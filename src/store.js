@@ -134,9 +134,4 @@ export default new Vuex.Store({
         });
     },
   },
-  computed: {
-    currentWeather() {
-      return this.$store.state.currentWeather;
-    },
-  },
 });

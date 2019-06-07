@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <CurrentWeather v-if="this.$store.state.isWeatherGot"/>
+    <CurrentWeather :weather="currentWeather" v-if="this.$store.state.isWeatherGot"/>
     <h2
       v-else-if="this.$store.state.errorDesc"
       class="weather-container__no-pos"
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import CurrentWeather from './components/CurrentWeather.vue';
 
 export default {
@@ -18,6 +19,9 @@ export default {
   },
   components: {
     CurrentWeather,
+  },
+  computed: {
+    ...mapState(['currentWeather']),
   },
 };
 </script>

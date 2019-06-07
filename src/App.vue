@@ -9,19 +9,22 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import CurrentWeather from './components/CurrentWeather.vue';
 
 export default {
   name: 'app',
   created() {
-    this.$store.dispatch('getCurrentPositionAndWeather');
+    this.getCurrentPositionAndWeather();
   },
   components: {
     CurrentWeather,
   },
   computed: {
     ...mapState(['currentWeather']),
+  },
+  methods: {
+    ...mapActions(['getCurrentPositionAndWeather']),
   },
 };
 </script>

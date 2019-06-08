@@ -7,7 +7,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    firstStart: true,
     APIkey: {
       CLIENT_ID: 'zovm6afV1sSFyuLDNutQn',
       CLIENT_SECRET: 'Zeee2pQAi37pofB9i6oYRq1b0iepGFc9r4cAjk43',

@@ -1,23 +1,27 @@
 <template>
   <div id="app">
-    <CurrentWeather v-if="this.$store.state.isWeatherGot"/>
-    <h2
-      v-else-if="this.$store.state.errorDesc"
-      class="weather-container__no-pos"
-    >{{this.$store.state.errorDesc}}</h2>
+    <CurrentWeather :weather="currentWeather" v-if="isWeatherGot"/>
+    <h2 v-else-if="errorDesc" class="weather-container__no-pos">{{errorDesc}}</h2>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import CurrentWeather from './components/CurrentWeather.vue';
 
 export default {
   name: 'app',
   created() {
-    this.$store.dispatch('getCurrentPositionAndWeather');
+    this.getCurrentPositionAndWeather();
   },
   components: {
     CurrentWeather,
+  },
+  computed: {
+    ...mapState(['currentWeather', 'isWeatherGot', 'errorDesc']),
+  },
+  methods: {
+    ...mapActions(['getCurrentPositionAndWeather']),
   },
 };
 </script>

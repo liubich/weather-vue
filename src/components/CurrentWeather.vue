@@ -1,38 +1,38 @@
-<template>
+<template functional>
   <div class="current-weather">
-    <p class="current-weather__datetime">Останнє оновлення: {{weather.dateTime}}</p>
+    <p class="current-weather__datetime">Останнє оновлення: {{props.weather.dateTime}}</p>
     <h2 class="current-weather__header">
-      {{weather.place}},
-      {{weather.countryCode}}
+      {{props.weather.place}},
+      {{props.weather.countryCode}}
     </h2>
     <div class="current-weather__columns-container">
       <div class="current-weather__left-column column">
         <h2 class="current-weather__temperature">
-          <span class="current-weather__temperature-digit">{{weather.temperature}}</span>
+          <span class="current-weather__temperature-digit">{{props.weather.temperature}}</span>
           °C
         </h2>
-        <p class="current-weather__description">{{weather.description}}</p>
+        <p class="current-weather__description">{{props.weather.description}}</p>
       </div>
       <div class="current-weather__middle-column column">
-        <img alt="weather icon" :src="weather.icon">
+        <img alt="weather icon" :src="props.weather.icon">
       </div>
       <div class="current-weather__right-column column">
         <div class="current-weather__wind-container">
           <div class="current-weather__wind-caption">вітер:</div>
           <div
-            v-if="weather.windSpeed"
-            :style="{transform: `rotate(${weather.windDirectionDeg}deg)`}"
+            v-if="props.weather.windSpeed"
+            :style="{transform: `rotate(${props.weather.windDirectionDeg}deg)`}"
             class="current-weather__wind-direction"
           >&#8681;</div>
-          <div v-if="weather.windSpeed" class="current-weather__wind-caption">
-            {{weather.windDirection}} ,
-            {{weather.windSpeed}} м/с
+          <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
+            {{props.weather.windDirection}} ,
+            {{props.weather.windSpeed}} м/с
           </div>
           <div v-else class="current-weather__wind-caption">штиль</div>
         </div>
         <p class="current-weather__pressure">
           тиск:
-          {{weather.pressure}} гПа
+          {{props.weather.pressure}} гПа
         </p>
       </div>
     </div>

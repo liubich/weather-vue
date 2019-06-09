@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 import CurrentWeather from './components/CurrentWeather.vue';
 
 export default {
@@ -19,9 +19,7 @@ export default {
   },
   computed: {
     ...mapState(['currentWeather', 'errorDesc']),
-    isWeatherGot() {
-      return this.$store.getters.isWeatherGot;
-    },
+    ...mapGetters(['isWeatherGot']),
   },
   methods: {
     ...mapActions(['getCurrentPositionAndWeather']),

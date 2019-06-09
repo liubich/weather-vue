@@ -18,7 +18,10 @@ export default {
     CurrentWeather,
   },
   computed: {
-    ...mapState(['currentWeather', 'isWeatherGot', 'errorDesc']),
+    ...mapState(['currentWeather', 'errorDesc']),
+    isWeatherGot() {
+      return this.$store.getters.isWeatherGot;
+    },
   },
   methods: {
     ...mapActions(['getCurrentPositionAndWeather']),

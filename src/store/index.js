@@ -27,7 +27,6 @@ export default new Vuex.Store({
       windDirectionDeg: null,
       pressure: null,
     },
-    isWeatherGot: false,
     errorDesc: null,
   },
   mutations: {
@@ -36,11 +35,13 @@ export default new Vuex.Store({
     },
     saveCurrentWeather(state, currentWeather) {
       state.currentWeather = currentWeather;
-      state.isWeatherGot = true;
     },
     saveErrDesc(state, errorDesc) {
       state.errorDesc = errorDesc;
     },
+  },
+  getters: {
+    isWeatherGot: state => !!state.currentWeather.description,
   },
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {

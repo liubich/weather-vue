@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import * as mutationTypes from './mutationTypes';
 import * as utils from './utils';
 
 Vue.use(Vuex);
@@ -31,26 +32,26 @@ export default new Vuex.Store({
     errorDesc: null,
   },
   mutations: {
-    savePosition(state, currentPosition) {
+    [mutationTypes.SAVE_POSITION](state, currentPosition) {
       state.currentPosition = currentPosition;
     },
-    saveCurrentWeather(state, currentWeather) {
+    [mutationTypes.SAVE_WEATHER](state, currentWeather) {
       state.currentWeather = currentWeather;
       state.isWeatherGot = true;
     },
-    saveErrDesc(state, errorDesc) {
+    [mutationTypes.SAVE_ERROR_DESC](state, errorDesc) {
       state.errorDesc = errorDesc;
     },
   },
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {
       const onSuccess = (pos) => {
-        commit('savePosition', pos.coords);
+        commit(mutationTypes.SAVE_POSITION, pos.coords);
         dispatch('getCurrentWeather');
       };
 
       const onError = (error) => {
-        commit('saveErrDesc', utils.getReadableErrorDesc(error));
+        commit(mutationTypes.SAVE_ERROR_DESC, utils.getReadableErrorDesc(error));
       };
 
       const options = {
@@ -59,7 +60,7 @@ export default new Vuex.Store({
         maximumAge: 0,
       };
       if (!navigator.geolocation) {
-        commit('saveErrDesc', 'Ваш браузер не підтримує геолокацію');
+        commit(mutationTypes.SAVE_ERROR_DESC, 'Ваш браузер не підтримує геолокацію');
         return;
       }
       navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
@@ -74,15 +75,15 @@ export default new Vuex.Store({
       fetch(currentWeatherUrl)
         .then((response) => {
           if (response.ok) return response.json();
-          commit('saveErrDesc', response.statusText);
+          commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
           throw new Error(`HTTP error, status = ${response.status}`);
         })
         .then((json) => {
           if (json.success) {
-            commit('saveCurrentWeather', utils.translateJSONToCurrentWeather(json.response));
+            commit(mutationTypes.SAVE_WEATHER, utils.translateJSONToCurrentWeather(json.response));
             return;
           }
-          commit('saveErrDesc', json.error);
+          commit(mutationTypes.SAVE_ERROR_DESC, json.error);
         });
     },
   },

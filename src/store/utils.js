@@ -42,10 +42,10 @@ const getWindDirection = (deg) => {
   return windDirectionTranslator[rumb];
 };
 
-export const getCurrentWeatherAPIUrl = ({ latitude, longitude, APIkey }) => `https://api.darksky.net/forecast/${APIkey}/${latitude},${longitude}?exclude=minutely,hourly,daily,alerts,flags&units=si`;
+export const getCurrentWeatherAPIUrl = ({ latitude, longitude, APIkey }) => `https://api.darksky.net/forecast/${APIkey}/${latitude},${longitude}?exclude=minutely,hourly,daily,alerts,flags&units=si&lang=uk`;
 
 export const translateJSONToCurrentWeather = jsonResponse => ({
-  icon: `${jsonResponse.icon || 'na.png'}`,
+  icon: `img/weather_icons/${jsonResponse.icon || 'na'}.png`,
   temperature: Math.round(parseFloat(jsonResponse.temperature)),
   description: jsonResponse.summary || 'Unknown',
   dateTime: getFormattedDateStr(jsonResponse.time * 1000),

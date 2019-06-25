@@ -1,61 +1,58 @@
-export const getReadableErrorDesc = (error) => {
+export const getReadableErrorDesc = error => {
   const errorCodeToDescription = {
-    [error.PERMISSION_DENIED]:
-      'Будь ласка, надайте сторінці доступ до місцезнаходження',
-    [error.POSITION_UNAVAILABLE]:
-      'Недоступні дані про поточне місцезнаходження',
-    [error.TIMEOUT]: 'Вийшов час для визначення місцезнаходження',
+    [error.PERMISSION_DENIED]: "Будь ласка, надайте сторінці доступ до місцезнаходження",
+    [error.POSITION_UNAVAILABLE]: "Недоступні дані про поточне місцезнаходження",
+    [error.TIMEOUT]: "Вийшов час для визначення місцезнаходження"
   };
-  return errorCodeToDescription[error.code] || 'Невідома помилка';
+  return errorCodeToDescription[error.code] || "Невідома помилка";
 };
 
-const getFormattedDateStr = (UNIXdate) => {
+const getFormattedDateStr = UNIXdate => {
   const reqDate = new Date(parseInt(UNIXdate, 10));
-  return reqDate.toLocaleString('uk-UA', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
+  return reqDate.toLocaleString("uk-UA", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric"
   });
 };
 
-const getWindDirection = (deg) => {
+const getWindDirection = deg => {
   const rumb = Math.ceil((deg - 11.25) / 22.5);
   const windDirectionTranslator = {
-    0: 'Пн',
-    1: 'Пн-Пн-С',
-    2: 'Пн-С',
-    3: 'Пн-С-С',
-    4: 'С',
-    5: 'Пд-С-С',
-    6: 'Пд-С',
-    7: 'Пд-Пд-С',
-    8: 'Пд',
-    9: 'Пд-Пд-З',
-    10: 'Пд-З',
-    11: 'Пд-З-З',
-    12: 'З',
-    13: 'Пн-З-З',
-    14: 'Пн-З',
-    15: 'Пн-Пн-З',
-    16: 'Пн',
+    0: "Пн",
+    1: "Пн-Пн-С",
+    2: "Пн-С",
+    3: "Пн-С-С",
+    4: "С",
+    5: "Пд-С-С",
+    6: "Пд-С",
+    7: "Пд-Пд-С",
+    8: "Пд",
+    9: "Пд-Пд-З",
+    10: "Пд-З",
+    11: "Пд-З-З",
+    12: "З",
+    13: "Пн-З-З",
+    14: "Пн-З",
+    15: "Пн-Пн-З",
+    16: "Пн"
   };
   return windDirectionTranslator[rumb];
 };
 
-export const getCurrentWeatherAPIUrl = ({ latitude, longitude, APIkey }) => `https://api.aerisapi.com/observations/${latitude},${longitude}?&format=json&filter=metar&limit=1&client_id=${APIkey.CLIENT_ID}&client_secret=${APIkey.CLIENT_SECRET}`;
+// export const getCurrentWeatherAPIUrl = ({ latitude, longitude, APIkey }) => `https://api.aerisapi.com/observations/${latitude},${longitude}?&format=json&filter=metar&limit=1&client_id=${APIkey.CLIENT_ID}&client_secret=${APIkey.CLIENT_SECRET}`;
+export const getCurrentWeatherAPIUrl = ({ latitude, longitude, APIkey }) =>
+  `https://api.darksky.net/forecast/${APIkey}/${latitude},${longitude}?exclude=minutely,hourly,daily,alerts,flags&units=si`;
 
 export const translateJSONToCurrentWeather = jsonResponse => ({
-  icon: `https://cdn.aerisapi.com/wxblox/icons/${jsonResponse.ob.icon || 'na.png'}`,
-  place: jsonResponse.place.name,
-  countryCode: jsonResponse.place.country,
-  temperature: Math.round(parseFloat(jsonResponse.ob.tempC)),
-  description: jsonResponse.ob.weatherShort || 'Недоступно',
-  dateTime: getFormattedDateStr(jsonResponse.ob.timestamp * 1000),
-  windSpeed:
-    Math.round((parseInt(jsonResponse.ob.windSpeedKPH, 10) / 3.6) * 10) / 10,
+  icon: `${jsonResponse.icon || "na.png"}`,
+  temperature: Math.round(parseFloat(jsonResponse.temperature)),
+  description: jsonResponse.summary || "Unknown",
+  dateTime: getFormattedDateStr(jsonResponse.time * 1000),
+  windSpeed: Math.round(parseFloat(jsonResponse.windSpeed) * 10) / 10,
   windDirection: getWindDirection(parseInt(jsonResponse.ob.windDirDEG, 10)),
-  windDirectionDeg: parseInt(jsonResponse.ob.windDirDEG, 10),
-  pressure: parseInt(jsonResponse.ob.pressureMB, 10),
+  windDirectionDeg: parseInt(jsonResponse.windBearing, 10),
+  pressure: parseFloat(jsonResponse.pressure)
 });

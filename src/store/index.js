@@ -36,6 +36,9 @@ export default new Vuex.Store({
     [mutationTypes.SAVE_ERROR_DESC](state, errorDesc) {
       state.errorDesc = errorDesc;
     },
+    [mutationTypes.SAVE_CURRENT_POSITION_ADDRESS](state, currentAddress) {
+      state.currentAddress = currentAddress;
+    },
   },
   getters: {
     isWeatherGot: state => !!state.currentWeather.description,
@@ -77,6 +80,18 @@ export default new Vuex.Store({
         })
         .then((json) => {
           commit(mutationTypes.SAVE_WEATHER, utils.translateJSONToCurrentWeather(json.currently));
+        });
+      const getCurrentAddressUrl = utils.getCurrentAddressAPIUrl({
+        latitude: state.currentPosition.latitude,
+        longitude: state.currentPosition.longitude,
+        APIkey: state.geoCodingAPIKey
+      });
+      fetch(getCurrentAddressUrl)
+        .then((response) => {
+          if (response.ok) return response.json();
+        })
+        .then((json) => {
+          commit(mutationTypes.SAVE_CURRENT_POSITION_ADDRESS, json.Response.View[0].Result[0].Address);
         });
     },
   },

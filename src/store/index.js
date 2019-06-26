@@ -12,8 +12,8 @@ export default new Vuex.Store({
     currentPosition: {
       latitude: null,
       longitude: null,
-      placeName: null,
     },
+    currentAddress: {},
     currentWeather: {
       icon: null,
       temperature: null,
@@ -84,14 +84,19 @@ export default new Vuex.Store({
       const getCurrentAddressUrl = utils.getCurrentAddressAPIUrl({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
-        APIkey: state.geoCodingAPIKey
+        APIkey: state.geoCodingAPIKey,
       });
       fetch(getCurrentAddressUrl)
         .then((response) => {
           if (response.ok) return response.json();
+          commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
+          throw new Error(`HTTP error, status = ${response.status}`);
         })
         .then((json) => {
-          commit(mutationTypes.SAVE_CURRENT_POSITION_ADDRESS, json.Response.View[0].Result[0].Address);
+          commit(
+            mutationTypes.SAVE_CURRENT_POSITION_ADDRESS,
+            json.Response.View[0].Result[0].Location.Address,
+          );
         });
     },
   },

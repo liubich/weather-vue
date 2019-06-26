@@ -2,8 +2,8 @@
   <div class="current-weather">
     <p class="current-weather__datetime">Останнє оновлення: {{props.weather.dateTime}}</p>
     <h2 class="current-weather__header">
-      {{props.weather.place}},
-      {{props.weather.countryCode}}
+      {{props.address.City}},
+      {{props.address.State}}
     </h2>
     <div class="current-weather__columns-container">
       <div class="current-weather__left-column column">
@@ -41,8 +41,8 @@
 
 <script>
 export default {
-  name: 'CurrentWeather',
-  props: ['weather'],
+  name: "CurrentWeather",
+  props: ["weather"]
 };
 </script>
 

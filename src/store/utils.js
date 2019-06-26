@@ -55,4 +55,4 @@ export const translateJSONToCurrentWeather = jsonResponse => ({
   pressure: parseFloat(jsonResponse.pressure),
 });
 
-export const getGeoCodingAPIUrl = ({ latitude, longitude, APIkey }) => `https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=${latitude}%2C${longitude}%2C250&mode=retrieveAddresses&maxresults=1&gen=9&app_id=${APIkey.Id}&app_code=${APIkey.Code}`;
+export const getCurrentAddressAPIUrl = ({ latitude, longitude, APIkey }) => `https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=${latitude}%2C${longitude}%2C250&mode=retrieveAddresses&maxresults=1&gen=9&app_id=${APIkey.Id}&app_code=${APIkey.Code}`;

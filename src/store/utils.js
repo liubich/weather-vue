@@ -51,6 +51,10 @@ export const translateJSONToCurrentWeather = (jsonResponse) => {
     windDirectionDeg: jsonResponse.Wind.Direction.Degrees,
     pressure: parseInt(jsonResponse.Pressure.Metric.Value, 10),
     pressureTendency: translatePressureTendency(jsonResponse.PressureTendency.Code),
+    realFeelTemperature: jsonResponse.RealFeelTemperature.Metric.Value,
+    realFeelTemperatureShade: jsonResponse.RealFeelTemperatureShade.Metric.Value,
+    detailsURL: jsonResponse.MobileLink,
+    precipitationType: jsonResponse.PrecipitationType,
   };
 };
 

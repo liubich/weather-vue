@@ -29,7 +29,7 @@
         </div>
         <p class="current-weather__pressure">
           тиск:
-          {{props.weather.pressure}} гПа
+          {{props.weather.pressure}} гПа, {{props.weather.pressureTendency}}
         </p>
       </div>
     </div>

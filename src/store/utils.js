@@ -30,6 +30,15 @@ const getActualIconNumber = (iconNumber) => {
   return iconMapping[iconNumber] || iconNumber;
 };
 
+const translatePressureTendency = (pressureTendencyCode) => {
+  const pressureTendencyMapping = {
+    F: 'падає',
+    S: 'стабільний',
+    R: 'зростає',
+  };
+  return pressureTendencyMapping[pressureTendencyCode] || null;
+};
+
 export const translateJSONToCurrentWeather = (jsonResponse) => {
   const iconNumber = getActualIconNumber(jsonResponse.WeatherIcon);
   return {
@@ -41,6 +50,7 @@ export const translateJSONToCurrentWeather = (jsonResponse) => {
     windDirection: jsonResponse.Wind.Direction.Localized,
     windDirectionDeg: jsonResponse.Wind.Direction.Degrees,
     pressure: parseInt(jsonResponse.Pressure.Metric.Value, 10),
+    pressureTendency: translatePressureTendency(jsonResponse.PressureTendency.Code),
   };
 };
 

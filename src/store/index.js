@@ -34,7 +34,7 @@ export default new Vuex.Store({
     errorDesc: null,
   },
   mutations: {
-    [mutationTypes.SAVE_POSITION](state, currentPosition) {
+    [mutationTypes.SAVE_COORDINATES](state, currentPosition) {
       state.currentPosition.latitude = currentPosition.latitude;
       state.currentPosition.longitude = currentPosition.longitude;
     },
@@ -44,7 +44,7 @@ export default new Vuex.Store({
     [mutationTypes.SAVE_ERROR_DESC](state, errorDesc) {
       state.errorDesc = errorDesc;
     },
-    [mutationTypes.SAVE_CURRENT_POSITION_KEY](state, currentPosition) {
+    [mutationTypes.SAVE_CURRENT_POSITION_DATA](state, currentPosition) {
       state.currentPosition.positionKey = currentPosition.Key;
       state.currentPosition.city = currentPosition.City;
     },
@@ -55,7 +55,7 @@ export default new Vuex.Store({
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {
       const onSuccess = (pos) => {
-        commit(mutationTypes.SAVE_POSITION, pos.coords);
+        commit(mutationTypes.SAVE_COORDINATES, pos.coords);
         dispatch('getCurrentPositionKey');
       };
 
@@ -89,7 +89,7 @@ export default new Vuex.Store({
         })
         .then((positionJson) => {
           if (positionJson.Key) {
-            commit(mutationTypes.SAVE_CURRENT_POSITION_KEY, {
+            commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, {
               Key: positionJson.Key,
               City: positionJson.LocalizedName,
             });

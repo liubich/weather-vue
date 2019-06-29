@@ -18,30 +18,6 @@ const getFormattedDateStr = (UNIXdate) => {
   });
 };
 
-const getWindDirection = (deg) => {
-  const rumb = Math.ceil((deg - 11.25) / 22.5);
-  const windDirectionTranslator = {
-    0: 'Пн',
-    1: 'Пн-Пн-С',
-    2: 'Пн-С',
-    3: 'Пн-С-С',
-    4: 'С',
-    5: 'Пд-С-С',
-    6: 'Пд-С',
-    7: 'Пд-Пд-С',
-    8: 'Пд',
-    9: 'Пд-Пд-З',
-    10: 'Пд-З',
-    11: 'Пд-З-З',
-    12: 'З',
-    13: 'Пн-З-З',
-    14: 'Пн-З',
-    15: 'Пн-Пн-З',
-    16: 'Пн',
-  };
-  return windDirectionTranslator[rumb];
-};
-
 export const translateJSONToCurrentWeather = jsonResponse => ({
   icon: `img/weather-icons/${jsonResponse.WeatherIcon || 'na.png'}`,
   temperature: parseInt(jsonResponse.Temperature.Metric.Value, 10),

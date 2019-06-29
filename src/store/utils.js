@@ -1,9 +1,7 @@
 export const getReadableErrorDesc = (error) => {
   const errorCodeToDescription = {
-    [error.PERMISSION_DENIED]:
-      'Будь ласка, надайте сторінці доступ до місцезнаходження',
-    [error.POSITION_UNAVAILABLE]:
-      'Недоступні дані про поточне місцезнаходження',
+    [error.PERMISSION_DENIED]: 'Будь ласка, надайте сторінці доступ до місцезнаходження',
+    [error.POSITION_UNAVAILABLE]: 'Недоступні дані про поточне місцезнаходження',
     [error.TIMEOUT]: 'Вийшов час для визначення місцезнаходження',
   };
   return errorCodeToDescription[error.code] || 'Невідома помилка';
@@ -44,8 +42,6 @@ const getWindDirection = (deg) => {
   return windDirectionTranslator[rumb];
 };
 
-export const getCurrentWeatherAPIUrl = ({ latitude, longitude, APIkey }) => `https://api.aerisapi.com/observations/${latitude},${longitude}?&format=json&filter=metar&limit=1&client_id=${APIkey.CLIENT_ID}&client_secret=${APIkey.CLIENT_SECRET}`;
-
 export const translateJSONToCurrentWeather = jsonResponse => ({
   icon: `https://cdn.aerisapi.com/wxblox/icons/${jsonResponse.ob.icon || 'na.png'}`,
   place: jsonResponse.place.name,
@@ -53,11 +49,12 @@ export const translateJSONToCurrentWeather = jsonResponse => ({
   temperature: Math.round(parseFloat(jsonResponse.ob.tempC)),
   description: jsonResponse.ob.weatherShort || 'Недоступно',
   dateTime: getFormattedDateStr(jsonResponse.ob.timestamp * 1000),
-  windSpeed:
-    Math.round((parseInt(jsonResponse.ob.windSpeedKPH, 10) / 3.6) * 10) / 10,
+  windSpeed: Math.round((parseInt(jsonResponse.ob.windSpeedKPH, 10) / 3.6) * 10) / 10,
   windDirection: getWindDirection(parseInt(jsonResponse.ob.windDirDEG, 10)),
   windDirectionDeg: parseInt(jsonResponse.ob.windDirDEG, 10),
   pressure: parseInt(jsonResponse.ob.pressureMB, 10),
 });
+
+export const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) => `http://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
 
 export const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) => `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua&details=true`;

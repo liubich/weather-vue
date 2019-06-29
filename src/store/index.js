@@ -84,7 +84,6 @@ export default new Vuex.Store({
         })
         .then((positionJson) => {
           if (positionJson.Key) {
-            console.log(positionJson);
             commit(mutationTypes.SAVE_CURRENT_POSITION_KEY, {
               Key: positionJson.Key,
               City: positionJson.LocalizedName,
@@ -108,7 +107,6 @@ export default new Vuex.Store({
           throw new Error(`HTTP error, status = ${response.status}`);
         })
         .then((currentWeatherJson) => {
-          console.log(currentWeatherJson);
           commit(
             mutationTypes.SAVE_WEATHER,
             utils.translateJSONToCurrentWeather(currentWeatherJson[0]),

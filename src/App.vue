@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <CurrentWeather :weather="currentWeather" v-if="isWeatherGot"/>
+    <CurrentWeather
+      :weather="currentWeather"
+      :currentPosition="currentPosition"
+      v-if="isWeatherGot"
+    />
     <h2 v-else-if="errorDesc" class="weather-container__no-pos">{{errorDesc}}</h2>
   </div>
 </template>
@@ -18,7 +22,7 @@ export default {
     CurrentWeather,
   },
   computed: {
-    ...mapState(['currentWeather', 'errorDesc']),
+    ...mapState(['currentWeather', 'errorDesc', 'currentPosition']),
     ...mapGetters(['isWeatherGot']),
   },
   methods: {

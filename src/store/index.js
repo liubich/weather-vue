@@ -12,6 +12,7 @@ export default new Vuex.Store({
       latitude: null,
       longitude: null,
       positionKey: null,
+      city: null,
     },
     currentWeather: {
       icon: null,
@@ -38,8 +39,9 @@ export default new Vuex.Store({
     [mutationTypes.SAVE_ERROR_DESC](state, errorDesc) {
       state.errorDesc = errorDesc;
     },
-    [mutationTypes.SAVE_CURRENT_POSITION_KEY](state, currentPositionKey) {
-      state.currentPosition.positionKey = currentPositionKey;
+    [mutationTypes.SAVE_CURRENT_POSITION_KEY](state, currentPosition) {
+      state.currentPosition.positionKey = currentPosition.Key;
+      state.currentPosition.city = currentPosition.City;
     },
   },
   getters: {
@@ -83,7 +85,7 @@ export default new Vuex.Store({
         .then((positionJson) => {
           if (positionJson.Key) {
             console.log(positionJson);
-            commit(mutationTypes.SAVE_CURRENT_POSITION_KEY, positionJson.Key);
+            commit(mutationTypes.SAVE_CURRENT_POSITION_KEY, { Key: positionJson.Key, City: positionJson.LocalizedName });
             dispatch('getCurrentWeatherData');
             return;
           }
@@ -104,7 +106,7 @@ export default new Vuex.Store({
         })
         .then((currentWeatherJson) => {
           console.log(currentWeatherJson);
-          // commit(mutationTypes.SAVE_WEATHER, utils.translateJSONToCurrentWeather(currentWeatherJson[0]));
+          commit(mutationTypes.SAVE_WEATHER, utils.translateJSONToCurrentWeather(currentWeatherJson[0]));
         });
     },
   },

@@ -18,16 +18,31 @@ const getFormattedDateStr = (UNIXdate) => {
   });
 };
 
-export const translateJSONToCurrentWeather = jsonResponse => ({
-  icon: `img/weather-icons/${jsonResponse.WeatherIcon || 'na.png'}`,
-  temperature: parseInt(jsonResponse.Temperature.Metric.Value, 10),
-  description: jsonResponse.WeatherText || 'Недоступно',
-  dateTime: getFormattedDateStr(jsonResponse.EpochTime),
-  windSpeed: Math.round((parseInt(jsonResponse.Wind.Speed.Metric.Value, 10) / 3.6) * 10) / 10,
-  windDirection: jsonResponse.Wind.Direction.Localized,
-  windDirectionDeg: jsonResponse.Wind.Direction.Degrees,
-  pressure: parseInt(jsonResponse.Pressure.Metric.Value, 10),
-});
+const getActualIconNumber = (iconNumber) => {
+  const iconMapping = {
+    3: '2',
+    8: '7',
+    23: '21',
+    29: '26',
+    35: '34',
+    37: '5',
+  };
+  return iconMapping[iconNumber] || iconNumber;
+};
+
+export const translateJSONToCurrentWeather = (jsonResponse) => {
+  const iconNumber = getActualIconNumber(jsonResponse.WeatherIcon);
+  return {
+    icon: `img/weather-icons/${iconNumber || 'na'}.png`,
+    temperature: parseInt(jsonResponse.Temperature.Metric.Value, 10),
+    description: jsonResponse.WeatherText || 'Недоступно',
+    dateTime: getFormattedDateStr(parseInt(jsonResponse.EpochTime, 10) * 1000),
+    windSpeed: Math.round((parseInt(jsonResponse.Wind.Speed.Metric.Value, 10) / 3.6) * 10) / 10,
+    windDirection: jsonResponse.Wind.Direction.Localized,
+    windDirectionDeg: jsonResponse.Wind.Direction.Degrees,
+    pressure: parseInt(jsonResponse.Pressure.Metric.Value, 10),
+  };
+};
 
 export const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) => `https://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
 

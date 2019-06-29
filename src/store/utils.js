@@ -59,3 +59,5 @@ export const translateJSONToCurrentWeather = jsonResponse => ({
   windDirectionDeg: parseInt(jsonResponse.ob.windDirDEG, 10),
   pressure: parseInt(jsonResponse.ob.pressureMB, 10),
 });
+
+export const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) => `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua&details=true`;

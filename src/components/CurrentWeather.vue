@@ -10,25 +10,50 @@
     </div>
     <div class="current-weather__row">
       <p class="current-weather__description">{{props.weather.description}}</p>
-    </div>
-    <div class="current-weather__row">
-      <p class="current-weather__pressure">
-        тиск:
-        {{props.weather.pressure}} гПа, {{props.weather.pressureTendency}}
-      </p>
       <div class="current-weather__wind-container">
-        <div class="current-weather__wind-caption">вітер:</div>
+        <div class="current-weather__info">вітер:</div>
         <div
           v-if="props.weather.windSpeed"
           :style="{transform: `rotate(${props.weather.windDirectionDeg}deg)`}"
           class="current-weather__wind-direction"
         >&#8681;</div>
-        <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
-          {{props.weather.windDirection}} ,
-          {{props.weather.windSpeed}} м/с
+        <div v-if="props.weather.windSpeed" class="current-weather__info">
+          <strong>
+            {{props.weather.windDirection}},
+            {{props.weather.windSpeed}}
+          </strong> м/с
         </div>
-        <div v-else class="current-weather__wind-caption">штиль</div>
+        <div v-else class="current-weather__info">штиль</div>
       </div>
+    </div>
+    <div class="current-weather__row">
+      <p class="current-weather__info">
+        відчувається як:
+        <strong>{{props.weather.realFeelTemperature}}</strong>°C
+      </p>
+      <p class="current-weather__info">
+        тиск:
+        <strong>{{props.weather.pressure}}</strong>
+        гПа, {{props.weather.pressureTendency}}
+      </p>
+    </div>
+    <div class="current-weather__row">
+      <p class="current-weather__info">
+        у затінку:
+        <strong>{{props.weather.realFeelTemperatureShade}}</strong>°C
+      </p>
+      <p
+        :v-if="props.weather.precipitationType"
+        class="current-weather__info"
+      >опади: {{props.weather.precipitationType}}</p>
+    </div>
+    <div class="current-weather__row">
+      <a
+        :href="props.weather.detailsURL"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="current-weather__datetime"
+      >accuweather.com</a>
     </div>
     <div class="current-weather__row">
       <p class="current-weather__datetime">Останнє оновлення: {{props.weather.dateTime}}</p>
@@ -56,7 +81,7 @@ export default {
 
 .current-weather__row {
   width: 100%;
-  padding: 0 10px;
+  padding: 3px 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -87,8 +112,7 @@ export default {
   font-size: 90px;
 }
 
-.current-weather__pressure {
-  padding: 3px 0;
+.current-weather__info {
   font-family: Roboto, sans-serif;
   font-size: 14px;
 }
@@ -96,11 +120,6 @@ export default {
 .current-weather__wind-container {
   display: flex;
   align-items: center;
-}
-
-.current-weather__wind-caption {
-  font-family: Roboto, sans-serif;
-  font-size: 14px;
 }
 
 .current-weather__wind-direction {

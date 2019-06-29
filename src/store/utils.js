@@ -43,16 +43,14 @@ const getWindDirection = (deg) => {
 };
 
 export const translateJSONToCurrentWeather = jsonResponse => ({
-  icon: `https://cdn.aerisapi.com/wxblox/icons/${jsonResponse.ob.icon || 'na.png'}`,
-  place: jsonResponse.place.name,
-  countryCode: jsonResponse.place.country,
-  temperature: Math.round(parseFloat(jsonResponse.ob.tempC)),
-  description: jsonResponse.ob.weatherShort || 'Недоступно',
-  dateTime: getFormattedDateStr(jsonResponse.ob.timestamp * 1000),
-  windSpeed: Math.round((parseInt(jsonResponse.ob.windSpeedKPH, 10) / 3.6) * 10) / 10,
-  windDirection: getWindDirection(parseInt(jsonResponse.ob.windDirDEG, 10)),
-  windDirectionDeg: parseInt(jsonResponse.ob.windDirDEG, 10),
-  pressure: parseInt(jsonResponse.ob.pressureMB, 10),
+  icon: `img/weather-icons/${jsonResponse.WeatherIcon || 'na.png'}`,
+  temperature: parseInt(jsonResponse.Temperature.Metric.Value, 10),
+  description: jsonResponse.WeatherText || 'Недоступно',
+  dateTime: getFormattedDateStr(jsonResponse.EpochTime),
+  windSpeed: Math.round((parseInt(jsonResponse.Wind.Speed.Metric.Value, 10) / 3.6) * 10) / 10,
+  windDirection: jsonResponse.Wind.Direction.Localized,
+  windDirectionDeg: jsonResponse.Wind.Direction.Degrees,
+  pressure: parseInt(jsonResponse.Pressure.Metric.Value, 10),
 });
 
 export const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) => `http://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;

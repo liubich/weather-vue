@@ -8,13 +8,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    APIkey: {
-      CLIENT_ID: 'zovm6afV1sSFyuLDNutQn',
-      CLIENT_SECRET: 'Zeee2pQAi37pofB9i6oYRq1b0iepGFc9r4cAjk43',
-    },
+    APIkey: 'xABfuuGRMZm5LKIzi08KAGZLqd2Eduov',
     currentPosition: {
       latitude: null,
       longitude: null,
+      positionKey: null,
     },
     currentWeather: {
       icon: null,

@@ -40,5 +40,7 @@ export default {
 
 #app {
   padding: 10px;
+  display: flex;
+  justify-content: center;
 }
 </style>

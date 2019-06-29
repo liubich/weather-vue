@@ -85,7 +85,10 @@ export default new Vuex.Store({
         .then((positionJson) => {
           if (positionJson.Key) {
             console.log(positionJson);
-            commit(mutationTypes.SAVE_CURRENT_POSITION_KEY, { Key: positionJson.Key, City: positionJson.LocalizedName });
+            commit(mutationTypes.SAVE_CURRENT_POSITION_KEY, {
+              Key: positionJson.Key,
+              City: positionJson.LocalizedName,
+            });
             dispatch('getCurrentWeatherData');
             return;
           }
@@ -106,7 +109,10 @@ export default new Vuex.Store({
         })
         .then((currentWeatherJson) => {
           console.log(currentWeatherJson);
-          commit(mutationTypes.SAVE_WEATHER, utils.translateJSONToCurrentWeather(currentWeatherJson[0]));
+          commit(
+            mutationTypes.SAVE_WEATHER,
+            utils.translateJSONToCurrentWeather(currentWeatherJson[0]),
+          );
         });
     },
   },

@@ -86,7 +86,7 @@ export default new Vuex.Store({
           if (positionJson.Key) {
             commit(mutationTypes.SAVE_CURRENT_POSITION_KEY, {
               Key: positionJson.Key,
-              City: positionJson.LocalizedName,
+              City: `${positionJson.LocalizedName}, ${positionJson.AdministrativeArea.LocalizedName} обл.`,
             });
             dispatch('getCurrentWeatherData');
             return;

@@ -5,7 +5,6 @@ import * as utils from './utils';
 
 Vue.use(Vuex);
 
-
 export default new Vuex.Store({
   state: {
     APIkey: 'xABfuuGRMZm5LKIzi08KAGZLqd2Eduov',
@@ -30,13 +29,17 @@ export default new Vuex.Store({
   },
   mutations: {
     [mutationTypes.SAVE_POSITION](state, currentPosition) {
-      state.currentPosition = currentPosition;
+      state.currentPosition.latitude = currentPosition.latitude;
+      state.currentPosition.longitude = currentPosition.longitude;
     },
     [mutationTypes.SAVE_WEATHER](state, currentWeather) {
       state.currentWeather = currentWeather;
     },
     [mutationTypes.SAVE_ERROR_DESC](state, errorDesc) {
       state.errorDesc = errorDesc;
+    },
+    [mutationTypes.SAVE_CURRENT_POSITION_KEY](state, currentPositionKey) {
+      state.currentPosition.positionKey = currentPositionKey;
     },
   },
   getters: {
@@ -46,7 +49,7 @@ export default new Vuex.Store({
     getCurrentPositionAndWeather({ commit, dispatch }) {
       const onSuccess = (pos) => {
         commit(mutationTypes.SAVE_POSITION, pos.coords);
-        dispatch('getCurrentWeather');
+        dispatch('getCurrentPositionKey');
       };
 
       const onError = (error) => {
@@ -65,10 +68,32 @@ export default new Vuex.Store({
       navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
     },
 
-    getCurrentWeather({ commit, state }) {
-      const currentWeatherUrl = utils.getCurrentWeatherAPIUrl({
+    getCurrentPositionKey({ commit, state, dispatch }) {
+      const currentPositionAPIUrl = utils.getCurrentPositionAPIUrl({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
+        APIkey: state.APIkey,
+      });
+      fetch(currentPositionAPIUrl)
+        .then((response) => {
+          if (response.ok) return response.json();
+          commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
+          throw new Error(`HTTP error, status = ${response.status}`);
+        })
+        .then((positionJson) => {
+          if (positionJson.Key) {
+            console.log(positionJson);
+            commit(mutationTypes.SAVE_CURRENT_POSITION_KEY, positionJson.Key);
+            dispatch('getCurrentWeatherData');
+            return;
+          }
+          commit(mutationTypes.SAVE_ERROR_DESC, 'Помилка при отриманні поточної погоди');
+        });
+    },
+
+    getCurrentWeatherData({ commit, state }) {
+      const currentWeatherUrl = utils.getCurrentWeatherAPIUrl({
+        positionKey: state.currentPosition.positionKey,
         APIkey: state.APIkey,
       });
       fetch(currentWeatherUrl)
@@ -77,12 +102,9 @@ export default new Vuex.Store({
           commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
           throw new Error(`HTTP error, status = ${response.status}`);
         })
-        .then((json) => {
-          if (json.success) {
-            commit(mutationTypes.SAVE_WEATHER, utils.translateJSONToCurrentWeather(json.response));
-            return;
-          }
-          commit(mutationTypes.SAVE_ERROR_DESC, json.error);
+        .then((currentWeatherJson) => {
+          console.log(currentWeatherJson);
+          // commit(mutationTypes.SAVE_WEATHER, utils.translateJSONToCurrentWeather(currentWeatherJson[0]));
         });
     },
   },

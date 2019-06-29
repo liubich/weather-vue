@@ -57,4 +57,4 @@ export const translateJSONToCurrentWeather = jsonResponse => ({
 
 export const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) => `http://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
 
-export const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) => `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua&details=true`;
+export const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) => `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua`;

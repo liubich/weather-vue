@@ -43,7 +43,7 @@
         <strong>{{props.weather.realFeelTemperatureShade}}</strong>°C
       </p>
       <p
-        :v-if="props.weather.precipitationType"
+        v-if="props.weather.precipitationType"
         class="current-weather__info"
       >опади: {{props.weather.precipitationType}}</p>
     </div>

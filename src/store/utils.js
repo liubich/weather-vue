@@ -53,6 +53,6 @@ export const translateJSONToCurrentWeather = jsonResponse => ({
   pressure: parseInt(jsonResponse.Pressure.Metric.Value, 10),
 });
 
-export const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) => `http://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
+export const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) => `https://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
 
-export const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) => `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua`;
+export const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) => `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua`;

@@ -1,10 +1,7 @@
 <template functional>
   <div class="current-weather">
     <p class="current-weather__datetime">Останнє оновлення: {{props.weather.dateTime}}</p>
-    <h2 class="current-weather__header">
-      {{props.weather.place}},
-      {{props.weather.countryCode}}
-    </h2>
+    <h2 :v-if="props.currentPosition" class="current-weather__header">{{props.currentPosition.city}}</h2>
     <div class="current-weather__columns-container">
       <div class="current-weather__left-column column">
         <h2 class="current-weather__temperature">
@@ -42,7 +39,7 @@
 <script>
 export default {
   name: 'CurrentWeather',
-  props: ['weather'],
+  props: ['weather', 'currentPosition'],
 };
 </script>
 

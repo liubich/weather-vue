@@ -29,18 +29,15 @@
     <div class="current-weather__row">
       <p class="current-weather__info">
         відчувається як:
-        <strong>{{props.weather.realFeelTemperature}}</strong>°C
-      </p>
-      <p class="current-weather__info">
-        тиск:
-        <strong>{{props.weather.pressure}}</strong>
-        гПа, {{props.weather.pressureTendency}}
+        <strong>{{props.weather.realFeelTemperature}}</strong>°C, у затінку:
+        <strong>{{props.weather.realFeelTemperatureShade}}</strong>°C
       </p>
     </div>
     <div class="current-weather__row">
       <p class="current-weather__info">
-        у затінку:
-        <strong>{{props.weather.realFeelTemperatureShade}}</strong>°C
+        тиск:
+        <strong>{{props.weather.pressure}}</strong>
+        гПа, {{props.weather.pressureTendency}}
       </p>
       <p
         v-if="props.weather.precipitationType"
@@ -70,8 +67,9 @@ export default {
 
 <style scoped>
 .current-weather {
-  min-width: 400px;
-  max-width: 540px;
+  width: 100%;
+  min-width: 320px;
+  max-width: 480px;
   padding: 5px;
   display: flex;
   align-items: flex-start;

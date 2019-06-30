@@ -3,10 +3,9 @@
     <h2 class="current-weather__city">{{props.currentPosition.city}}</h2>
     <div class="current-weather__row">
       <h2 class="current-weather__temperature">
-        <span class="current-weather__temperature-digit">{{props.weather.temperature}}</span>
-        °C
+        <span class="current-weather__temperature-digit">{{props.weather.temperature}}</span>°C
       </h2>
-      <img alt="weather icon" :src="props.weather.icon">
+      <img class="current-weather__icon" alt="weather icon" :src="props.weather.icon">
     </div>
     <div class="current-weather__row">
       <p class="current-weather__description">{{props.weather.description}}</p>
@@ -68,7 +67,6 @@ export default {
 <style scoped>
 .current-weather {
   width: 100%;
-  min-width: 320px;
   max-width: 480px;
   padding: 5px;
   display: flex;
@@ -79,10 +77,15 @@ export default {
 
 .current-weather__row {
   width: 100%;
-  padding: 3px 10px;
+  padding: 3px 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.current-weather__icon {
+  width: 120px;
+  height: 120px;
 }
 
 .current-weather__datetime {
@@ -98,21 +101,20 @@ export default {
 }
 
 .current-weather__temperature {
-  padding-left: 4px;
   font-family: Oswald, sans-serif;
   font-weight: 600;
-  font-size: 50px;
+  font-size: 40px;
 }
 
 .current-weather__temperature-digit {
   font-family: Oswald, sans-serif;
   font-weight: 600;
-  font-size: 90px;
+  font-size: 80px;
 }
 
 .current-weather__info {
   font-family: Roboto, sans-serif;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .current-weather__wind-container {

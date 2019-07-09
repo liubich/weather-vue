@@ -5,16 +5,14 @@ import * as utils from './utils';
 
 Vue.use(Vuex);
 
-
 export default new Vuex.Store({
   state: {
-    APIkey: {
-      CLIENT_ID: 'zovm6afV1sSFyuLDNutQn',
-      CLIENT_SECRET: 'Zeee2pQAi37pofB9i6oYRq1b0iepGFc9r4cAjk43',
-    },
+    APIkey: 'xABfuuGRMZm5LKIzi08KAGZLqd2Eduov',
     currentPosition: {
       latitude: null,
       longitude: null,
+      positionKey: null,
+      city: null,
     },
     currentWeather: {
       icon: null,
@@ -27,18 +25,28 @@ export default new Vuex.Store({
       windDirection: null,
       windDirectionDeg: null,
       pressure: null,
+      pressureTendency: null,
+      realFeelTemperature: null,
+      realFeelTemperatureShade: null,
+      detailsURL: null,
+      precipitationType: null,
     },
     errorDesc: null,
   },
   mutations: {
-    [mutationTypes.SAVE_POSITION](state, currentPosition) {
-      state.currentPosition = currentPosition;
+    [mutationTypes.SAVE_COORDINATES](state, currentPosition) {
+      state.currentPosition.latitude = currentPosition.latitude;
+      state.currentPosition.longitude = currentPosition.longitude;
     },
     [mutationTypes.SAVE_WEATHER](state, currentWeather) {
       state.currentWeather = currentWeather;
     },
     [mutationTypes.SAVE_ERROR_DESC](state, errorDesc) {
       state.errorDesc = errorDesc;
+    },
+    [mutationTypes.SAVE_CURRENT_POSITION_DATA](state, currentPosition) {
+      state.currentPosition.positionKey = currentPosition.Key;
+      state.currentPosition.city = currentPosition.City;
     },
   },
   getters: {
@@ -47,8 +55,8 @@ export default new Vuex.Store({
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {
       const onSuccess = (pos) => {
-        commit(mutationTypes.SAVE_POSITION, pos.coords);
-        dispatch('getCurrentWeather');
+        commit(mutationTypes.SAVE_COORDINATES, pos.coords);
+        dispatch('getCurrentPositionKey');
       };
 
       const onError = (error) => {
@@ -67,10 +75,34 @@ export default new Vuex.Store({
       navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
     },
 
-    getCurrentWeather({ commit, state }) {
-      const currentWeatherUrl = utils.getCurrentWeatherAPIUrl({
+    getCurrentPositionKey({ commit, state, dispatch }) {
+      const currentPositionAPIUrl = utils.getCurrentPositionAPIUrl({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
+        APIkey: state.APIkey,
+      });
+      fetch(currentPositionAPIUrl)
+        .then((response) => {
+          if (response.ok) return response.json();
+          commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
+          throw new Error(`HTTP error, status = ${response.status}`);
+        })
+        .then((positionJson) => {
+          if (positionJson.Key) {
+            commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, {
+              Key: positionJson.Key,
+              City: positionJson.LocalizedName,
+            });
+            dispatch('getCurrentWeatherData');
+            return;
+          }
+          commit(mutationTypes.SAVE_ERROR_DESC, 'Помилка при отриманні поточної погоди');
+        });
+    },
+
+    getCurrentWeatherData({ commit, state }) {
+      const currentWeatherUrl = utils.getCurrentWeatherAPIUrl({
+        positionKey: state.currentPosition.positionKey,
         APIkey: state.APIkey,
       });
       fetch(currentWeatherUrl)
@@ -79,12 +111,11 @@ export default new Vuex.Store({
           commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
           throw new Error(`HTTP error, status = ${response.status}`);
         })
-        .then((json) => {
-          if (json.success) {
-            commit(mutationTypes.SAVE_WEATHER, utils.translateJSONToCurrentWeather(json.response));
-            return;
-          }
-          commit(mutationTypes.SAVE_ERROR_DESC, json.error);
+        .then((currentWeatherJson) => {
+          commit(
+            mutationTypes.SAVE_WEATHER,
+            utils.translateJSONToCurrentWeather(currentWeatherJson[0]),
+          );
         });
     },
   },

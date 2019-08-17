@@ -43,6 +43,18 @@ const translatePressureTendency = (pressureTendencyCode) => {
 const convertPressureFromhPaTommHg = pressureValuehPa => Math.round(pressureValuehPa * 0.75006375541921);
 const parseWindSpeed = windSpeedStr => Math.round((parseInt(windSpeedStr, 10) / 3.6) * 10) / 10;
 
+const getWindBackgroundColor = (windSpeedStr) => {
+  const windSpeedNumber = Math.ceil(parseWindSpeed(windSpeedStr) / 3);
+  const windSpeedToBackgroundMapping = {
+    0: '#FFF',
+    1: '#DDD',
+    2: '#BBB',
+    3: '#999',
+    4: '#000',
+  };
+  return windSpeedToBackgroundMapping[windSpeedNumber] || '#f36d6d';
+};
+
 export const translateJSONToCurrentWeather = (jsonResponse) => {
   const iconNumber = getActualIconNumber(jsonResponse.WeatherIcon);
   return {
@@ -53,6 +65,7 @@ export const translateJSONToCurrentWeather = (jsonResponse) => {
     windSpeed: parseWindSpeed(jsonResponse.Wind.Speed.Metric.Value),
     windDirection: jsonResponse.Wind.Direction.Localized,
     windDirectionDeg: jsonResponse.Wind.Direction.Degrees,
+    windBackgroundColor: getWindBackgroundColor(jsonResponse.Wind.Speed.Metric.Value),
     pressure: convertPressureFromhPaTommHg(parseInt(jsonResponse.Pressure.Metric.Value, 10)),
     pressureTendency: translatePressureTendency(jsonResponse.PressureTendency.Code),
     realFeelTemperature: jsonResponse.RealFeelTemperature.Metric.Value,

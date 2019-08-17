@@ -41,6 +41,7 @@ const translatePressureTendency = (pressureTendencyCode) => {
 
 // eslint-disable-next-line max-len
 const convertPressureFromhPaTommHg = pressureValuehPa => Math.round(pressureValuehPa * 0.75006375541921);
+const parseWindSpeed = windSpeedStr => Math.round((parseInt(windSpeedStr, 10) / 3.6) * 10) / 10;
 
 export const translateJSONToCurrentWeather = (jsonResponse) => {
   const iconNumber = getActualIconNumber(jsonResponse.WeatherIcon);
@@ -49,7 +50,7 @@ export const translateJSONToCurrentWeather = (jsonResponse) => {
     temperature: parseInt(jsonResponse.Temperature.Metric.Value, 10),
     description: jsonResponse.WeatherText || 'Недоступно',
     dateTime: getFormattedDateStr(parseInt(jsonResponse.EpochTime, 10) * 1000),
-    windSpeed: Math.round((parseInt(jsonResponse.Wind.Speed.Metric.Value, 10) / 3.6) * 10) / 10,
+    windSpeed: parseWindSpeed(jsonResponse.Wind.Speed.Metric.Value),
     windDirection: jsonResponse.Wind.Direction.Localized,
     windDirectionDeg: jsonResponse.Wind.Direction.Degrees,
     pressure: convertPressureFromhPaTommHg(parseInt(jsonResponse.Pressure.Metric.Value, 10)),

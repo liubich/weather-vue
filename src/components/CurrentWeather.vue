@@ -36,7 +36,7 @@
       <p class="current-weather__info">
         тиск:
         <strong>{{props.weather.pressure}}</strong>
-        гПа, {{props.weather.pressureTendency}}
+        мм.рт.ст, {{props.weather.pressureTendency}}
       </p>
       <p
         v-if="props.weather.precipitationType"

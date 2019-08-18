@@ -13,10 +13,10 @@
           <div class="current-weather__wind-caption">вітер:</div>
           <div
             v-if="props.weather.windSpeed"
-            :style="{transform: `rotate(${props.weather.windDirectionDeg}deg)`, background: props.weather.windDirectionBackground}"
+            :style="{transform: `rotate(${props.weather.windDirectionDeg}deg)`}"
             class="current-weather__wind-direction"
           >
-            <div class="current-weather__wind-direction-inner"></div>
+            <div :style="{background: props.weather.windDirectionBackground}" class="current-weather__wind-direction-inner"></div>
           </div>
           <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
             {{props.weather.windDirection}} ,

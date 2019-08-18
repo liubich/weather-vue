@@ -16,7 +16,7 @@
             :style="{transform: `rotate(${props.weather.windDirectionDeg}deg)`}"
             class="current-weather__wind-direction"
           >
-            <div :style="{background: props.weather.windDirectionBackground}" class="current-weather__wind-direction-inner"></div>
+            <div :style="windColor" class="current-weather__wind-direction-inner"></div>
           </div>
           <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
             {{props.weather.windDirection}} ,
@@ -61,6 +61,11 @@
 export default {
   name: 'CurrentWeather',
   props: ['weather', 'currentPosition'],
+  computed: {
+    windColor () {
+      return `background: ${this.weather.windDirectionBackground}`;
+    },
+  },
 };
 </script>
 

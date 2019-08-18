@@ -15,7 +15,9 @@
             v-if="props.weather.windSpeed"
             :style="{transform: `rotate(${props.weather.windDirectionDeg}deg)`}"
             class="current-weather__wind-direction"
-          ></div>
+          >
+            <div class="current-weather__wind-direction-inner"></div>
+          </div>
           <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
             {{props.weather.windDirection}} ,
             {{props.weather.windSpeed}} м/с
@@ -122,9 +124,14 @@ export default {
 
 .current-weather__wind-direction {
   padding: 0 5px;
+}
+
+.current-weather__wind-direction-inner {
   mask-image: url(location-arrow-solid.svg);
   mask-size: contain;
   transform: rotate(135deg);
+  width: 17px;
+  height: 17px;
 }
 
 .current-weather__description {

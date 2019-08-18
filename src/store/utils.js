@@ -41,6 +41,15 @@ const translatePressureTendency = (pressureTendencyCode) => {
 
 // eslint-disable-next-line max-len
 const convertPressureFromhPaTommHg = pressureValuehPa => Math.round(pressureValuehPa * 0.75006375541921);
+// eslint-disable-next-line max-len
+const convertWindSpeedFromKmPerHToMPerS = windSpeedKmPerH => Math.round((windSpeedKmPerH / 3.6) * 10) / 10;
+
+const getWindBackgroundColor = (windSpeedKmPerH) => {
+  const windSpeedMPerS = convertWindSpeedFromKmPerHToMPerS(windSpeedKmPerH);
+  const windSpeedNumberForMapping = Math.ceil(windSpeedMPerS / 3);
+  const windSpeedToBackgroundMapping = ['#FFF', '#DDD', '#BBB', '#999', '#000'];
+  return windSpeedToBackgroundMapping[windSpeedNumberForMapping] || '#f36d6d';
+};
 
 export const translateJSONToCurrentWeather = (jsonResponse) => {
   const iconNumber = getActualIconNumber(jsonResponse.WeatherIcon);
@@ -49,9 +58,10 @@ export const translateJSONToCurrentWeather = (jsonResponse) => {
     temperature: parseInt(jsonResponse.Temperature.Metric.Value, 10),
     description: jsonResponse.WeatherText || 'Недоступно',
     dateTime: getFormattedDateStr(parseInt(jsonResponse.EpochTime, 10) * 1000),
-    windSpeed: Math.round((parseInt(jsonResponse.Wind.Speed.Metric.Value, 10) / 3.6) * 10) / 10,
+    windSpeed: convertWindSpeedFromKmPerHToMPerS(jsonResponse.Wind.Speed.Metric.Value),
     windDirection: jsonResponse.Wind.Direction.Localized,
     windDirectionDeg: jsonResponse.Wind.Direction.Degrees,
+    windBackgroundColor: getWindBackgroundColor(jsonResponse.Wind.Speed.Metric.Value),
     pressure: convertPressureFromhPaTommHg(parseInt(jsonResponse.Pressure.Metric.Value, 10)),
     pressureTendency: translatePressureTendency(jsonResponse.PressureTendency.Code),
     realFeelTemperature: jsonResponse.RealFeelTemperature.Metric.Value,

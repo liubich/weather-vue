@@ -24,6 +24,7 @@ export default new Vuex.Store({
       windSpeed: null,
       windDirection: null,
       windDirectionDeg: null,
+      windDirectionBackground: 'black',
       pressure: null,
       pressureTendency: null,
       realFeelTemperature: null,

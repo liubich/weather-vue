@@ -45,13 +45,7 @@ const parseWindSpeed = windSpeedStr => Math.round((parseInt(windSpeedStr, 10) / 
 
 const getWindBackgroundColor = (windSpeedStr) => {
   const windSpeedNumber = Math.ceil(parseWindSpeed(windSpeedStr) / 3);
-  const windSpeedToBackgroundMapping = {
-    0: '#FFF',
-    1: '#DDD',
-    2: '#BBB',
-    3: '#999',
-    4: '#000',
-  };
+  const windSpeedToBackgroundMapping = ['#FFF', '#DDD', '#BBB', '#999', '#000'];
   return windSpeedToBackgroundMapping[windSpeedNumber] || '#f36d6d';
 };
 

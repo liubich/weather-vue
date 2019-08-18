@@ -10,19 +10,17 @@
     <div class="current-weather__row">
       <p class="current-weather__description">{{props.weather.description}}</p>
       <div class="current-weather__wind-container">
-        <div class="current-weather__info">вітер:</div>
-        <div
-          v-if="props.weather.windSpeed"
-          :style="{transform: `rotate(${props.weather.windDirectionDeg}deg)`}"
-          class="current-weather__wind-direction"
-        >&#8681;</div>
-        <div v-if="props.weather.windSpeed" class="current-weather__info">
-          <strong>
-            {{props.weather.windDirection}},
-            {{props.weather.windSpeed}}
-          </strong> м/с
-        </div>
-        <div v-else class="current-weather__info">штиль</div>
+          <div class="current-weather__wind-caption">вітер:</div>
+          <div
+            v-if="props.weather.windSpeed"
+            :style="{transform: `rotate(${props.weather.windDirectionDeg}deg)`}"
+            class="current-weather__wind-direction"
+          ></div>
+          <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
+            {{props.weather.windDirection}} ,
+            {{props.weather.windSpeed}} м/с
+          </div>
+          <div v-else class="current-weather__wind-caption">штиль</div>
       </div>
     </div>
     <div class="current-weather__row">
@@ -124,8 +122,9 @@ export default {
 
 .current-weather__wind-direction {
   padding: 0 5px;
-  font-family: Roboto, sans-serif;
-  font-size: 24px;
+  mask-image: url(location-arrow-solid.svg);
+  mask-size: contain;
+  transform: rotate(135deg);
 }
 
 .current-weather__description {

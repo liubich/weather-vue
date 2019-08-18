@@ -128,7 +128,7 @@ export default {
 
 .current-weather__wind-direction-inner {
   mask-image: url(location-arrow-solid.svg);
-  mask-size: contain;
+  mask-size: cover;
   transform: rotate(135deg);
   width: 17px;
   height: 17px;

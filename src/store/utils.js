@@ -68,6 +68,7 @@ export const translateJSONToCurrentWeather = (jsonResponse) => {
     realFeelTemperatureShade: jsonResponse.RealFeelTemperatureShade.Metric.Value,
     detailsURL: jsonResponse.MobileLink,
     precipitationType: jsonResponse.PrecipitationType,
+    isDayTime: jsonResponse.isDayTime,
   };
 };
 

@@ -31,8 +31,18 @@
     <div class="current-weather__row">
       <p class="current-weather__info">
         відчувається як:
-        <strong>{{props.weather.realFeelTemperature}}</strong>°C, у затінку:
-        <strong>{{props.weather.realFeelTemperatureShade}}</strong>°C
+        <strong>
+          {{props.weather.realFeelTemperature}}
+        </strong>
+        °C
+        <span
+          v-if="props.weather.isDayTime">
+          у затінку:
+          <strong>
+            {{props.weather.realFeelTemperatureShade}}
+          </strong>
+          °C
+        </span>
       </p>
     </div>
     <div class="current-weather__row">

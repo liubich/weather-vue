@@ -51,6 +51,17 @@ const getWindBackgroundColor = (windSpeedKmPerH) => {
   return windSpeedToBackgroundMapping[windSpeedNumberForMapping] || '#f36d6d';
 };
 
+const translatePrecipitationType = (precipitationTypeInEnglish, languageCode = 'uk') => {
+  if (!precipitationTypeInEnglish) return precipitationTypeInEnglish;
+  const precipitationTypesEnglish = ['Rain', 'Snow', 'Ice', 'Mixed'];
+  const precipitationsTranslator = {
+    uk: ['Дощ', 'Сніг', 'Град', 'Змішані'],
+  };
+  const precipitationCode = precipitationTypesEnglish.indexOf(precipitationTypeInEnglish);
+  if (precipitationCode === -1) return precipitationTypeInEnglish;
+  return precipitationsTranslator[languageCode][precipitationCode];
+};
+
 export const translateJSONToCurrentWeather = (jsonResponse) => {
   const iconNumber = getActualIconNumber(jsonResponse.WeatherIcon);
   return {
@@ -67,7 +78,7 @@ export const translateJSONToCurrentWeather = (jsonResponse) => {
     realFeelTemperature: jsonResponse.RealFeelTemperature.Metric.Value,
     realFeelTemperatureShade: jsonResponse.RealFeelTemperatureShade.Metric.Value,
     detailsURL: jsonResponse.MobileLink,
-    precipitationType: jsonResponse.PrecipitationType,
+    precipitationType: translatePrecipitationType(jsonResponse.PrecipitationType),
     isDayTime: jsonResponse.isDayTime,
   };
 };

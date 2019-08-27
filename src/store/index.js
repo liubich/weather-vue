@@ -53,17 +53,31 @@ export default new Vuex.Store({
   getters: {
     isWeatherGot: state => !!state.currentWeather.description,
     getRelativeTimeLastUpdate: (state) => {
-      if (!state.currentWeather.dateTime) return 'Невідомо';
+      if (!state.currentWeather.lastUpdateTimeStamp) return 'Невідомо';
       const currTimeStamp = Date.now();
-      const lastUpdateTimeStamp = state.currentWeather.dateTime.valueOf();
-      const lastUpdateCurrentTimeDelayInSeconds = (lastUpdateTimeStamp - currTimeStamp) / 1000;
+      // eslint-disable-next-line max-len
+      const lastUpdateCurrentTimeDelayInSeconds = (state.currentWeather.lastUpdateTimeStamp - currTimeStamp) / 1000;
       const relativeTimeFormatter = new Intl.RelativeTimeFormat(state.languageCode || 'uk');
-      if (lastUpdateCurrentTimeDelayInSeconds > -60)
-        return relativeTimeFormatter.format(Math.floor(lastUpdateCurrentTimeDelayInSeconds), 'second');
-      if (lastUpdateCurrentTimeDelayInSeconds <= -60 && lastUpdateCurrentTimeDelayInSeconds > -3600)
-        return relativeTimeFormatter.format(Math.floor(lastUpdateCurrentTimeDelayInSeconds / 60), 'minute');
-      return relativeTimeFormatter.format(Math.floor(lastUpdateCurrentTimeDelayInSeconds / 3600), 'hour');
-    }
+      if (lastUpdateCurrentTimeDelayInSeconds > -60) {
+        return relativeTimeFormatter.format(
+          Math.floor(lastUpdateCurrentTimeDelayInSeconds),
+          'second',
+        );
+      }
+      if (
+        lastUpdateCurrentTimeDelayInSeconds <= -60
+        && lastUpdateCurrentTimeDelayInSeconds > -3600
+      ) {
+        return relativeTimeFormatter.format(
+          Math.floor(lastUpdateCurrentTimeDelayInSeconds / 60),
+          'minute',
+        );
+      }
+      return relativeTimeFormatter.format(
+        Math.floor(lastUpdateCurrentTimeDelayInSeconds / 3600),
+        'hour',
+      );
+    },
   },
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {

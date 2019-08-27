@@ -61,8 +61,7 @@ export default new Vuex.Store({
         return relativeTimeFormatter.format(Math.floor(lastUpdateCurrentTimeDelayInSeconds), 'second');
       if (lastUpdateCurrentTimeDelayInSeconds <= -60 && lastUpdateCurrentTimeDelayInSeconds > -3600)
         return relativeTimeFormatter.format(Math.floor(lastUpdateCurrentTimeDelayInSeconds / 60), 'minute');
-      if (lastUpdateCurrentTimeDelayInSeconds < -3600)
-        return relativeTimeFormatter.format(Math.floor(lastUpdateCurrentTimeDelayInSeconds / 3600), 'hour');
+      return relativeTimeFormatter.format(Math.floor(lastUpdateCurrentTimeDelayInSeconds / 3600), 'hour');
     }
   },
   actions: {

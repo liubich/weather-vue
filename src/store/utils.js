@@ -68,7 +68,7 @@ export const translateJSONToCurrentWeather = (jsonResponse) => {
     icon: `img/weather-icons/${iconNumber || 'na'}.png`,
     temperature: parseInt(jsonResponse.Temperature.Metric.Value, 10),
     description: jsonResponse.WeatherText || 'Недоступно',
-    dateTime: getFormattedDateStr(parseInt(jsonResponse.EpochTime, 10) * 1000),
+    lastUpdateTimeStamp: jsonResponse.EpochTime * 1000,
     windSpeed: convertWindSpeedFromKmPerHToMPerS(jsonResponse.Wind.Speed.Metric.Value),
     windDirection: jsonResponse.Wind.Direction.Localized,
     windDirectionDeg: jsonResponse.Wind.Direction.Degrees,

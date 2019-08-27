@@ -65,7 +65,7 @@
       >accuweather.com</a>
     </div>
     <div class="current-weather__row">
-      <p class="current-weather__datetime">Останнє оновлення: {{props.weather.dateTime}}</p>
+      <p class="current-weather__datetime">Останнє оновлення: {{props.lastUpdateTime}}</p>
     </div>
   </div>
 </template>
@@ -73,7 +73,7 @@
 <script>
 export default {
   name: 'CurrentWeather',
-  props: ['weather', 'currentPosition'],
+  props: ['weather', 'currentPosition', 'lastUpdateTime'],
 };
 </script>
 

@@ -53,6 +53,7 @@ export default new Vuex.Store({
   getters: {
     isWeatherGot: state => !!state.currentWeather.description,
     getRelativeTimeLastUpdate: (state, languageCode = 'uk') => {
+      if (!state.currentWeather.dateTime) return 'Невідомо';
       const currTimeStamp = Date.now();
       const lastUpdateTimeStamp = state.currentWeather.dateTime.valueOf();
       const lastUpdateCurrentTimeDelayInSeconds = (lastUpdateTimeStamp - currTimeStamp) / 1000;

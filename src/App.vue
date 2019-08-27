@@ -5,6 +5,7 @@
       :weather="currentWeather"
       :currentPosition="currentPosition"
       v-else-if="isWeatherGot"
+      :lastUpdateTime="getRelativeTimeLastUpdate"
     />
     <h2 class="weather-container__loading" v-else>Завантаження</h2>
   </div>
@@ -24,7 +25,7 @@ export default {
   },
   computed: {
     ...mapState(['currentWeather', 'errorDesc', 'currentPosition']),
-    ...mapGetters(['isWeatherGot']),
+    ...mapGetters(['isWeatherGot', 'getRelativeTimeLastUpdate']),
   },
   methods: {
     ...mapActions(['getCurrentPositionAndWeather']),

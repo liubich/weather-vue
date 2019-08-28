@@ -65,15 +65,23 @@
       >accuweather.com</a>
     </div>
     <div class="current-weather__row">
-      <p class="current-weather__datetime">Останнє оновлення: {{props.weather.dateTime}}</p>
+      <p class="current-weather__datetime">
+        Останнє оновлення: {{props.weather.dateTimeStamp | distanceToNowInWords}} тому
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import { formatDistanceToNow } from 'date-fns';
+import { uk } from 'date-fns/locale';
+
 export default {
   name: 'CurrentWeather',
   props: ['weather', 'currentPosition'],
+  filters: {
+    distanceToNowInWords: dateTimeStamp => formatDistanceToNow(dateTimeStamp, { locale: uk }),
+  },
 };
 </script>
 

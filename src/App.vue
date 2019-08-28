@@ -1,11 +1,12 @@
 <template>
   <div id="app">
+    <h2 v-if="errorDesc" class="weather-container__no-pos">{{errorDesc}}</h2>
     <CurrentWeather
       :weather="currentWeather"
       :currentPosition="currentPosition"
-      v-if="isWeatherGot"
+      v-else-if="isWeatherGot"
     />
-    <h2 v-else-if="errorDesc" class="weather-container__no-pos">{{errorDesc}}</h2>
+    <h2 class="weather-container__loading" v-else>Завантаження</h2>
   </div>
 </template>
 
@@ -43,4 +44,10 @@ export default {
   display: flex;
   justify-content: center;
 }
+
+.weather-container__no-pos,
+.weather-container__loading {
+  text-align: center;
+}
+
 </style>

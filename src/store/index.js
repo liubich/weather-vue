@@ -112,10 +112,13 @@ export default new Vuex.Store({
           throw new Error(`HTTP error, status = ${response.status}`);
         })
         .then((currentWeatherJson) => {
-          commit(
-            mutationTypes.SAVE_WEATHER,
-            utils.translateJSONToCurrentWeather(currentWeatherJson[0]),
-          );
+          const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
+          commit(mutationTypes.SAVE_WEATHER, currentWeatherForStore);
+          utils.saveCurrentPositionToLocalStorage({
+            positionKey: state.currentPosition.positionKey,
+            city: state.currentPosition.city,
+          });
+          utils.saveCurrentWeatherToLocalStorage(currentWeatherForStore);
         });
     },
   },

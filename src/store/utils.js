@@ -75,3 +75,13 @@ export const translateJSONToCurrentWeather = (jsonResponse) => {
 export const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) => `https://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
 
 export const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) => `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua`;
+
+export const saveCurrentPositionToLocalStorage = (currentPosition) => {
+  if (!localStorage) return;
+  localStorage.setItem('lastKnownPosition', JSON.stringify(currentPosition));
+};
+
+export const saveCurrentWeatherToLocalStorage = (currentWeather) => {
+  if (!localStorage) return;
+  localStorage.setItem('currentWeather', JSON.stringify(currentWeather));
+};

@@ -7,7 +7,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    APIkey: 'xABfuuGRMZm5LKIzi08KAGZLqd2Eduov',
     currentPosition: {
       latitude: null,
       longitude: null,
@@ -80,7 +79,7 @@ export default new Vuex.Store({
       const currentPositionAPIUrl = utils.getCurrentPositionAPIUrl({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
-        APIkey: state.APIkey,
+        APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
       });
       fetch(currentPositionAPIUrl)
         .then((response) => {
@@ -104,7 +103,7 @@ export default new Vuex.Store({
     getCurrentWeatherData({ commit, state }) {
       const currentWeatherUrl = utils.getCurrentWeatherAPIUrl({
         positionKey: state.currentPosition.positionKey,
-        APIkey: state.APIkey,
+        APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
       });
       fetch(currentWeatherUrl)
         .then((response) => {

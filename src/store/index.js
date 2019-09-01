@@ -30,6 +30,7 @@ export default new Vuex.Store({
       realFeelTemperatureShade: null,
       detailsURL: null,
       precipitationType: null,
+      dataLoadedFromAPI: false,
     },
     errorDesc: null,
   },
@@ -113,6 +114,7 @@ export default new Vuex.Store({
         })
         .then((currentWeatherJson) => {
           const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
+          currentWeatherForStore.dataLoadedFromAPI = true;
           commit(mutationTypes.SAVE_WEATHER, currentWeatherForStore);
           utils.saveCurrentPositionToLocalStorage({
             positionKey: state.currentPosition.positionKey,

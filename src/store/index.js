@@ -117,8 +117,8 @@ export default new Vuex.Store({
           currentWeatherForStore.dataLoadedFromAPI = true;
           commit(mutationTypes.SAVE_WEATHER, currentWeatherForStore);
           utils.saveCurrentPositionToLocalStorage({
-            positionKey: state.currentPosition.positionKey,
-            city: state.currentPosition.city,
+            Key: state.currentPosition.positionKey,
+            City: state.currentPosition.city,
           });
           utils.saveCurrentWeatherToLocalStorage(currentWeatherForStore);
         });

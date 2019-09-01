@@ -121,6 +121,7 @@ export default new Vuex.Store({
             Key: state.currentPosition.positionKey,
             City: state.currentPosition.city,
           });
+          delete currentWeatherForStore.dataLoadedFromAPI;
           utils.saveCurrentWeatherToLocalStorage(currentWeatherForStore);
         });
     },

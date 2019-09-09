@@ -56,7 +56,6 @@ export default new Vuex.Store({
   },
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {
-      dispatch('loadDataFromLocalStorage');
       const onSuccess = (pos) => {
         commit(mutationTypes.SAVE_COORDINATES, pos.coords);
         dispatch('getCurrentPositionKey');
@@ -118,28 +117,7 @@ export default new Vuex.Store({
           const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
           currentWeatherForStore.dataLoadedFromAPI = true;
           commit(mutationTypes.SAVE_WEATHER, currentWeatherForStore);
-          utils.saveCurrentPositionToLocalStorage({
-            Key: state.currentPosition.positionKey,
-            City: state.currentPosition.city,
-          });
-          delete currentWeatherForStore.dataLoadedFromAPI;
-          utils.saveCurrentWeatherToLocalStorage(currentWeatherForStore);
         });
-    },
-    loadDataFromLocalStorage({ commit, state }) {
-      if (!localStorage) return;
-      const lastKnownPositionFromLocalStorage = localStorage.getItem('lastKnownPosition');
-      const currentWeatherFromLocalStorage = localStorage.getItem('currentWeather');
-      if (
-        !lastKnownPositionFromLocalStorage
-        || !currentWeatherFromLocalStorage
-        || state.currentWeather.dataLoadedFromAPI
-      ) return;
-      commit(
-        mutationTypes.SAVE_CURRENT_POSITION_DATA,
-        JSON.parse(lastKnownPositionFromLocalStorage),
-      );
-      commit(mutationTypes.SAVE_WEATHER, JSON.parse(currentWeatherFromLocalStorage));
     },
   },
   plugins: [localStoragePlugin],

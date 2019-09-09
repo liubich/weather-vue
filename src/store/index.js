@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as mutationTypes from './mutationTypes';
 import * as utils from './utils';
+import localStoragePlugin from './localStoragePlugin';
 
 Vue.use(Vuex);
 
@@ -141,4 +142,5 @@ export default new Vuex.Store({
       commit(mutationTypes.SAVE_WEATHER, JSON.parse(currentWeatherFromLocalStorage));
     },
   },
+  plugins: [localStoragePlugin],
 });

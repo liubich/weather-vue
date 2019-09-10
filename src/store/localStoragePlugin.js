@@ -1,23 +1,23 @@
 import * as mutationTypes from './mutationTypes';
 import * as utils from './utils';
 
-export default function localStoragePlugin({ state, commit, subscribe }) {
+export default function localStoragePlugin(store) {
   if (localStorage) {
     const lastKnownPositionFromLocalStorage = localStorage.getItem('lastKnownPosition');
     const currentWeatherFromLocalStorage = localStorage.getItem('currentWeather');
     if (
       lastKnownPositionFromLocalStorage
       && currentWeatherFromLocalStorage
-      && !state.currentWeather.dataLoadedFromAPI
+      && !store.state.currentWeather.dataLoadedFromAPI
     ) {
-      commit(
+      store.commit(
         mutationTypes.SAVE_CURRENT_POSITION_DATA,
         JSON.parse(lastKnownPositionFromLocalStorage),
       );
-      commit(mutationTypes.SAVE_WEATHER, JSON.parse(currentWeatherFromLocalStorage));
+      store.commit(mutationTypes.SAVE_WEATHER, JSON.parse(currentWeatherFromLocalStorage));
     }
   }
-  subscribe((mutation) => {
+  store.subscribe((mutation) => {
     if (!localStorage) return;
     switch (mutation.type) {
       case mutationTypes.SAVE_CURRENT_POSITION_DATA:

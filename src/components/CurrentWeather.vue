@@ -85,7 +85,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .current-weather {
   width: 100%;
   max-width: 480px;
@@ -94,72 +94,72 @@ export default {
   align-items: flex-start;
   flex-direction: column;
   border: thick double #32a1ce;
-}
 
-.current-weather__row {
-  width: 100%;
-  padding: 3px 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  &__row {
+    width: 100%;
+    padding: 3px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.current-weather__icon {
-  width: 120px;
-  height: 120px;
-}
+  &__icon {
+    width: 120px;
+    height: 120px;
+  }
 
-.current-weather__datetime {
-  font-family: Roboto, sans-serif;
-  color: dimgray;
-  font-size: 12px;
-}
+  &__datetime {
+    font-family: Roboto, sans-serif;
+    color: dimgray;
+    font-size: 12px;
+  }
 
-.current-weather__city {
-  padding-top: 4px;
-  font-family: Oswald, sans-serif;
-  font-size: 16px;
-}
+  &__city {
+    padding-top: 4px;
+    font-family: Oswald, sans-serif;
+    font-size: 16px;
+  }
 
-.current-weather__temperature {
-  font-family: Oswald, sans-serif;
-  font-weight: 600;
-  font-size: 40px;
-}
+  &__temperature {
+    font-family: Oswald, sans-serif;
+    font-weight: 600;
+    font-size: 40px;
+  }
 
-.current-weather__temperature-digit {
-  font-family: Oswald, sans-serif;
-  font-weight: 600;
-  font-size: 80px;
-}
+  &__temperature-digit {
+    font-family: Oswald, sans-serif;
+    font-weight: 600;
+    font-size: 80px;
+  }
 
-.current-weather__info {
-  font-family: Roboto, sans-serif;
-  font-size: 12px;
-}
+  &__info {
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+  }
 
-.current-weather__wind-container {
-  display: flex;
-  align-items: center;
-}
+  &__wind-container {
+    display: flex;
+    align-items: center;
+  }
 
-.current-weather__wind-direction {
-  padding: 0 5px;
-}
+  &__wind-direction {
+    padding: 0 5px;
+  }
 
-.current-weather__wind-direction-inner {
-  mask-image: url(location-arrow-solid.svg);
-  mask-size: cover;
-  transform: rotate(135deg);
-  width: 17px;
-  height: 17px;
-}
+  &__wind-direction-inner {
+    mask-image: url(location-arrow-solid.svg);
+    mask-size: cover;
+    transform: rotate(135deg);
+    width: 17px;
+    height: 17px;
+  }
 
-.current-weather__description {
-  text-align: center;
-  padding: 3px 0;
-  font-family: Roboto, sans-serif;
-  font-weight: bold;
-  font-size: 20px;
+  &__description {
+    text-align: center;
+    padding: 3px 0;
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+  }
 }
 </style>

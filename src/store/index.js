@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as mutationTypes from './mutationTypes';
 import * as utils from './utils';
+import localStoragePlugin from './localStoragePlugin';
 
 Vue.use(Vuex);
 
@@ -30,6 +31,7 @@ export default new Vuex.Store({
       realFeelTemperatureShade: null,
       detailsURL: null,
       precipitationType: null,
+      dataLoadedFromAPI: false,
     },
     errorDesc: null,
   },
@@ -112,11 +114,11 @@ export default new Vuex.Store({
           throw new Error(`HTTP error, status = ${response.status}`);
         })
         .then((currentWeatherJson) => {
-          commit(
-            mutationTypes.SAVE_WEATHER,
-            utils.translateJSONToCurrentWeather(currentWeatherJson[0]),
-          );
+          const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
+          currentWeatherForStore.dataLoadedFromAPI = true;
+          commit(mutationTypes.SAVE_WEATHER, currentWeatherForStore);
         });
     },
   },
+  plugins: [localStoragePlugin],
 });

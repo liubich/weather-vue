@@ -34,7 +34,7 @@
           v-if="props.weather.windSpeed"
           class="current-weather__wind-caption"
         >
-          {{ props.weather.windDirection }} , {{ props.weather.windSpeed }} м/с
+          {{ props.weather.windDirection }}, {{ props.weather.windSpeed }} м/с
         </div>
         <div v-else class="current-weather__wind-caption">штиль</div>
       </div>

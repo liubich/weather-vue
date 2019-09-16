@@ -21,8 +21,8 @@ export default function localStoragePlugin(store) {
       case mutationTypes.SAVE_CURRENT_POSITION_DATA:
         if (mutation.payload.dataLoadedFromAPI) {
           utils.saveCurrentPositionToLocalStorage({
-            Key: mutation.payload.currentPosition.positionKey,
-            City: mutation.payload.currentPosition.city,
+            ...mutation.payload,
+            dataLoadedFromAPI: null,
           });
         }
         break;

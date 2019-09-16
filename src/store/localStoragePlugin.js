@@ -19,7 +19,7 @@ export default function localStoragePlugin(store) {
   store.subscribe((mutation) => {
     switch (mutation.type) {
       case mutationTypes.SAVE_CURRENT_POSITION_DATA:
-        if (mutation.payload.latitude) {
+        if (mutation.payload.dataLoadedFromAPI) {
           utils.saveCurrentPositionToLocalStorage({
             Key: mutation.payload.currentPosition.positionKey,
             City: mutation.payload.currentPosition.city,

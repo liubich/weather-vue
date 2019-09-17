@@ -13,6 +13,7 @@ export default new Vuex.Store({
       longitude: null,
       positionKey: null,
       city: null,
+      dataLoadedFromAPI: false,
     },
     currentWeather: {
       icon: null,
@@ -49,6 +50,7 @@ export default new Vuex.Store({
     [mutationTypes.SAVE_CURRENT_POSITION_DATA](state, currentPosition) {
       state.currentPosition.positionKey = currentPosition.Key;
       state.currentPosition.city = currentPosition.City;
+      state.currentPosition.dataLoadedFromAPI = currentPosition.dataLoadedFromAPI;
     },
   },
   getters: {
@@ -94,6 +96,7 @@ export default new Vuex.Store({
             commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, {
               Key: positionJson.Key,
               City: positionJson.LocalizedName,
+              dataLoadedFromAPI: true,
             });
             dispatch('getCurrentWeatherData');
             return;

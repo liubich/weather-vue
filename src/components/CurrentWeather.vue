@@ -3,16 +3,10 @@
     <h2 class="current-weather__city">{{ props.currentPosition.city }}</h2>
     <div class="current-weather__row">
       <h2 class="current-weather__temperature">
-        <span class="current-weather__temperature-digit">{{
-          props.weather.temperature
-        }}</span
-        >°C
+        <span class="current-weather__temperature-digit">{{ props.weather.temperature }}</span>
+        °C
       </h2>
-      <img
-        class="current-weather__icon"
-        alt="weather icon"
-        :src="props.weather.icon"
-      />
+      <img class="current-weather__icon" alt="weather icon" :src="props.weather.icon" />
     </div>
     <div class="current-weather__row">
       <p class="current-weather__description">
@@ -30,10 +24,7 @@
             class="current-weather__wind-direction-inner"
           ></div>
         </div>
-        <div
-          v-if="props.weather.windSpeed"
-          class="current-weather__wind-caption"
-        >
+        <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
           {{ props.weather.windDirection }}, {{ props.weather.windSpeed }} м/с
         </div>
         <div v-else class="current-weather__wind-caption">штиль</div>
@@ -71,8 +62,9 @@
         target="_blank"
         rel="noopener noreferrer"
         class="current-weather__datetime"
-        >accuweather.com</a
       >
+        accuweather.com
+      </a>
     </div>
     <div class="current-weather__row">
       <p class="current-weather__datetime">

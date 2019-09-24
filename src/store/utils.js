@@ -1,4 +1,4 @@
-export const getReadableErrorDesc = (error) => {
+export const getReadableErrorDesc = error => {
   const errorCodeToDescription = {
     [error.PERMISSION_DENIED]: 'Будь ласка, надайте сторінці доступ до місцезнаходження',
     [error.POSITION_UNAVAILABLE]: 'Недоступні дані про поточне місцезнаходження',
@@ -7,7 +7,7 @@ export const getReadableErrorDesc = (error) => {
   return errorCodeToDescription[error.code] || 'Невідома помилка';
 };
 
-const getActualIconNumber = (iconNumber) => {
+const getActualIconNumber = iconNumber => {
   const iconMapping = {
     3: '2',
     8: '7',
@@ -19,7 +19,7 @@ const getActualIconNumber = (iconNumber) => {
   return iconMapping[iconNumber] || iconNumber;
 };
 
-const translatePressureTendency = (pressureTendencyCode) => {
+const translatePressureTendency = pressureTendencyCode => {
   const pressureTendencyMapping = {
     F: 'падає',
     S: 'стабільний',
@@ -29,11 +29,13 @@ const translatePressureTendency = (pressureTendencyCode) => {
 };
 
 // eslint-disable-next-line max-len
-const convertPressureFromhPaTommHg = pressureValuehPa => Math.round(pressureValuehPa * 0.75006375541921);
+const convertPressureFromhPaTommHg = pressureValuehPa =>
+  Math.round(pressureValuehPa * 0.75006375541921);
 // eslint-disable-next-line max-len
-const convertWindSpeedFromKmPerHToMPerS = windSpeedKmPerH => Math.round((windSpeedKmPerH / 3.6) * 10) / 10;
+const convertWindSpeedFromKmPerHToMPerS = windSpeedKmPerH =>
+  Math.round((windSpeedKmPerH / 3.6) * 10) / 10;
 
-const getWindBackgroundColor = (windSpeedKmPerH) => {
+const getWindBackgroundColor = windSpeedKmPerH => {
   const windSpeedMPerS = convertWindSpeedFromKmPerHToMPerS(windSpeedKmPerH);
   const windSpeedNumberForMapping = Math.ceil(windSpeedMPerS / 3);
   const windSpeedToBackgroundMapping = ['#FFF', '#DDD', '#BBB', '#999', '#000'];
@@ -51,7 +53,7 @@ const translatePrecipitationType = (precipitationTypeInEnglish, languageCode = '
   return precipitationsTranslator[languageCode][precipitationCode];
 };
 
-export const translateJSONToCurrentWeather = (jsonResponse) => {
+export const translateJSONToCurrentWeather = jsonResponse => {
   const iconNumber = getActualIconNumber(jsonResponse.WeatherIcon);
   return {
     icon: `img/weather-icons/${iconNumber || 'na'}.png`,
@@ -72,16 +74,18 @@ export const translateJSONToCurrentWeather = (jsonResponse) => {
   };
 };
 
-export const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) => `https://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
+export const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) =>
+  `https://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
 
-export const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) => `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua`;
+export const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) =>
+  `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua`;
 
-export const saveCurrentPositionToLocalStorage = (currentPosition) => {
+export const saveCurrentPositionToLocalStorage = currentPosition => {
   if (!localStorage) return;
   localStorage.setItem('lastKnownPosition', JSON.stringify(currentPosition));
 };
 
-export const saveCurrentWeatherToLocalStorage = (currentWeather) => {
+export const saveCurrentWeatherToLocalStorage = currentWeather => {
   if (!localStorage) return;
   localStorage.setItem('currentWeather', JSON.stringify(currentWeather));
 };

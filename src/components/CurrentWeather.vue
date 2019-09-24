@@ -1,29 +1,31 @@
 <template functional>
   <div class="current-weather">
-    <h2 class="current-weather__city">{{props.currentPosition.city}}</h2>
+    <h2 class="current-weather__city">{{ props.currentPosition.city }}</h2>
     <div class="current-weather__row">
       <h2 class="current-weather__temperature">
-        <span class="current-weather__temperature-digit">{{props.weather.temperature}}</span>°C
+        <span class="current-weather__temperature-digit">{{ props.weather.temperature }}</span>
+        °C
       </h2>
-      <img class="current-weather__icon" alt="weather icon" :src="props.weather.icon">
+      <img class="current-weather__icon" alt="weather icon" :src="props.weather.icon" />
     </div>
     <div class="current-weather__row">
-      <p class="current-weather__description">{{props.weather.description}}</p>
+      <p class="current-weather__description">
+        {{ props.weather.description }}
+      </p>
       <div class="current-weather__wind-container">
         <div class="current-weather__wind-caption">вітер:</div>
         <div
           v-if="props.weather.windSpeed"
-          :style="{transform: `rotate(${props.weather.windDirectionDeg}deg)`}"
+          :style="{ transform: `rotate(${props.weather.windDirectionDeg}deg)` }"
           class="current-weather__wind-direction"
         >
           <div
-            :style="{background: props.weather.windBackgroundColor}"
-            class="current-weather__wind-direction-inner">
-          </div>
+            :style="{ background: props.weather.windBackgroundColor }"
+            class="current-weather__wind-direction-inner"
+          ></div>
         </div>
         <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
-          {{props.weather.windDirection}} ,
-          {{props.weather.windSpeed}} м/с
+          {{ props.weather.windDirection }}, {{ props.weather.windSpeed }} м/с
         </div>
         <div v-else class="current-weather__wind-caption">штиль</div>
       </div>
@@ -32,14 +34,13 @@
       <p class="current-weather__info">
         відчувається як:
         <strong>
-          {{props.weather.realFeelTemperature}}
+          {{ props.weather.realFeelTemperature }}
         </strong>
         °C
-        <span
-          v-if="props.weather.isDayTime">
+        <span v-if="props.weather.isDayTime">
           у затінку:
           <strong>
-            {{props.weather.realFeelTemperatureShade}}
+            {{ props.weather.realFeelTemperatureShade }}
           </strong>
           °C
         </span>
@@ -48,13 +49,12 @@
     <div class="current-weather__row">
       <p class="current-weather__info">
         тиск:
-        <strong>{{props.weather.pressure}}</strong>
-        мм.рт.ст, {{props.weather.pressureTendency}}
+        <strong>{{ props.weather.pressure }}</strong>
+        мм.рт.ст, {{ props.weather.pressureTendency }}
       </p>
-      <p
-        v-if="props.weather.precipitationType"
-        class="current-weather__info"
-      >опади: {{props.weather.precipitationType}}</p>
+      <p v-if="props.weather.precipitationType" class="current-weather__info">
+        опади: {{ props.weather.precipitationType }}
+      </p>
     </div>
     <div class="current-weather__row">
       <a
@@ -62,11 +62,14 @@
         target="_blank"
         rel="noopener noreferrer"
         class="current-weather__datetime"
-      >accuweather.com</a>
+      >
+        accuweather.com
+      </a>
     </div>
     <div class="current-weather__row">
       <p class="current-weather__datetime">
-        Останнє оновлення: {{props.weather.dateTimeStamp | distanceToNowInWords}} тому
+        Останнє оновлення:
+        {{ props.weather.dateTimeStamp | distanceToNowInWords }} тому
       </p>
     </div>
   </div>

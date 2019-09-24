@@ -58,12 +58,12 @@ export default new Vuex.Store({
   },
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {
-      const onSuccess = (pos) => {
+      const onSuccess = pos => {
         commit(mutationTypes.SAVE_COORDINATES, pos.coords);
         dispatch('getCurrentPositionKey');
       };
 
-      const onError = (error) => {
+      const onError = error => {
         commit(mutationTypes.SAVE_ERROR_DESC, utils.getReadableErrorDesc(error));
       };
 
@@ -86,12 +86,12 @@ export default new Vuex.Store({
         APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
       });
       fetch(currentPositionAPIUrl)
-        .then((response) => {
+        .then(response => {
           if (response.ok) return response.json();
           commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
           throw new Error(`HTTP error, status = ${response.status}`);
         })
-        .then((positionJson) => {
+        .then(positionJson => {
           if (positionJson.Key) {
             commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, {
               Key: positionJson.Key,
@@ -111,12 +111,12 @@ export default new Vuex.Store({
         APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
       });
       fetch(currentWeatherUrl)
-        .then((response) => {
+        .then(response => {
           if (response.ok) return response.json();
           commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
           throw new Error(`HTTP error, status = ${response.status}`);
         })
-        .then((currentWeatherJson) => {
+        .then(currentWeatherJson => {
           const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
           currentWeatherForStore.dataLoadedFromAPI = true;
           commit(mutationTypes.SAVE_WEATHER, currentWeatherForStore);

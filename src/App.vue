@@ -5,7 +5,7 @@
       :currentPosition="currentPosition"
       v-if="isWeatherGot"
     />
-    <h2 v-else-if="errorDesc" class="weather-container__no-pos">{{errorDesc}}</h2>
+    <h2 v-else-if="errorDesc" class="weather-container__no-pos">{{ errorDesc }}</h2>
     <h2 class="weather-container__loading" v-else>Завантаження</h2>
   </div>
 </template>
@@ -49,5 +49,4 @@ export default {
 .weather-container__loading {
   text-align: center;
 }
-
 </style>

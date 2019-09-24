@@ -34,7 +34,7 @@ jobs:
      
       - run:
           name: check code style
-          command: npm run lint:js
+          command: npm run check-code-style
 
       - run:
           name: check css style

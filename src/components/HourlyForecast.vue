@@ -159,6 +159,7 @@ export default {
 <style lang="scss" scoped>
 $thin-border: 1px solid #b2b2b2;
 $thick-border: 2px solid #b2b2b2;
+$font: 12px Roboto, sans-serif;
 
 @mixin tooltip {
   content: attr(data-tooltip);
@@ -167,8 +168,7 @@ $thick-border: 2px solid #b2b2b2;
   border-radius: 5px;
   background-color: white;
   padding: 2px 5px;
-  font-family: Roboto, sans-serif;
-  font-size: 12px;
+  font: $font;
   font-weight: bold;
   z-index: 1;
   opacity: 1;
@@ -199,9 +199,8 @@ $thick-border: 2px solid #b2b2b2;
     position: relative;
     display: inline-block;
     padding: 4px 10px;
-    font-family: Roboto, sans-serif;
+    font: $font;
     font-weight: 600;
-    font-size: 12px;
 
     &:hover::after,
     &:focus::after {
@@ -212,9 +211,8 @@ $thick-border: 2px solid #b2b2b2;
   }
 
   &__headings-column {
-    font-family: Roboto, sans-serif;
+    font: $font;
     font-weight: bold;
-    font-size: 12px;
     padding: 4px 10px;
     white-space: nowrap;
     text-align: right;
@@ -223,9 +221,8 @@ $thick-border: 2px solid #b2b2b2;
   }
 
   &__time {
-    font-family: Roboto, sans-serif;
+    font: $font;
     font-weight: bold;
-    font-size: 12px;
     padding: 4px 10px;
   }
 
@@ -235,8 +232,7 @@ $thick-border: 2px solid #b2b2b2;
   &__wind-speed,
   &__wind-gust-speed {
     padding: 4px 10px;
-    font-family: Roboto, sans-serif;
-    font-size: 12px;
+    font: $font;
     text-align: center;
     border-top: $thin-border;
   }

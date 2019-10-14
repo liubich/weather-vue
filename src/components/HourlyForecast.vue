@@ -160,7 +160,6 @@ export default {
 @mixin tooltip {
   content: attr(data-tooltip);
   position: absolute;
-  top: 22px;
   border: 1px solid #cecece;
   border-radius: 5px;
   background-color: white;
@@ -204,6 +203,8 @@ export default {
     &:hover::after,
     &:focus::after {
       @include tooltip;
+
+      top: 22px;
     }
   }
 
@@ -254,6 +255,8 @@ export default {
     &:hover::after,
     &:focus::after {
       @include tooltip;
+
+      top: -20px;
     }
 
     &-direction {
@@ -279,6 +282,8 @@ export default {
     &:hover::after,
     &:focus::after {
       @include tooltip;
+
+      top: 36px;
     }
   }
 

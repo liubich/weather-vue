@@ -157,10 +157,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$thin-border: 1px solid #b2b2b2;
+$thick-border: 2px solid #b2b2b2;
+
 @mixin tooltip {
   content: attr(data-tooltip);
   position: absolute;
-  border: 1px solid #cecece;
+  border: $thin-border;
   border-radius: 5px;
   background-color: white;
   padding: 2px 5px;
@@ -183,12 +186,12 @@ export default {
 
 .data-table {
   border-collapse: collapse;
-  border: 2px solid #b2b2b2;
+  border: $thick-border;
 
   &__day-row {
-    border-top: 1px solid #b2b2b2;
-    border-bottom: 1px solid #b2b2b2;
-    border-left: 2px solid #b2b2b2;
+    border-top: $thin-border;
+    border-bottom: $thin-border;
+    border-left: $thick-border;
     text-align: left;
   }
 
@@ -215,7 +218,7 @@ export default {
     padding: 4px 10px;
     white-space: nowrap;
     text-align: right;
-    border-right: 2px solid #b2b2b2;
+    border-right: $thick-border;
     background-color: rgb(243, 243, 243);
   }
 
@@ -235,7 +238,7 @@ export default {
     font-family: Roboto, sans-serif;
     font-size: 12px;
     text-align: center;
-    border-top: 1px solid #b2b2b2;
+    border-top: $thin-border;
   }
 
   &__temperature {
@@ -249,7 +252,7 @@ export default {
 
   &__wind {
     position: relative;
-    border-top: 1px solid #b2b2b2;
+    border-top: $thin-border;
     padding: 6px;
 
     &:hover::after,
@@ -277,7 +280,7 @@ export default {
   .icon[data-tooltip] {
     position: relative;
     padding: 4px 10px;
-    border-top: 1px solid #b2b2b2;
+    border-top: $thin-border;
 
     &:hover::after,
     &:focus::after {
@@ -288,7 +291,7 @@ export default {
   }
 
   .cell_left-border {
-    border-left: 2px solid #b2b2b2;
+    border-left: $thick-border;
   }
 
   .cell_shadow {

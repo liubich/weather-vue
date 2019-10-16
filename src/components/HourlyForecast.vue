@@ -4,19 +4,14 @@
       <tbody>
         <tr>
           <th class="data-table__headings-column">День тижня</th>
-          <th class="data-table__day-row" :colspan="props.weather.numberOfTodayColumns">
-            <div class="data-table__day" :data-tooltip="props.weather.todayDate">
-              Сьогодні
-            </div>
-          </th>
-          <th class="data-table__day-row" :colspan="props.weather.numberOfTomorrowColumns">
-            <div class="data-table__day" :data-tooltip="props.weather.tomorrowDate">
-              Завтра
-            </div>
-          </th>
-          <th class="data-table__day-row" :colspan="props.weather.numberOfPastTomorrowColumns">
-            <div class="data-table__day" :data-tooltip="props.weather.pastTomorrowDate">
-              {{ props.weather.pastTomorrowDayOfWeek }}
+          <th
+            v-for="(day, index) in props.weather.datesWithColumnsNumber"
+            :key="index"
+            class="data-table__day-row"
+            :colspan="day.columnsNumber"
+          >
+            <div class="data-table__day" :data-tooltip="day.tooltipString">
+              {{ day.displayString }}
             </div>
           </th>
         </tr>

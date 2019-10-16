@@ -225,22 +225,34 @@ const getAllDatesForHeader = jsonDataArray => {
   const todayDate = new Date();
   const tomorrowDate = new Date();
   tomorrowDate.setDate(todayDate.getDate() + 1);
-  const datesArray = jsonDataArray.map(arrayItem => new Date(arrayItem.timestamp_local));
-  return [...new Set(datesArray)].map(dateItem => {
+
+  const datesArrayAsDate = jsonDataArray.map(arrayItem => {
+    const date = new Date(arrayItem.timestamp_local);
+    date.setHours(0);
+    return date;
+  });
+
+  const datesArrayInms = datesArrayAsDate.map(arrayItem => {
+    return arrayItem.valueOf();
+  });
+  return [...new Set(datesArrayInms)].map(dateItemInms => {
+    const dateItemAsDate = new Date(dateItemInms);
     return {
-      displayString: getDisplayStringByDate(dateItem),
+      displayString: getDisplayStringByDate(dateItemAsDate),
       tooltipString:
-        dateItem.getDay() === todayDate.getDay() || dateItem.getDay() === tomorrowDate.getDay()
-          ? dateItem.toLocaleTimeString('uk-UA', {
+        dateItemAsDate.getDay() === todayDate.getDay() ||
+        dateItemAsDate.getDay() === tomorrowDate.getDay()
+          ? dateItemAsDate.toLocaleDateString('uk-UA', {
               weekday: 'long',
               day: '2-digit',
               month: 'long',
             })
-          : dateItem.toLocaleTimeString('uk-UA', {
+          : dateItemAsDate.toLocaleDateString('uk-UA', {
               day: '2-digit',
               month: 'long',
             }),
-      columnsNumber: datesArray.filter(date => date.getDay() === dateItem.getDay()).length,
+      columnsNumber: datesArrayAsDate.filter(date => date.getDay() === dateItemAsDate.getDay())
+        .length,
     };
   });
 };

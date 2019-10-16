@@ -285,39 +285,6 @@ export const translateJSONToHourlyForecast = jsonResponse => {
     };
   });
   hourlyForecastData.datesWithColumnsNumber = getAllDatesForHeader(jsonResponse.data);
-  const todayDate = new Date();
-  hourlyForecastData.todayDate = todayDate.toLocaleDateString('uk-UA', {
-    weekday: 'long',
-    day: '2-digit',
-    month: 'long',
-  });
-  const tomorrowDate = new Date();
-  tomorrowDate.setDate(todayDate.getDate() + 1);
-  hourlyForecastData.tomorrowDate = tomorrowDate.toLocaleDateString('uk-UA', {
-    weekday: 'long',
-    day: '2-digit',
-    month: 'long',
-  });
-  const pastTomorrowDate = new Date();
-  pastTomorrowDate.setDate(todayDate.getDate() + 2);
-  hourlyForecastData.pastTomorrowDate = pastTomorrowDate.toLocaleDateString('uk-UA', {
-    day: '2-digit',
-    month: 'long',
-  });
-  hourlyForecastData.pastTomorrowDayOfWeek = pastTomorrowDate.toLocaleDateString('uk-UA', {
-    weekday: 'long',
-  });
-  hourlyForecastData.numberOfTodayColumns = jsonResponse.data.filter(h => {
-    const localTimestamp = new Date(h.timestamp_local);
-    return localTimestamp.getDay() === todayDate.getDay();
-  }).length;
-  hourlyForecastData.numberOfTomorrowColumns = jsonResponse.data.filter(h => {
-    const localTimestamp = new Date(h.timestamp_local);
-    return localTimestamp.getDay() === tomorrowDate.getDay();
-  }).length;
-  hourlyForecastData.numberOfPastTomorrowColumns = jsonResponse.data.filter(h => {
-    const localTimestamp = new Date(h.timestamp_local);
-    return localTimestamp.getDay() === pastTomorrowDate.getDay();
-  }).length;
+
   return hourlyForecastData;
 };

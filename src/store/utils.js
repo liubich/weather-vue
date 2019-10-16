@@ -209,7 +209,7 @@ const getDisplayStringByDate = date => {
   const todayDate = new Date();
   const tomorrowDate = new Date();
   tomorrowDate.setDate(todayDate.getDate() + 1);
-  switch (date.getday()) {
+  switch (date.getDay()) {
     case todayDate.getDay():
       return 'Сьогодні';
     case tomorrowDate.getDay():

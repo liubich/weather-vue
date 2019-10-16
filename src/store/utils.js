@@ -205,26 +205,43 @@ const formatTemperature = temperature => {
   return temperature > 0 ? `+ ${Math.round(temperature)}` : Math.round(temperature);
 };
 
+const getDisplayStringByDate = date => {
+  const todayDate = new Date();
+  const tomorrowDate = new Date();
+  tomorrowDate.setDate(todayDate.getDate() + 1);
+  switch (date.getday()) {
+    case todayDate.getDay():
+      return 'Сьогодні';
+    case tomorrowDate.getDay():
+      return 'Завтра';
+    default:
+      return date.toLocaleDateString('uk-UA', {
+        weekday: 'long',
+      });
+  }
+};
+
 const getAllDatesForHeader = jsonDataArray => {
   const todayDate = new Date();
   const tomorrowDate = new Date();
   tomorrowDate.setDate(todayDate.getDate() + 1);
   const datesArray = jsonDataArray.map(arrayItem => new Date(arrayItem.timestamp_local));
-  return [... new Set(datesArray)].map(dateItem => {
+  return [...new Set(datesArray)].map(dateItem => {
     return {
-      displayString: dateItem.getDay() === todayDate.getDay() ? 'Сьогодні' : dateItem.getDay() === tomorrowDate.getDay() ? 'Завтра' : dateItem.toLocaleDateString('uk-UA', {
-        weekday: 'long',
-      }),
-      tooltipString: dateItem.getDay() === todayDate.getDay() || dateItem.getDay() === tomorrowDate.getDay() ? dateItem.toLocaleTimeString('uk-UA', {
-        weekday: 'long',
-        day: '2-digit',
-        month: 'long',
-      }) : dateItem.toLocaleTimeString('uk-UA', {
-        day: '2-digit',
-        month: 'long',
-      }),
-      columnsNumber = datesArray.filter(date => date.getDay() === dateItem.getDay()).length,
-    }
+      displayString: getDisplayStringByDate(dateItem),
+      tooltipString:
+        dateItem.getDay() === todayDate.getDay() || dateItem.getDay() === tomorrowDate.getDay()
+          ? dateItem.toLocaleTimeString('uk-UA', {
+              weekday: 'long',
+              day: '2-digit',
+              month: 'long',
+            })
+          : dateItem.toLocaleTimeString('uk-UA', {
+              day: '2-digit',
+              month: 'long',
+            }),
+      columnsNumber: datesArray.filter(date => date.getDay() === dateItem.getDay()).length,
+    };
   });
 };
 

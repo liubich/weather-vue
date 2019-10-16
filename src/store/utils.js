@@ -255,6 +255,7 @@ export const translateJSONToHourlyForecast = jsonResponse => {
       isDayTime: hourForecast.pod === 'd',
     };
   });
+  hourlyForecastData.datesWithColumnsNumber = getAllDatesForHeader(jsonResponse.data);
   const todayDate = new Date();
   hourlyForecastData.todayDate = todayDate.toLocaleDateString('uk-UA', {
     weekday: 'long',

@@ -21,7 +21,7 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__time cell"
-            v-bind:class="{
+            :class="{
               'cell_left-border': hourForecast.beginNextDay,
               cell_shadow: !hourForecast.isDayTime,
             }"
@@ -36,7 +36,7 @@
             :key="index"
             class="data-table__icon icon cell"
             :data-tooltip="hourForecast.weatherDescription"
-            v-bind:class="{
+            :class="{
               'cell_left-border': hourForecast.beginNextDay,
               cell_shadow: !hourForecast.isDayTime,
             }"
@@ -50,7 +50,7 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__temperature cell"
-            v-bind:class="{
+            :class="{
               'cell_left-border': hourForecast.beginNextDay,
               cell_shadow: !hourForecast.isDayTime,
             }"
@@ -64,7 +64,7 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__feels-like cell"
-            v-bind:class="{
+            :class="{
               'cell_left-border': hourForecast.beginNextDay,
               cell_shadow: !hourForecast.isDayTime,
             }"
@@ -78,7 +78,7 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__pressure cell"
-            v-bind:class="{
+            :class="{
               'cell_left-border': hourForecast.beginNextDay,
               cell_shadow: !hourForecast.isDayTime,
             }"
@@ -92,7 +92,7 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__wind-speed cell"
-            v-bind:class="{
+            :class="{
               'cell_left-border': hourForecast.beginNextDay,
               cell_shadow: !hourForecast.isDayTime,
             }"
@@ -106,7 +106,7 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__wind-gust-speed cell"
-            v-bind:class="{
+            :class="{
               'cell_left-border': hourForecast.beginNextDay,
               cell_shadow: !hourForecast.isDayTime,
             }"
@@ -120,7 +120,7 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__wind cell"
-            v-bind:class="{
+            :class="{
               'cell_left-border': hourForecast.beginNextDay,
               cell_shadow: !hourForecast.isDayTime,
             }"

@@ -232,10 +232,12 @@ const getAllDatesForHeader = jsonDataArray => {
     return date;
   });
 
+  const getUniqueItems = items => [...new Set(items)];
+
   const datesArrayInms = datesArrayAsDate.map(arrayItem => {
     return arrayItem.valueOf();
   });
-  return [...new Set(datesArrayInms)].map(dateItemInms => {
+  return getUniqueItems(datesArrayInms).map(dateItemInms => {
     const dateItemAsDate = new Date(dateItemInms);
     return {
       displayString: getDisplayStringByDate(dateItemAsDate),

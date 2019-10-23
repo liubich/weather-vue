@@ -1,3 +1,5 @@
+import { isToday, isTomorrow, startOfDay } from 'date-fns';
+
 export const getReadableErrorDesc = error => {
   const errorCodeToDescription = {
     [error.PERMISSION_DENIED]: 'Будь ласка, надайте сторінці доступ до місцезнаходження',
@@ -206,31 +208,17 @@ const formatTemperature = temperature => {
 };
 
 const getDisplayStringByDate = date => {
-  const todayDate = new Date();
-  const tomorrowDate = new Date();
-  tomorrowDate.setDate(todayDate.getDate() + 1);
-  switch (date.getDay()) {
-    case todayDate.getDay():
-      return 'Сьогодні';
-    case tomorrowDate.getDay():
-      return 'Завтра';
-    default:
-      return date.toLocaleDateString('uk-UA', {
-        weekday: 'long',
-      });
-  }
+  if (isToday(date)) return 'Сьогодні';
+  if (isTomorrow(date)) return 'Завтра';
+  return date.toLocaleDateString('uk-UA', {
+    weekday: 'long',
+  });
 };
 
 const getAllDatesForHeader = jsonDataArray => {
-  const todayDate = new Date();
-  const tomorrowDate = new Date();
-  tomorrowDate.setDate(todayDate.getDate() + 1);
-
-  const datesArrayAsDate = jsonDataArray.map(arrayItem => {
-    const date = new Date(arrayItem.timestamp_local);
-    date.setHours(0);
-    return date;
-  });
+  const datesArrayAsDate = jsonDataArray.map(arrayItem =>
+    startOfDay(new Date(arrayItem.timestamp_local)),
+  );
 
   const getUniqueItems = items => [...new Set(items)];
 
@@ -242,8 +230,7 @@ const getAllDatesForHeader = jsonDataArray => {
     return {
       displayString: getDisplayStringByDate(dateItemAsDate),
       tooltipString:
-        dateItemAsDate.getDay() === todayDate.getDay() ||
-        dateItemAsDate.getDay() === tomorrowDate.getDay()
+        isToday(dateItemAsDate) || isTomorrow(dateItemAsDate)
           ? dateItemAsDate.toLocaleDateString('uk-UA', {
               weekday: 'long',
               day: '2-digit',

@@ -147,7 +147,7 @@
 <script>
 export default {
   name: 'HourlyForecast',
-  props: ['weather'],
+  props: { weather: Object },
 };
 </script>
 

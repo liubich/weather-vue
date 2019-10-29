@@ -222,6 +222,19 @@ const getAllDatesForHeader = jsonDataArray => {
 
   const getUniqueItems = items => [...new Set(items)];
 
+  const formatTooltip = date => {
+    return isToday(date) || isTomorrow(date)
+      ? date.toLocaleDateString('uk-UA', {
+          weekday: 'long',
+          day: '2-digit',
+          month: 'long',
+        })
+      : date.toLocaleDateString('uk-UA', {
+          day: '2-digit',
+          month: 'long',
+        });
+  };
+
   const datesArrayInms = datesArrayAsDate.map(arrayItem => {
     return arrayItem.valueOf();
   });
@@ -229,17 +242,7 @@ const getAllDatesForHeader = jsonDataArray => {
     const dateItemAsDate = new Date(dateItemInms);
     return {
       displayString: getDisplayStringByDate(dateItemAsDate),
-      tooltipString:
-        isToday(dateItemAsDate) || isTomorrow(dateItemAsDate)
-          ? dateItemAsDate.toLocaleDateString('uk-UA', {
-              weekday: 'long',
-              day: '2-digit',
-              month: 'long',
-            })
-          : dateItemAsDate.toLocaleDateString('uk-UA', {
-              day: '2-digit',
-              month: 'long',
-            }),
+      tooltipString: formatTooltip(dateItemAsDate),
       columnsNumber: datesArrayAsDate.filter(date => date.getDay() === dateItemAsDate.getDay())
         .length,
     };

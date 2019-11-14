@@ -215,9 +215,9 @@ const getDisplayStringByDate = date => {
   });
 };
 
-export const getAllDatesForHeader = jsonDataArray => {
-  const hourlyWeatherDatesInDate = jsonDataArray.map(arrayItem =>
-    startOfDay(new Date(arrayItem.timestamp_local)),
+export const getAllDatesForHeader = hourlyForecastDataFromAPI => {
+  const hourlyWeatherDatesInDate = hourlyForecastDataFromAPI.map(hourForecast =>
+    startOfDay(new Date(hourForecast.timestamp_local)),
   );
 
   const getUniqueItems = items => [...new Set(items)];

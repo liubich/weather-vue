@@ -135,8 +135,12 @@ export default new Vuex.Store({
         longitude: state.currentPosition.longitude,
       });
       if (hourlyForecastDataFromAPI.data) {
-        const hourlyForecastDataForStore = utils.translateJSONToHourlyForecast(
-          hourlyForecastDataFromAPI,
+        const hourlyForecastDataForStore = {};
+        hourlyForecastDataForStore.data = utils.translateJSONToHourlyForecast(
+          hourlyForecastDataFromAPI.data,
+        );
+        hourlyForecastDataForStore.datesWithColumnsNumber = utils.getAllDatesForHeader(
+          hourlyForecastDataFromAPI.data,
         );
         commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastDataForStore);
       }

@@ -216,7 +216,7 @@ const getDisplayStringByDate = date => {
 };
 
 const getAllDatesForHeader = jsonDataArray => {
-  const datesArrayAsDate = jsonDataArray.map(arrayItem =>
+  const hourlyWeatherDatesInDate = jsonDataArray.map(arrayItem =>
     startOfDay(new Date(arrayItem.timestamp_local)),
   );
 
@@ -235,23 +235,24 @@ const getAllDatesForHeader = jsonDataArray => {
         });
   };
 
-  const datesArrayInms = datesArrayAsDate.map(arrayItem => {
+  const hourlyWeatherDatesInMilliseconds = hourlyWeatherDatesInDate.map(arrayItem => {
     return arrayItem.valueOf();
   });
-  return getUniqueItems(datesArrayInms).map(dateItemInms => {
+  return getUniqueItems(hourlyWeatherDatesInMilliseconds).map(dateItemInms => {
     const dateItemAsDate = new Date(dateItemInms);
     return {
       displayString: getDisplayStringByDate(dateItemAsDate),
       tooltipString: formatTooltip(dateItemAsDate),
-      columnsNumber: datesArrayAsDate.filter(date => date.getDay() === dateItemAsDate.getDay())
-        .length,
+      columnsNumber: hourlyWeatherDatesInDate.filter(
+        date => date.getDay() === dateItemAsDate.getDay(),
+      ).length,
     };
   });
 };
 
-export const translateJSONToHourlyForecast = jsonResponse => {
+export const translateJSONToHourlyForecast = hourlyForecastDataFromAPI => {
   const hourlyForecastData = {};
-  hourlyForecastData.data = jsonResponse.data.map(hourForecast => {
+  hourlyForecastData.data = hourlyForecastDataFromAPI.data.map(hourForecast => {
     const iconNumber = mapWeatherbitIconCodeToStandard(hourForecast.weather.icon);
     const localTimestamp = new Date(hourForecast.timestamp_local);
     return {
@@ -276,7 +277,7 @@ export const translateJSONToHourlyForecast = jsonResponse => {
       isDayTime: hourForecast.pod === 'd',
     };
   });
-  hourlyForecastData.datesWithColumnsNumber = getAllDatesForHeader(jsonResponse.data);
+  hourlyForecastData.datesWithColumnsNumber = getAllDatesForHeader(hourlyForecastDataFromAPI.data);
 
   return hourlyForecastData;
 };

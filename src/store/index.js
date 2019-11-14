@@ -130,13 +130,15 @@ export default new Vuex.Store({
         });
     },
     async getHourlyForecastForCurrentLocation({ commit, state }) {
-      const hourlyForecastJSON = await utils.getHourlyForecastForCoordinates({
+      const hourlyForecastDataFromAPI = await utils.getHourlyForecastForCoordinates({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
       });
-      if (hourlyForecastJSON.data) {
-        const hourlyForecastData = utils.translateJSONToHourlyForecast(hourlyForecastJSON);
-        commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastData);
+      if (hourlyForecastDataFromAPI.data) {
+        const hourlyForecastDataForStore = utils.translateJSONToHourlyForecast(
+          hourlyForecastDataFromAPI,
+        );
+        commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastDataForStore);
       }
     },
   },

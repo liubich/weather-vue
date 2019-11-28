@@ -34,6 +34,7 @@ export default new Vuex.Store({
       precipitationType: null,
       dataLoadedFromAPI: false,
     },
+    hourlyForecast: { dataLoadedFromAPI: false },
     errorDesc: null,
   },
   mutations: {
@@ -41,7 +42,7 @@ export default new Vuex.Store({
       state.currentPosition.latitude = currentPosition.latitude;
       state.currentPosition.longitude = currentPosition.longitude;
     },
-    [mutationTypes.SAVE_WEATHER](state, currentWeather) {
+    [mutationTypes.SAVE_CURRENT_WEATHER](state, currentWeather) {
       state.currentWeather = currentWeather;
     },
     [mutationTypes.SAVE_ERROR_DESC](state, errorDesc) {
@@ -52,9 +53,14 @@ export default new Vuex.Store({
       state.currentPosition.city = currentPosition.City;
       state.currentPosition.dataLoadedFromAPI = currentPosition.dataLoadedFromAPI;
     },
+    [mutationTypes.SAVE_HOURLY_FORECAST](state, hourlyForecastData) {
+      state.hourlyForecast = hourlyForecastData;
+      state.hourlyForecast.dataLoadedFromAPI = true;
+    },
   },
   getters: {
-    isWeatherGot: state => !!state.currentWeather.description,
+    isCurrentWeatherGot: state => !!state.currentWeather.description,
+    isHourlyForecastGot: state => state.hourlyForecast.dataLoadedFromAPI,
   },
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {
@@ -99,6 +105,7 @@ export default new Vuex.Store({
               dataLoadedFromAPI: true,
             });
             dispatch('getCurrentWeatherData');
+            dispatch('getHourlyForecastForCurrentLocation');
             return;
           }
           commit(mutationTypes.SAVE_ERROR_DESC, 'Помилка при отриманні поточної погоди');
@@ -119,8 +126,21 @@ export default new Vuex.Store({
         .then(currentWeatherJson => {
           const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
           currentWeatherForStore.dataLoadedFromAPI = true;
-          commit(mutationTypes.SAVE_WEATHER, currentWeatherForStore);
+          commit(mutationTypes.SAVE_CURRENT_WEATHER, currentWeatherForStore);
         });
+    },
+    async getHourlyForecastForCurrentLocation({ commit, state }) {
+      const hourlyForecastDataFromAPI = await utils.getHourlyForecastForCoordinates({
+        latitude: state.currentPosition.latitude,
+        longitude: state.currentPosition.longitude,
+      });
+      if (hourlyForecastDataFromAPI.data) {
+        const hourlyForecastDataForStore = {
+          data: utils.translateJSONToHourlyForecast(hourlyForecastDataFromAPI.data),
+          datesWithColumnsNumber: utils.getAllDatesForHeader(hourlyForecastDataFromAPI.data),
+        };
+        commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastDataForStore);
+      }
     },
   },
   plugins: [localStoragePlugin],

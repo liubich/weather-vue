@@ -3,16 +3,20 @@
     <CurrentWeather
       :weather="currentWeather"
       :currentPosition="currentPosition"
-      v-if="isWeatherGot"
+      v-if="isCurrentWeatherGot"
     />
-    <h2 v-else-if="errorDesc" class="weather-container__no-pos">{{ errorDesc }}</h2>
+    <h2 v-else-if="errorDesc" class="weather-container__no-pos">
+      {{ errorDesc }}
+    </h2>
     <h2 class="weather-container__loading" v-else>Завантаження</h2>
+    <HourlyForecast v-if="isHourlyForecastGot" :weather="hourlyForecast" />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 import CurrentWeather from './components/CurrentWeather.vue';
+import HourlyForecast from './components/HourlyForecast.vue';
 
 export default {
   name: 'app',
@@ -21,10 +25,11 @@ export default {
   },
   components: {
     CurrentWeather,
+    HourlyForecast,
   },
   computed: {
-    ...mapState(['currentWeather', 'errorDesc', 'currentPosition']),
-    ...mapGetters(['isWeatherGot']),
+    ...mapState(['currentWeather', 'errorDesc', 'currentPosition', 'hourlyForecast']),
+    ...mapGetters(['isCurrentWeatherGot', 'isHourlyForecastGot']),
   },
   methods: {
     ...mapActions(['getCurrentPositionAndWeather']),
@@ -42,7 +47,8 @@ export default {
 #app {
   padding: 10px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .weather-container__no-pos,

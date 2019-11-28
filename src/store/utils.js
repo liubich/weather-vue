@@ -94,18 +94,16 @@ const getHourlyForecastAPIUrl = ({ latitude, longitude, APIKey, language = 'uk' 
   return `https://api.weatherbit.io/v2.0/forecast/hourly?key=${APIKey}&lang=${language}&lat=${latitude}&lon=${longitude}`;
 };
 
-export const getHourlyForecastForCoordinates = ({ latitude, longitude }) => {
-  const hourlyForecastAPIUrl = getHourlyForecastAPIUrl(
+export const getHourlyForecastForCoordinates = async ({ latitude, longitude }) => {
+  const hourlyForecastAPIUrl = getHourlyForecastAPIUrl({
     latitude,
     longitude,
-    process.env.VUE_APP_WEATHERBIT_KEY,
-  );
-  fetch(hourlyForecastAPIUrl)
-    .then(response => {
-      if (response.ok) return response.json();
-      throw new Error(`HTTP error, status = ${response.status}`);
-    })
-    .then(hourlyForecastJson => {
-      return hourlyForecastJson;
-    });
+    APIKey: process.env.VUE_APP_WEATHERBIT_KEY,
+  });
+  const response = await fetch(hourlyForecastAPIUrl);
+  if (!response.ok) {
+    throw new Error(`HTTP error, status = ${response.status}`);
+  }
+  const hourlyForecastData = await response.json();
+  return hourlyForecastData;
 };

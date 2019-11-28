@@ -41,7 +41,7 @@ export default new Vuex.Store({
       state.currentPosition.latitude = currentPosition.latitude;
       state.currentPosition.longitude = currentPosition.longitude;
     },
-    [mutationTypes.SAVE_WEATHER](state, currentWeather) {
+    [mutationTypes.SAVE_CURRENT_WEATHER](state, currentWeather) {
       state.currentWeather = currentWeather;
     },
     [mutationTypes.SAVE_ERROR_DESC](state, errorDesc) {
@@ -119,7 +119,7 @@ export default new Vuex.Store({
         .then(currentWeatherJson => {
           const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
           currentWeatherForStore.dataLoadedFromAPI = true;
-          commit(mutationTypes.SAVE_WEATHER, currentWeatherForStore);
+          commit(mutationTypes.SAVE_CURRENT_WEATHER, currentWeatherForStore);
         });
     },
   },

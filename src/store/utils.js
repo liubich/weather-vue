@@ -212,6 +212,7 @@ export const translateJSONToHourlyForecast = jsonResponse => {
       windBackgroundColor: getWindBackgroundColor(hourForecast.wind_spd),
       windDirection: getWindDirection(hourForecast.wind_dir),
       icon: `img/weather-icons/${iconNumber || 'na'}.png`,
+      time: hourForecast.timestamp_local.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' }),
     };
   });
 };

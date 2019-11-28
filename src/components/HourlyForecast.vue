@@ -20,7 +20,11 @@
             :data-tooltip="hourForecast.weatherDescription"
             v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
           >
-            <img :src="hourForecast.icon" alt="weather icon" class="data-table__icon-image" />
+            <img
+              :src="hourForecast.icon"
+              alt="weather icon"
+              class="data-table__icon-image"
+            />
           </td>
         </tr>
         <tr>
@@ -54,6 +58,32 @@
             v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
           >
             {{ hourForecast.pressure }}
+          </td>
+        </tr>
+        <tr>
+          <td class="data-table__headings-column">Вітер</td>
+          <td
+            v-for="(hourForecast, index) in props.weather.data"
+            :key="index"
+            class="data-table__wind cell"
+            v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
+          >
+            <div class="data-table__wind-container">
+              <div
+                class="data-table__wind-direction"
+                :style="{
+                  transform: `rotate(${hourForecast.windDirectionDeg}deg)`,
+                }"
+              >
+                <div
+                  class="data-table__wind-direction-inner"
+                  :style="{ background: hourForecast.windBackgroundColor }"
+                ></div>
+              </div>
+              <div class="data-table__wind-speed">
+                {{ `${hourForecast.windSpeed} м/с` }}
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -115,6 +145,38 @@ export default {
   &__icon-image {
     width: 32px;
     height: 32px;
+  }
+
+  &__wind {
+    border-top: 1px solid #b2b2b2;
+    padding: 6px;
+
+    &-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+
+    &-direction {
+      width: 17px;
+      height: 17px;
+
+      &-inner {
+        mask-image: url(location-arrow-solid.svg);
+        mask-size: cover;
+        transform: rotate(135deg);
+        width: 17px;
+        height: 17px;
+      }
+    }
+
+    &-speed {
+      font-family: Roboto, sans-serif;
+      font-size: 12px;
+      white-space: nowrap;
+      padding: 4px;
+    }
   }
 
   .icon[data-tooltip] {

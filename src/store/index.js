@@ -53,8 +53,8 @@ export default new Vuex.Store({
       state.currentPosition.city = currentPosition.City;
       state.currentPosition.dataLoadedFromAPI = currentPosition.dataLoadedFromAPI;
     },
-    [mutationTypes.SAVE_HOURLY_FORECAST](state, hourlyForecastJson) {
-      state.hourlyForecast.data = hourlyForecastJson.data;
+    [mutationTypes.SAVE_HOURLY_FORECAST](state, hourlyForecastData) {
+      state.hourlyForecast.data = hourlyForecastData.data;
       state.hourlyForecast.dataLoadedFromAPI = true;
     },
   },
@@ -130,11 +130,14 @@ export default new Vuex.Store({
         });
     },
     async getHourlyForecastForCurrentLocation({ commit, state }) {
-      const hourlyForecastData = await utils.getHourlyForecastForCoordinates({
+      const hourlyForecastJSON = await utils.getHourlyForecastForCoordinates({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
       });
-      if (hourlyForecastData.data) commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastData);
+      if (hourlyForecastJSON.data) {
+        const hourlyForecastData = utils.translateJSONToHourlyForecast(hourlyForecastJSON);
+        commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastData);
+      }
     },
   },
   plugins: [localStoragePlugin],

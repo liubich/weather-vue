@@ -102,6 +102,7 @@ export default new Vuex.Store({
               dataLoadedFromAPI: true,
             });
             dispatch('getCurrentWeatherData');
+            dispatch('getHourlyForecastForCurrentLocation');
             return;
           }
           commit(mutationTypes.SAVE_ERROR_DESC, 'Помилка при отриманні поточної погоди');

@@ -100,6 +100,20 @@
           </td>
         </tr>
         <tr>
+          <td class="data-table__headings-column">Пориви, м/с</td>
+          <td
+            v-for="(hourForecast, index) in props.weather.data"
+            :key="index"
+            class="data-table__wind-gust-speed cell"
+            v-bind:class="{
+              'cell_left-border': hourForecast.beginNextDay,
+              cell_shadow: !hourForecast.isDayTime,
+            }"
+          >
+            {{ hourForecast.windGustSpeed }}
+          </td>
+        </tr>
+        <tr>
           <td class="data-table__headings-column">Напрямок</td>
           <td
             v-for="(hourForecast, index) in props.weather.data"
@@ -179,7 +193,8 @@ export default {
   &__pressure,
   &__temperature,
   &__feels-like,
-  &__wind-speed {
+  &__wind-speed,
+  &__wind-gust-speed {
     padding: 4px 10px;
     font-family: Roboto, sans-serif;
     font-size: 12px;

@@ -201,14 +201,18 @@ const mapWeatherbitIconCodeToStandard = weatherbitIconCode => {
   return iconsMapping[weatherbitIconCode] || weatherbitIconCode;
 };
 
+const formatTemperature = temperature => {
+  return temperature > 0 ? `+ ${Math.round(temperature)}` : Math.round(temperature);
+};
+
 export const translateJSONToHourlyForecast = jsonResponse => {
   const hourlyForecastData = {};
   hourlyForecastData.data = jsonResponse.data.map(hourForecast => {
     const iconNumber = mapWeatherbitIconCodeToStandard(hourForecast.weather.icon);
     const localTimestamp = new Date(hourForecast.timestamp_local);
     return {
-      temperature: hourForecast.temp,
-      appearingTemperature: hourForecast.app_temp,
+      temperature: formatTemperature(hourForecast.temp),
+      appearingTemperature: formatTemperature(hourForecast.app_temp),
       windDirectionDeg: hourForecast.wind_dir,
       pressure: convertPressureFromhPaTommHg(hourForecast.pres),
       windBackgroundColor: getWindBackgroundColor(hourForecast.wind_spd),

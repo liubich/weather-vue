@@ -135,23 +135,75 @@ const getWindDirection = deg => {
 
 const mapWeatherbitIconCodeToStandard = weatherbitIconCode => {
   const iconsMapping = {
-    t01d: 17,
-    t02d: 16,
-    t03d: 15,
-    t04d: 17,
-    t05d: 17,
-    d01d:
-      d02d:
-    d03d:
-
-
-
-      t01n:
-  }
+    t01d: '15',
+    t02d: '15',
+    t03d: '15',
+    t04d: '15',
+    t05d: '15',
+    d01d: '18',
+    d02d: '18',
+    d03d: '18',
+    r01d: '18',
+    r02d: '18',
+    r03d: '18',
+    r04d: '18',
+    r05d: '12',
+    r06d: '12',
+    f01d: '19',
+    s01d: '22',
+    s02d: '22',
+    s03d: '22',
+    s04d: '29',
+    s05d: '25',
+    s06d: '19',
+    a01d: '11',
+    a02d: '11',
+    a03d: '5',
+    a04d: '11',
+    a05d: '11',
+    a06d: '11',
+    c01d: '1',
+    c02d: '2',
+    c03d: '4',
+    c04d: '7',
+    t01n: '15',
+    t02n: '15',
+    t03n: '15',
+    t04n: '15',
+    t05n: '15',
+    d01n: '18',
+    d02n: '18',
+    d03n: '18',
+    r01n: '18',
+    r02n: '18',
+    r03n: '18',
+    r04n: '18',
+    r05n: '12',
+    r06n: '12',
+    f01n: '19',
+    s01n: '22',
+    s02n: '22',
+    s03n: '22',
+    s04n: '29',
+    s05n: '25',
+    s06n: '19',
+    a01n: '11',
+    a02n: '11',
+    a03n: '5',
+    a04n: '11',
+    a05n: '11',
+    a06n: '11',
+    c01n: '33',
+    c02n: '34',
+    c03n: '36',
+    c04n: '7',
+  };
+  return iconsMapping[weatherbitIconCode] || weatherbitIconCode;
 }
 
 export const translateJSONToHourlyForecast = jsonResponse => {
   return jsonResponse.data.map(hourForecast => {
+    const iconNumber = mapWeatherbitIconCodeToStandard(hourForecast.weather.icon);
     return {
       temperature: hourForecast.temp,
       appearingTemperature: hourForecast.app_temp,
@@ -159,6 +211,7 @@ export const translateJSONToHourlyForecast = jsonResponse => {
       pressure: convertPressureFromhPaTommHg(hourForecast.pres),
       windBackgroundColor: getWindBackgroundColor(hourForecast.wind_spd),
       windDirection: getWindDirection(hourForecast.wind_dir),
+      icon: `img/weather-icons/${iconNumber || 'na'}.png`,
     };
   });
 };

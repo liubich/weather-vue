@@ -38,10 +38,23 @@ export default {
 .column {
   display: flex;
   flex-direction: column;
+  align-items: center;
   border-right: black solid 1px;
+
+  &__time {
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 2px 10px;
+  }
 
   &__temperature {
     padding: 2px 10px;
+  }
+
+  &__icon {
+    width: 32px;
+    height: 32px;
   }
 }
 </style>

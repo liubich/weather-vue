@@ -5,14 +5,18 @@
       :currentPosition="currentPosition"
       v-if="isWeatherGot"
     />
-    <h2 v-else-if="errorDesc" class="weather-container__no-pos">{{ errorDesc }}</h2>
+    <h2 v-else-if="errorDesc" class="weather-container__no-pos">
+      {{ errorDesc }}
+    </h2>
     <h2 class="weather-container__loading" v-else>Завантаження</h2>
+    <HourlyForecast v-if="hourlyForecastData" :weather="hourlyForecastData" />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 import CurrentWeather from './components/CurrentWeather.vue';
+import HourlyForecast from './components/HourlyForecast.vue';
 
 export default {
   name: 'app',
@@ -21,9 +25,10 @@ export default {
   },
   components: {
     CurrentWeather,
+    HourlyForecast,
   },
   computed: {
-    ...mapState(['currentWeather', 'errorDesc', 'currentPosition']),
+    ...mapState(['currentWeather', 'errorDesc', 'currentPosition', 'hourlyForecastData']),
     ...mapGetters(['isWeatherGot']),
   },
   methods: {

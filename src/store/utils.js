@@ -107,3 +107,41 @@ export const getHourlyForecastForCoordinates = async ({ latitude, longitude }) =
   const hourlyForecastData = await response.json();
   return hourlyForecastData;
 };
+
+const getWindDirection = deg => {
+  const rumb = Math.ceil((deg - 11.25) / 22.5);
+  const windDirectionTranslator = {
+    0: 'Пн',
+    1: 'Пн-Пн-С',
+    2: 'Пн-С',
+    3: 'Пн-С-С',
+    4: 'С',
+    5: 'Пд-С-С',
+    6: 'Пд-С',
+    7: 'Пд-Пд-С',
+    8: 'Пд',
+    9: 'Пд-Пд-З',
+    10: 'Пд-З',
+    11: 'Пд-З-З',
+    12: 'З',
+    13: 'Пн-З-З',
+    14: 'Пн-З',
+    15: 'Пн-Пн-З',
+    16: 'Пн',
+  };
+
+  return windDirectionTranslator[rumb];
+};
+
+export const translateJSONToHourlyForecast = jsonResponse => {
+  return jsonResponse.data.map(hourForecast => {
+    return {
+      temperature: hourForecast.temp,
+      appearingTemperature: hourForecast.app_temp,
+      windDirectionDeg: hourForecast.wind_dir,
+      pressure: convertPressureFromhPaTommHg(hourForecast.pres),
+      windBackgroundColor: getWindBackgroundColor(hourForecast.wind_spd),
+      windDirection: getWindDirection(hourForecast.wind_dir),
+    };
+  });
+};

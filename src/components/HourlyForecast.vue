@@ -160,13 +160,14 @@ export default {
 
 .data-table {
   border-collapse: collapse;
+  border: 2px solid #b2b2b2;
 
   &__day-row {
     padding: 4px 10px;
     text-align: left;
     border-top: 1px solid #b2b2b2;
     border-bottom: 1px solid #b2b2b2;
-    border-right: 2px solid #b2b2b2;
+    border-left: 2px solid #b2b2b2;
     font-family: Roboto, sans-serif;
     font-weight: 600;
     font-size: 12px;
@@ -179,7 +180,7 @@ export default {
     padding: 4px 10px;
     white-space: nowrap;
     text-align: right;
-    border-right: 1px solid #b2b2b2;
+    border-right: 2px solid #b2b2b2;
     background-color: rgb(243, 243, 243);
   }
 

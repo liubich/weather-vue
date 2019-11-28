@@ -157,6 +157,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@mixin tooltip {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 22px;
+  border: 1px solid #cecece;
+  border-radius: 5px;
+  background-color: white;
+  padding: 2px 5px;
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 1;
+  opacity: 1;
+  white-space: nowrap;
+  box-shadow: 0 2px 1px #bcbcbc;
+}
+
 .hourly-forecast {
   padding: 5px;
   border: thick double #32a1ce;
@@ -186,20 +203,7 @@ export default {
 
     &:hover::after,
     &:focus::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      top: 22px;
-      border: 1px solid #cecece;
-      border-radius: 5px;
-      background-color: white;
-      padding: 2px 5px;
-      font-family: Roboto, sans-serif;
-      font-size: 12px;
-      font-weight: bold;
-      z-index: 1;
-      opacity: 1;
-      white-space: nowrap;
-      box-shadow: 0 2px 1px #bcbcbc;
+      @include tooltip;
     }
   }
 
@@ -249,20 +253,7 @@ export default {
 
     &:hover::after,
     &:focus::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      top: -20px;
-      border: 1px solid #cecece;
-      border-radius: 5px;
-      background-color: white;
-      padding: 2px 5px;
-      font-family: Roboto, sans-serif;
-      font-size: 12px;
-      font-weight: bold;
-      z-index: 1;
-      opacity: 1;
-      white-space: nowrap;
-      box-shadow: 0 2px 1px #bcbcbc;
+      @include tooltip;
     }
 
     &-direction {
@@ -287,20 +278,7 @@ export default {
 
     &:hover::after,
     &:focus::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      top: 36px;
-      border: 1px solid #cecece;
-      border-radius: 5px;
-      background-color: white;
-      padding: 2px 5px;
-      font-family: Roboto, sans-serif;
-      font-size: 12px;
-      font-weight: bold;
-      z-index: 1;
-      opacity: 1;
-      white-space: nowrap;
-      box-shadow: 0 2px 1px #bcbcbc;
+      @include tooltip;
     }
   }
 

@@ -74,7 +74,21 @@
           </td>
         </tr>
         <tr>
-          <td class="data-table__headings-column">Вітер</td>
+          <td class="data-table__headings-column">Вітер: швидкість, м/с</td>
+          <td
+            v-for="(hourForecast, index) in props.weather.data"
+            :key="index"
+            class="data-table__wind-speed cell"
+            v-bind:class="{
+              'cell_left-border': hourForecast.beginNextDay,
+              cell_shadow: !hourForecast.isDayTime,
+            }"
+          >
+            {{ hourForecast.windSpeed }}
+          </td>
+        </tr>
+        <tr>
+          <td class="data-table__headings-column">Напрямок</td>
           <td
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
@@ -84,21 +98,16 @@
               cell_shadow: !hourForecast.isDayTime,
             }"
           >
-            <div class="data-table__wind-container">
+            <div
+              class="data-table__wind-direction"
+              :style="{
+                transform: `rotate(${hourForecast.windDirectionDeg}deg)`,
+              }"
+            >
               <div
-                class="data-table__wind-direction"
-                :style="{
-                  transform: `rotate(${hourForecast.windDirectionDeg}deg)`,
-                }"
-              >
-                <div
-                  class="data-table__wind-direction-inner"
-                  :style="{ background: hourForecast.windBackgroundColor }"
-                ></div>
-              </div>
-              <div class="data-table__wind-speed">
-                {{ `${hourForecast.windSpeed} м/с` }}
-              </div>
+                class="data-table__wind-direction-inner"
+                :style="{ background: hourForecast.windBackgroundColor }"
+              ></div>
             </div>
           </td>
         </tr>
@@ -146,7 +155,8 @@ export default {
 
   &__pressure,
   &__temperature,
-  &__feels-like {
+  &__feels-like,
+  &__wind-speed {
     padding: 2px 10px;
     font-family: Roboto, sans-serif;
     font-size: 12px;
@@ -167,14 +177,8 @@ export default {
     border-top: 1px solid #b2b2b2;
     padding: 6px;
 
-    &-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 100%;
-    }
-
     &-direction {
+      margin: 0 auto;
       width: 17px;
       height: 17px;
 
@@ -185,13 +189,6 @@ export default {
         width: 17px;
         height: 17px;
       }
-    }
-
-    &-speed {
-      font-family: Roboto, sans-serif;
-      font-size: 12px;
-      white-space: nowrap;
-      padding: 4px;
     }
   }
 

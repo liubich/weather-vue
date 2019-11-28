@@ -127,8 +127,11 @@ export default new Vuex.Store({
         });
     },
     getHourlyForecastForCurrentLocation({ commit, state }) {
-      const hourlyForecastData = utils.getHourlyForecastForCoordinates({ state.currentPosition.latitude, state.currentPosition.longitude });
-      hourlyForecastData && commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastData);
+      const hourlyForecastData = utils.getHourlyForecastForCoordinates({
+        latitude: state.currentPosition.latitude,
+        longitude: state.currentPosition.longitude,
+      });
+      if (hourlyForecastData) commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastData);
     },
   },
   plugins: [localStoragePlugin],

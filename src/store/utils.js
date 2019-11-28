@@ -90,12 +90,12 @@ export const saveCurrentWeatherToLocalStorage = currentWeather => {
   localStorage.setItem('currentWeather', JSON.stringify(currentWeather));
 };
 
-export const getHourlyForecastAPIUrl = ({ latitude, longitude, APIKey, language = 'uk' }) => {
+const getHourlyForecastAPIUrl = ({ latitude, longitude, APIKey, language = 'uk' }) => {
   return `https://api.weatherbit.io/v2.0/forecast/hourly?key=${APIKey}&lang=${language}&lat=${latitude}&lon=${longitude}`;
 };
 
 export const getHourlyForecastForCoordinates = ({ latitude, longitude }) => {
-  const hourlyForecastAPIUrl = utils.getHourlyForecastAPIUrl(
+  const hourlyForecastAPIUrl = getHourlyForecastAPIUrl(
     latitude,
     longitude,
     process.env.VUE_APP_WEATHERBIT_KEY,
@@ -108,4 +108,4 @@ export const getHourlyForecastForCoordinates = ({ latitude, longitude }) => {
     .then(hourlyForecastJson => {
       return hourlyForecastJson;
     });
-},
+};

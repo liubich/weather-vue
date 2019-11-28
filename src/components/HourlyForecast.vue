@@ -78,6 +78,8 @@ export default {
 }
 
 .data-table {
+  border-collapse: collapse;
+
   &__headings-column {
     font-family: Roboto, sans-serif;
     font-weight: bold;

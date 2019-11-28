@@ -52,6 +52,9 @@ export default new Vuex.Store({
       state.currentPosition.city = currentPosition.City;
       state.currentPosition.dataLoadedFromAPI = currentPosition.dataLoadedFromAPI;
     },
+    [mutationTypes.SAVE_HOURLY_FORECAST](state, hourlyForecastJson) {
+      state.hourlyForecastData = hourlyForecastJson.data;
+    },
   },
   getters: {
     isWeatherGot: state => !!state.currentWeather.description,

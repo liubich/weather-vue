@@ -3,6 +3,18 @@
     <table class="hourly-forecast__data-table data-table">
       <tbody>
         <tr>
+          <th class="data-table__headings-column">День тижня</th>
+          <th class="data-table__day-row" :colspan="props.weather.numberOfTodayColumns">
+            Сьогодні
+          </th>
+          <th class="data-table__day-row" :colspan="props.weather.numberOfTomorrowColumns">
+            Завтра
+          </th>
+          <th class="data-table__day-row" :colspan="props.weather.numberOfPastTomorrowColumns">
+            Післязавтра
+          </th>
+        </tr>
+        <tr>
           <th class="data-table__headings-column">Час</th>
           <th
             v-for="(hourForecast, index) in props.weather.data"
@@ -135,11 +147,22 @@ export default {
 .data-table {
   border-collapse: collapse;
 
+  &__day-row {
+    padding: 4px 10px;
+    text-align: left;
+    border-top: 1px solid #b2b2b2;
+    border-bottom: 1px solid #b2b2b2;
+    border-right: 2px solid #b2b2b2;
+    font-family: Roboto, sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+  }
+
   &__headings-column {
     font-family: Roboto, sans-serif;
     font-weight: bold;
     font-size: 12px;
-    padding: 2px 10px;
+    padding: 4px 10px;
     white-space: nowrap;
     text-align: right;
     border-right: 1px solid #b2b2b2;
@@ -150,14 +173,14 @@ export default {
     font-family: Roboto, sans-serif;
     font-weight: bold;
     font-size: 12px;
-    padding: 2px 10px;
+    padding: 4px 10px;
   }
 
   &__pressure,
   &__temperature,
   &__feels-like,
   &__wind-speed {
-    padding: 2px 10px;
+    padding: 4px 10px;
     font-family: Roboto, sans-serif;
     font-size: 12px;
     text-align: center;

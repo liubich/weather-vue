@@ -3,7 +3,7 @@
     <CurrentWeather
       :weather="currentWeather"
       :currentPosition="currentPosition"
-      v-if="isWeatherGot"
+      v-if="isCurrentWeatherGot"
     />
     <h2 v-else-if="errorDesc" class="weather-container__no-pos">
       {{ errorDesc }}
@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     ...mapState(['currentWeather', 'errorDesc', 'currentPosition', 'hourlyForecastData']),
-    ...mapGetters(['isWeatherGot']),
+    ...mapGetters(['isCurrentWeatherGot']),
   },
   methods: {
     ...mapActions(['getCurrentPositionAndWeather']),

@@ -57,7 +57,7 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    isWeatherGot: state => !!state.currentWeather.description,
+    isCurrentWeatherGot: state => !!state.currentWeather.description,
   },
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {

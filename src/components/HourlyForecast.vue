@@ -129,6 +129,7 @@
               'cell_left-border': hourForecast.beginNextDay,
               cell_shadow: !hourForecast.isDayTime,
             }"
+            :data-tooltip="hourForecast.windDirection"
           >
             <div
               class="data-table__wind-direction"
@@ -242,8 +243,27 @@ export default {
   }
 
   &__wind {
+    position: relative;
     border-top: 1px solid #b2b2b2;
     padding: 6px;
+
+    &:hover::after,
+    &:focus::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: -20px;
+      border: 1px solid #cecece;
+      border-radius: 5px;
+      background-color: white;
+      padding: 2px 5px;
+      font-family: Roboto, sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      z-index: 1;
+      opacity: 1;
+      white-space: nowrap;
+      box-shadow: 0 2px 1px #bcbcbc;
+    }
 
     &-direction {
       margin: 0 auto;

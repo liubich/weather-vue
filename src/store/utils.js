@@ -212,7 +212,10 @@ export const translateJSONToHourlyForecast = jsonResponse => {
     const localTimestamp = new Date(hourForecast.timestamp_local);
     return {
       temperature: formatTemperature(hourForecast.temp),
-      appearingTemperature: formatTemperature(hourForecast.app_temp),
+      appearingTemperature:
+        Math.round(hourForecast.app_temp) !== Math.round(hourForecast.temp)
+          ? formatTemperature(hourForecast.app_temp)
+          : '',
       windDirectionDeg: hourForecast.wind_dir,
       pressure: convertPressureFromhPaTommHg(hourForecast.pres),
       windBackgroundColor: getWindBackgroundColor(hourForecast.wind_spd),

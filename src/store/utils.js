@@ -133,6 +133,23 @@ const getWindDirection = deg => {
   return windDirectionTranslator[rumb];
 };
 
+const mapWeatherbitIconCodeToStandard = weatherbitIconCode => {
+  const iconsMapping = {
+    t01d: 17,
+    t02d: 16,
+    t03d: 15,
+    t04d: 17,
+    t05d: 17,
+    d01d:
+      d02d:
+    d03d:
+
+
+
+      t01n:
+  }
+}
+
 export const translateJSONToHourlyForecast = jsonResponse => {
   return jsonResponse.data.map(hourForecast => {
     return {

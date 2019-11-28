@@ -16,7 +16,7 @@
           </th>
           <th class="data-table__day-row" :colspan="props.weather.numberOfPastTomorrowColumns">
             <div class="data-table__day" :data-tooltip="props.weather.pastTomorrowDate">
-              Післязавтра
+              {{ props.weather.pastTomorrowDayOfWeek }}
             </div>
           </th>
         </tr>

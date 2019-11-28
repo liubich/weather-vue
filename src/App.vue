@@ -48,7 +48,7 @@ export default {
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
 .weather-container__no-pos,

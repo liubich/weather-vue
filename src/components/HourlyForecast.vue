@@ -2,15 +2,20 @@
   <div class="hourly-forecast">
     <table class="hourly-forecast__data-table data-table">
       <tbody>
-        <th class="data-table__headings-column">Час</th>
-        <th
-          v-for="(hourForecast, index) in props.weather.data"
-          :key="index"
-          class="data-table__time cell"
-          v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
-        >
-          {{ hourForecast.time }}
-        </th>
+        <tr>
+          <th class="data-table__headings-column">Час</th>
+          <th
+            v-for="(hourForecast, index) in props.weather.data"
+            :key="index"
+            class="data-table__time cell"
+            v-bind:class="{
+              'cell_left-border': hourForecast.beginNextDay,
+              cell_shadow: !hourForecast.isDayTime,
+            }"
+          >
+            {{ hourForecast.time }}
+          </th>
+        </tr>
         <tr>
           <td class="data-table__headings-column">Опис погоди</td>
           <td
@@ -18,13 +23,12 @@
             :key="index"
             class="data-table__icon icon cell"
             :data-tooltip="hourForecast.weatherDescription"
-            v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
+            v-bind:class="{
+              'cell_left-border': hourForecast.beginNextDay,
+              cell_shadow: !hourForecast.isDayTime,
+            }"
           >
-            <img
-              :src="hourForecast.icon"
-              alt="weather icon"
-              class="data-table__icon-image"
-            />
+            <img :src="hourForecast.icon" alt="weather icon" class="data-table__icon-image" />
           </td>
         </tr>
         <tr>
@@ -33,7 +37,10 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__temperature cell"
-            v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
+            v-bind:class="{
+              'cell_left-border': hourForecast.beginNextDay,
+              cell_shadow: !hourForecast.isDayTime,
+            }"
           >
             {{ hourForecast.temperature }}
           </td>
@@ -44,7 +51,10 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__feels-like cell"
-            v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
+            v-bind:class="{
+              'cell_left-border': hourForecast.beginNextDay,
+              cell_shadow: !hourForecast.isDayTime,
+            }"
           >
             {{ hourForecast.appearingTemperature }}
           </td>
@@ -55,7 +65,10 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__pressure cell"
-            v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
+            v-bind:class="{
+              'cell_left-border': hourForecast.beginNextDay,
+              cell_shadow: !hourForecast.isDayTime,
+            }"
           >
             {{ hourForecast.pressure }}
           </td>
@@ -66,7 +79,10 @@
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
             class="data-table__wind cell"
-            v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
+            v-bind:class="{
+              'cell_left-border': hourForecast.beginNextDay,
+              cell_shadow: !hourForecast.isDayTime,
+            }"
           >
             <div class="data-table__wind-container">
               <div
@@ -205,6 +221,10 @@ export default {
 
   .cell_left-border {
     border-left: 2px solid #b2b2b2;
+  }
+
+  .cell_shadow {
+    background-color: #f4f4f4;
   }
 }
 </style>

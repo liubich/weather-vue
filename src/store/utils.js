@@ -220,6 +220,7 @@ export const translateJSONToHourlyForecast = jsonResponse => {
       pressure: convertPressureFromhPaTommHg(hourForecast.pres),
       windBackgroundColor: getWindBackgroundColor(hourForecast.wind_spd),
       windDirection: getWindDirection(hourForecast.wind_dir),
+      windSpeed: Math.round(hourForecast.wind_spd),
       icon: `img/weather-icons/${iconNumber || 'na'}.png`,
       weatherDescription: hourForecast.weather.description,
       time: localTimestamp.toLocaleTimeString('uk-UA', {

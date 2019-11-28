@@ -248,9 +248,11 @@ export const translateJSONToHourlyForecast = jsonResponse => {
   const pastTomorrowDate = new Date();
   pastTomorrowDate.setDate(todayDate.getDate() + 2);
   hourlyForecastData.pastTomorrowDate = pastTomorrowDate.toLocaleDateString('uk-UA', {
-    weekday: 'long',
     day: '2-digit',
     month: 'long',
+  });
+  hourlyForecastData.pastTomorrowDayOfWeek = pastTomorrowDate.toLocaleDateString('uk-UA', {
+    weekday: 'long',
   });
   hourlyForecastData.numberOfTodayColumns = jsonResponse.data.filter(h => {
     const localTimestamp = new Date(h.timestamp_local);

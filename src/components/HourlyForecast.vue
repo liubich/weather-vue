@@ -5,6 +5,7 @@
       :key="index"
       class="hourly-forecast__column column"
     >
+      <div class="column__time">{{ hourForecast.timestamp_local }}</div>
       <div class="column__temperature">{{ hourForecast.temp }}</div>
     </div>
   </div>

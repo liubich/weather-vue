@@ -122,6 +122,21 @@ export default new Vuex.Store({
           commit(mutationTypes.SAVE_CURRENT_WEATHER, currentWeatherForStore);
         });
     },
+    getWeatherForecastForCoordinates(store, coordinates) {
+      const hourlyForecastAPIUrl = utils.getHourlyForecastAPIUrl(
+        coordinates.latitude,
+        coordinates.longitude,
+        process.env.VUE_APP_WEATHERBIT_KEY,
+      );
+      fetch(hourlyForecastAPIUrl)
+        .then(response => {
+          if (response.ok) return response.json();
+          throw new Error(`HTTP error, status = ${response.status}`);
+        })
+        .then(hourlyForecastJson => {
+          store.commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastJson);
+        });
+    },
   },
   plugins: [localStoragePlugin],
 });

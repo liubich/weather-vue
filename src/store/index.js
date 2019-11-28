@@ -54,7 +54,7 @@ export default new Vuex.Store({
       state.currentPosition.dataLoadedFromAPI = currentPosition.dataLoadedFromAPI;
     },
     [mutationTypes.SAVE_HOURLY_FORECAST](state, hourlyForecastData) {
-      state.hourlyForecast.data = hourlyForecastData.data;
+      state.hourlyForecast = hourlyForecastData;
       state.hourlyForecast.dataLoadedFromAPI = true;
     },
   },

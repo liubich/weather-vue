@@ -231,5 +231,23 @@ export const translateJSONToHourlyForecast = jsonResponse => {
       isDayTime: hourForecast.pod === 'd',
     };
   });
+  const todayDate = new Date();
+  const tomorrowDate = new Date();
+  tomorrowDate.setDate(todayDate.getDate() + 1);
+  const pastTomorrowDate = new Date();
+  pastTomorrowDate.setDate(todayDate.getDate() + 2);
+
+  hourlyForecastData.numberOfTodayColumns = jsonResponse.data.filter(h => {
+    const localTimestamp = new Date(h.timestamp_local);
+    return localTimestamp.getDay() === todayDate.getDay();
+  }).length;
+  hourlyForecastData.numberOfTomorrowColumns = jsonResponse.data.filter(h => {
+    const localTimestamp = new Date(h.timestamp_local);
+    return localTimestamp.getDay() === tomorrowDate.getDay();
+  }).length;
+  hourlyForecastData.numberOfPastTomorrowColumns = jsonResponse.data.filter(h => {
+    const localTimestamp = new Date(h.timestamp_local);
+    return localTimestamp.getDay() === pastTomorrowDate.getDay();
+  }).length;
   return hourlyForecastData;
 };

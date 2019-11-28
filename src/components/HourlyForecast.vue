@@ -5,13 +5,19 @@
         <tr>
           <th class="data-table__headings-column">День тижня</th>
           <th class="data-table__day-row" :colspan="props.weather.numberOfTodayColumns">
-            Сьогодні
+            <div class="data-table__day" :data-tooltip="props.weather.todayDate">
+              Сьогодні
+            </div>
           </th>
           <th class="data-table__day-row" :colspan="props.weather.numberOfTomorrowColumns">
-            Завтра
+            <div class="data-table__day" :data-tooltip="props.weather.tomorrowDate">
+              Завтра
+            </div>
           </th>
           <th class="data-table__day-row" :colspan="props.weather.numberOfPastTomorrowColumns">
-            Післязавтра
+            <div class="data-table__day" :data-tooltip="props.weather.pastTomorrowDate">
+              Післязавтра
+            </div>
           </th>
         </tr>
         <tr>
@@ -163,14 +169,37 @@ export default {
   border: 2px solid #b2b2b2;
 
   &__day-row {
-    padding: 4px 10px;
-    text-align: left;
     border-top: 1px solid #b2b2b2;
     border-bottom: 1px solid #b2b2b2;
     border-left: 2px solid #b2b2b2;
+    text-align: left;
+  }
+
+  &__day {
+    position: relative;
+    display: inline-block;
+    padding: 4px 10px;
     font-family: Roboto, sans-serif;
     font-weight: 600;
     font-size: 12px;
+
+    &:hover::after,
+    &:focus::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: 22px;
+      border: 1px solid #cecece;
+      border-radius: 5px;
+      background-color: white;
+      padding: 2px 5px;
+      font-family: Roboto, sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      z-index: 1;
+      opacity: 1;
+      white-space: nowrap;
+      box-shadow: 0 2px 1px #bcbcbc;
+    }
   }
 
   &__headings-column {

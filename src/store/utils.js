@@ -228,6 +228,7 @@ export const translateJSONToHourlyForecast = jsonResponse => {
         minute: '2-digit',
       }),
       beginNextDay: !localTimestamp.getHours(),
+      isDayTime: hourForecast.pod === 'd',
     };
   });
   return hourlyForecastData;

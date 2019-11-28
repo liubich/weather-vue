@@ -1,29 +1,58 @@
 <template functional>
   <div class="hourly-forecast">
-    <div class="hourly-forecast__column-captions column">
-      <div class="captions-column__time">Час</div>
-      <div class="captions-column__icon-caption">Опис</div>
-      <div class="captions-column__temperature">Температура</div>
-      <div class="captions-column__appearing-temperature">Відчувається як</div>
-      <div class="captions-column__pressure">Тиск</div>
-    </div>
-    <div class="hourly-forecast__data-columns">
-      <div
-        v-for="(hourForecast, index) in props.weather.data"
-        :key="index"
-        class="hourly-forecast__column column"
-      >
-        <div class="column__time">{{ hourForecast.time }}</div>
-        <div class="column__icon icon" :data-tooltip="hourForecast.weatherDescription">
-          <img :src="hourForecast.icon" alt="weather icon" class="column__icon-image" />
-        </div>
-        <div class="column__temperature">{{ hourForecast.temperature }}</div>
-        <div class="column__appearing-temperature">
-          {{ hourForecast.appearingTemperature }}
-        </div>
-        <div class="column__pressure">{{ hourForecast.pressure }}</div>
-      </div>
-    </div>
+    <table class="hourly-forecast__data-table data-table">
+      <tbody>
+        <th class="data-table__headings-column">Час</th>
+        <th
+          v-for="(hourForecast, index) in props.weather.data"
+          :key="index"
+          class="data-table__time"
+        >
+          {{ hourForecast.time }}
+        </th>
+        <tr>
+          <td class="data-table__headings-column">Опис погоди</td>
+          <td
+            v-for="(hourForecast, index) in props.weather.data"
+            :key="index"
+            class="data-table__icon icon"
+            :data-tooltip="hourForecast.weatherDescription"
+          >
+            <img :src="hourForecast.icon" alt="weather icon" class="data-table__icon-image" />
+          </td>
+        </tr>
+        <tr>
+          <td class="data-table__headings-column">Температура, °C</td>
+          <td
+            v-for="(hourForecast, index) in props.weather.data"
+            :key="index"
+            class="data-table__temperature"
+          >
+            {{ hourForecast.temperature }}
+          </td>
+        </tr>
+        <tr>
+          <td class="data-table__headings-column">Відчувається як, °C</td>
+          <td
+            v-for="(hourForecast, index) in props.weather.data"
+            :key="index"
+            class="data-table__feels-like"
+          >
+            {{ hourForecast.appearingTemperature }}
+          </td>
+        </tr>
+        <tr>
+          <td class="data-table__headings-column">Тиск, мм.рт.ст</td>
+          <td
+            v-for="(hourForecast, index) in props.weather.data"
+            :key="index"
+            class="data-table__pressure"
+          >
+            {{ hourForecast.pressure }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -41,37 +70,24 @@ export default {
   border: thick double #32a1ce;
   width: 100%;
   max-width: 480px;
-}
-
-.hourly-forecast__data-columns {
-  display: flex;
-  align-items: flex-start;
   overflow-x: scroll;
 }
 
-.captions-column {
-  &__icon-caption {
-    height: 36px;
-    padding: 2px 10px;
-    font: bold 12px/36px Roboto, sans-serif;
-    white-space: nowrap;
-  }
-
-  &__time,
-  &__pressure,
-  &__temperature,
-  &__appearing-temperature {
-    padding: 2px 0;
-    font: bold 12px Roboto, sans-serif;
-    white-space: nowrap;
-  }
-}
-
-.column {
+.data-table {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-right: black solid 1px;
+
+  &__headings-column {
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 2px 10px;
+    white-space: nowrap;
+    text-align: right;
+    border-right: 1px solid #b2b2b2;
+    background-color: rgb(243, 243, 243);
+  }
 
   &__time {
     font-family: Roboto, sans-serif;
@@ -82,10 +98,15 @@ export default {
 
   &__pressure,
   &__temperature,
-  &__appearing-temperature {
+  &__feels-like {
     padding: 2px 10px;
     font-family: Roboto, sans-serif;
     font-size: 12px;
+    text-align: center;
+  }
+
+  &__temperature {
+    font-weight: bold;
   }
 
   &__icon-image {
@@ -95,12 +116,12 @@ export default {
 
   .icon[data-tooltip] {
     position: relative;
+    padding: 4px 10px;
 
     &:hover::after,
     &:focus::after {
       content: attr(data-tooltip);
       position: absolute;
-      left: -50%;
       top: 36px;
       border: 1px solid #cecece;
       border-radius: 5px;

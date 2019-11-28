@@ -34,6 +34,7 @@ export default new Vuex.Store({
       precipitationType: null,
       dataLoadedFromAPI: false,
     },
+    hourlyForecast: { dataLoadedFromAPI: false },
     errorDesc: null,
   },
   mutations: {
@@ -53,11 +54,13 @@ export default new Vuex.Store({
       state.currentPosition.dataLoadedFromAPI = currentPosition.dataLoadedFromAPI;
     },
     [mutationTypes.SAVE_HOURLY_FORECAST](state, hourlyForecastJson) {
-      state.hourlyForecastData = hourlyForecastJson.data;
+      state.hourlyForecast.data = hourlyForecastJson.data;
+      state.hourlyForecast.dataLoadedFromAPI = true;
     },
   },
   getters: {
     isCurrentWeatherGot: state => !!state.currentWeather.description,
+    isHourlyForecastGot: state => state.hourlyForecast.dataLoadedFromAPI,
   },
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {

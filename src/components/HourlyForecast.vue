@@ -6,7 +6,8 @@
         <th
           v-for="(hourForecast, index) in props.weather.data"
           :key="index"
-          class="data-table__time"
+          class="data-table__time cell"
+          v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
         >
           {{ hourForecast.time }}
         </th>
@@ -15,8 +16,9 @@
           <td
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
-            class="data-table__icon icon"
+            class="data-table__icon icon cell"
             :data-tooltip="hourForecast.weatherDescription"
+            v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
           >
             <img :src="hourForecast.icon" alt="weather icon" class="data-table__icon-image" />
           </td>
@@ -26,7 +28,8 @@
           <td
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
-            class="data-table__temperature"
+            class="data-table__temperature cell"
+            v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
           >
             {{ hourForecast.temperature }}
           </td>
@@ -36,7 +39,8 @@
           <td
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
-            class="data-table__feels-like"
+            class="data-table__feels-like cell"
+            v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
           >
             {{ hourForecast.appearingTemperature }}
           </td>
@@ -46,7 +50,8 @@
           <td
             v-for="(hourForecast, index) in props.weather.data"
             :key="index"
-            class="data-table__pressure"
+            class="data-table__pressure cell"
+            v-bind:class="{ 'cell_left-border': hourForecast.beginNextDay }"
           >
             {{ hourForecast.pressure }}
           </td>
@@ -135,6 +140,9 @@ export default {
       white-space: nowrap;
       box-shadow: 0 2px 1px #bcbcbc;
     }
+  }
+  .cell_left-border {
+    border-left: 2px solid #b2b2b2;
   }
 }
 </style>

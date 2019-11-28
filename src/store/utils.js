@@ -202,8 +202,10 @@ const mapWeatherbitIconCodeToStandard = weatherbitIconCode => {
 };
 
 export const translateJSONToHourlyForecast = jsonResponse => {
-  return jsonResponse.data.map(hourForecast => {
+  const hourlyForecastData = {};
+  hourlyForecastData.data = jsonResponse.data.map(hourForecast => {
     const iconNumber = mapWeatherbitIconCodeToStandard(hourForecast.weather.icon);
+    const localTimestamp = new Date(hourForecast.timestamp_local);
     return {
       temperature: hourForecast.temp,
       appearingTemperature: hourForecast.app_temp,
@@ -212,10 +214,11 @@ export const translateJSONToHourlyForecast = jsonResponse => {
       windBackgroundColor: getWindBackgroundColor(hourForecast.wind_spd),
       windDirection: getWindDirection(hourForecast.wind_dir),
       icon: `img/weather-icons/${iconNumber || 'na'}.png`,
-      time: hourForecast.timestamp_local.toLocaleTimeString('uk-UA', {
+      time: localTimestamp.toLocaleTimeString('uk-UA', {
         hour: '2-digit',
         minute: '2-digit',
       }),
     };
   });
+  return hourlyForecastData;
 };

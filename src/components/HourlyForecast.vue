@@ -1,11 +1,11 @@
 <template functional>
   <div class="hourly-forecast">
     <div
-      v-for="(hourForecast, index) in props.weather"
+      v-for="(hourForecast, index) in props.weather.data"
       :key="index"
       class="hourly-forecast__column column"
     >
-      <div>{{ props.weather[index].temp }}</div>
+      <div>{{ hourForecast.temp }}</div>
     </div>
   </div>
 </template>

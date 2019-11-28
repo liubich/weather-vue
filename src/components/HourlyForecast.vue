@@ -70,7 +70,6 @@ export default {
 
 <style lang="scss" scoped>
 .hourly-forecast {
-  display: flex;
   padding: 5px;
   border: thick double #32a1ce;
   width: 100%;
@@ -79,10 +78,6 @@ export default {
 }
 
 .data-table {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
   &__headings-column {
     font-family: Roboto, sans-serif;
     font-weight: bold;
@@ -108,6 +103,7 @@ export default {
     font-family: Roboto, sans-serif;
     font-size: 12px;
     text-align: center;
+    border-top: 1px solid #b2b2b2;
   }
 
   &__temperature {
@@ -122,6 +118,7 @@ export default {
   .icon[data-tooltip] {
     position: relative;
     padding: 4px 10px;
+    border-top: 1px solid #b2b2b2;
 
     &:hover::after,
     &:focus::after {
@@ -141,6 +138,7 @@ export default {
       box-shadow: 0 2px 1px #bcbcbc;
     }
   }
+
   .cell_left-border {
     border-left: 2px solid #b2b2b2;
   }

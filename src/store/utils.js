@@ -221,6 +221,7 @@ export const translateJSONToHourlyForecast = jsonResponse => {
       windBackgroundColor: getWindBackgroundColor(hourForecast.wind_spd),
       windDirection: getWindDirection(hourForecast.wind_dir),
       windSpeed: Math.round(hourForecast.wind_spd),
+      windGustSpeed: Math.round(hourForecast.wind_gust_spd),
       icon: `img/weather-icons/${iconNumber || 'na'}.png`,
       weatherDescription: hourForecast.weather.description,
       time: localTimestamp.toLocaleTimeString('uk-UA', {

@@ -5,8 +5,14 @@
       :key="index"
       class="hourly-forecast__column column"
     >
-      <div class="column__time">{{ hourForecast.timestamp_local }}</div>
-      <div class="column__temperature">{{ hourForecast.temp }}</div>
+      <div class="column__time">{{ hourForecast.time }}</div>
+      <div class="column__icon-wrapper">
+        <img :src="hourForecast.icon" alt="weather icon" class="column__icon" />
+      </div>
+      <div class="column__temperature">{{ hourForecast.temperature }}</div>
+      <div class="column__appearing-temperature">
+        {{ hourForecast.appearingTemperature }}
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +39,7 @@ export default {
   display: flex;
   flex-direction: column;
   border-right: black solid 1px;
+
   &__temperature {
     padding: 2px 10px;
   }

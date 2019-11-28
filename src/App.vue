@@ -9,7 +9,7 @@
       {{ errorDesc }}
     </h2>
     <h2 class="weather-container__loading" v-else>Завантаження</h2>
-    <HourlyForecast v-if="hourlyForecastData" :weather="hourlyForecastData" />
+    <HourlyForecast v-if="isHourlyForecastGot" :weather="hourlyForecast" />
   </div>
 </template>
 
@@ -28,8 +28,8 @@ export default {
     HourlyForecast,
   },
   computed: {
-    ...mapState(['currentWeather', 'errorDesc', 'currentPosition', 'hourlyForecastData']),
-    ...mapGetters(['isCurrentWeatherGot']),
+    ...mapState(['currentWeather', 'errorDesc', 'currentPosition', 'hourlyForecast']),
+    ...mapGetters(['isCurrentWeatherGot', 'isHourlyForecastGot']),
   },
   methods: {
     ...mapActions(['getCurrentPositionAndWeather']),

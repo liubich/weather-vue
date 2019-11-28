@@ -90,11 +90,6 @@ export const saveCurrentWeatherToLocalStorage = currentWeather => {
   localStorage.setItem('currentWeather', JSON.stringify(currentWeather));
 };
 
-export const getHourlyWeatherForecastAPIString = ({
-  latitude,
-  longitude,
-  APIKey,
-  language = 'uk',
-}) => {
+export const getHourlyForecastAPIUrl = ({ latitude, longitude, APIKey, language = 'uk' }) => {
   return `https://api.weatherbit.io/v2.0/forecast/hourly?key=${APIKey}&lang=${language}&lat=${latitude}&lon=${longitude}`;
 };

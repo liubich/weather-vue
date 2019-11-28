@@ -233,11 +233,25 @@ export const translateJSONToHourlyForecast = jsonResponse => {
     };
   });
   const todayDate = new Date();
+  hourlyForecastData.todayDate = todayDate.toLocaleDateString('uk-UA', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+  });
   const tomorrowDate = new Date();
   tomorrowDate.setDate(todayDate.getDate() + 1);
+  hourlyForecastData.tomorrowDate = tomorrowDate.toLocaleDateString('uk-UA', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+  });
   const pastTomorrowDate = new Date();
   pastTomorrowDate.setDate(todayDate.getDate() + 2);
-
+  hourlyForecastData.pastTomorrowDate = pastTomorrowDate.toLocaleDateString('uk-UA', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+  });
   hourlyForecastData.numberOfTodayColumns = jsonResponse.data.filter(h => {
     const localTimestamp = new Date(h.timestamp_local);
     return localTimestamp.getDay() === todayDate.getDay();

@@ -125,6 +125,10 @@ export default new Vuex.Store({
           commit(mutationTypes.SAVE_CURRENT_WEATHER, currentWeatherForStore);
         });
     },
+    getHourlyForecastForCurrentLocation({ commit, state }) {
+      const hourlyForecastData = utils.getHourlyForecastForCoordinates({ state.currentPosition.latitude, state.currentPosition.longitude });
+      hourlyForecastData && commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastData);
+    },
   },
   plugins: [localStoragePlugin],
 });

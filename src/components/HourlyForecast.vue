@@ -132,7 +132,12 @@
                 transform: `rotate(${hourForecast.windDirectionDeg}deg)`,
               }"
             >
-              <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <svg
+                class="data-table__wind-direction-image"
+                focusable="false"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
                 <path
                   :fill="hourForecast.windBackgroundColor"
                   d="M444.52 3.52L28.74 195.42c-47.97
@@ -263,6 +268,10 @@ $font: 12px Roboto, sans-serif;
       margin: 0 auto;
       width: 17px;
       height: 17px;
+
+      &-image {
+        transform: rotate(135deg);
+      }
     }
   }
 

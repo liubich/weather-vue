@@ -263,14 +263,6 @@ $font: 12px Roboto, sans-serif;
       margin: 0 auto;
       width: 17px;
       height: 17px;
-
-      &-inner {
-        mask-image: url(location-arrow-solid.svg);
-        mask-size: cover;
-        transform: rotate(135deg);
-        width: 17px;
-        height: 17px;
-      }
     }
   }
 

@@ -66,6 +66,8 @@ export default new Vuex.Store({
   getters: {
     isCurrentWeatherGot: state => !!state.currentWeather.description,
     isHourlyForecastGot: state => state.hourlyForecast.dataLoadedFromAPI,
+    getMainTextColor: state => (state.preferDarkTheme ? 'darkgreen' : 'black'),
+    getMainBackColor: state => (state.preferDarkTheme ? 'black' : 'white'),
   },
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {

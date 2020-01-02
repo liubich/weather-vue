@@ -113,7 +113,7 @@ export default {
 
   &__datetime {
     font-family: Roboto, sans-serif;
-    color: dimgray;
+    color: var(--shadow-text-color, dimgray);
     font-size: 12px;
   }
 

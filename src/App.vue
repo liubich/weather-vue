@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :style="'color: ' + getMainTextColor + '; background-color: ' + getMainBackColor">
     <CurrentWeather
       :weather="currentWeather"
       :currentPosition="currentPosition"
@@ -28,8 +28,19 @@ export default {
     HourlyForecast,
   },
   computed: {
-    ...mapState(['currentWeather', 'errorDesc', 'currentPosition', 'hourlyForecast']),
-    ...mapGetters(['isCurrentWeatherGot', 'isHourlyForecastGot']),
+    ...mapState([
+      'currentWeather',
+      'errorDesc',
+      'currentPosition',
+      'hourlyForecast',
+      'preferDarkTheme',
+    ]),
+    ...mapGetters([
+      'isCurrentWeatherGot',
+      'isHourlyForecastGot',
+      'getMainTextColor',
+      'getMainBackColor',
+    ]),
   },
   methods: {
     ...mapActions(['getCurrentPositionAndWeather']),
@@ -45,6 +56,7 @@ export default {
 }
 
 #app {
+  height: 100vh;
   padding: 10px;
   display: flex;
   flex-direction: column;

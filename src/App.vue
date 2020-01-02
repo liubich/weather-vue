@@ -1,5 +1,17 @@
 <template>
-  <div id="app" :style="'color: ' + getMainTextColor + '; background-color: ' + getMainBackColor">
+  <div
+    id="app"
+    :style="
+      'color: ' +
+        getMainTextColor +
+        '; background-color: ' +
+        getMainBackColor +
+        '; --shadow-back-color: ' +
+        getShadowBackColor +
+        '; --shadow-text-color: ' +
+        getShadowTextColor
+    "
+  >
     <CurrentWeather
       :weather="currentWeather"
       :currentPosition="currentPosition"
@@ -28,18 +40,14 @@ export default {
     HourlyForecast,
   },
   computed: {
-    ...mapState([
-      'currentWeather',
-      'errorDesc',
-      'currentPosition',
-      'hourlyForecast',
-      'preferDarkTheme',
-    ]),
+    ...mapState(['currentWeather', 'errorDesc', 'currentPosition', 'hourlyForecast']),
     ...mapGetters([
       'isCurrentWeatherGot',
       'isHourlyForecastGot',
       'getMainTextColor',
+      'getShadowTextColor',
       'getMainBackColor',
+      'getShadowBackColor',
     ]),
   },
   methods: {

@@ -170,7 +170,7 @@ $font: 12px Roboto, sans-serif;
   position: absolute;
   border: $thin-border;
   border-radius: 5px;
-  background-color: white;
+  background-color: var(--shadow-back-color, white);
   padding: 2px 5px;
   font: $font;
   font-weight: bold;
@@ -221,7 +221,7 @@ $font: 12px Roboto, sans-serif;
     white-space: nowrap;
     text-align: right;
     border-right: $thick-border;
-    background-color: rgb(243, 243, 243);
+    background-color: var(--shadow-back-color, #f4f4f4);
   }
 
   &__time {
@@ -291,7 +291,7 @@ $font: 12px Roboto, sans-serif;
   }
 
   .cell_shadow {
-    background-color: #f4f4f4;
+    background-color: var(--shadow-back-color, #f4f4f4);
   }
 }
 </style>

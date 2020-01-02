@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import * as mutationTypes from './mutationTypes';
 import * as utils from './utils';
 import localStoragePlugin from './localStoragePlugin';
+import darkThemePlugin from './darkThemePlugin';
 
 Vue.use(Vuex);
 
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     },
     hourlyForecast: { dataLoadedFromAPI: false },
     errorDesc: null,
+    preferDarkTheme: null,
   },
   mutations: {
     [mutationTypes.SAVE_COORDINATES](state, currentPosition) {
@@ -56,6 +58,9 @@ export default new Vuex.Store({
     [mutationTypes.SAVE_HOURLY_FORECAST](state, hourlyForecastData) {
       state.hourlyForecast = hourlyForecastData;
       state.hourlyForecast.dataLoadedFromAPI = true;
+    },
+    [mutationTypes.SAVE_PREFER_DARK_THEME](state, preferDarkTheme) {
+      state.preferDarkTheme = preferDarkTheme;
     },
   },
   getters: {
@@ -143,5 +148,5 @@ export default new Vuex.Store({
       }
     },
   },
-  plugins: [localStoragePlugin],
+  plugins: [localStoragePlugin, darkThemePlugin],
 });

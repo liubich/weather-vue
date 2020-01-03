@@ -1,77 +1,66 @@
 <template functional>
   <div class="current-weather">
-    <h2 class="current-weather__city">{{ props.currentPosition.city }}</h2>
-    <div class="current-weather__row">
-      <h2 class="current-weather__temperature">
-        <span class="current-weather__temperature-digit">{{ props.weather.temperature }}</span>
-        °C
-      </h2>
-      <img class="current-weather__icon" alt="weather icon" :src="props.weather.icon" />
-    </div>
-    <div class="current-weather__row">
-      <p class="current-weather__description">
-        {{ props.weather.description }}
-      </p>
-      <div class="current-weather__wind-container">
-        <div class="current-weather__wind-caption">вітер:</div>
+    <h1 class="current-weather__city">Погода у {{ props.currentPosition.city }}</h1>
+    <h2 class="current-weather__header">Поточний стан</h2>
+    <h2 class="current-weather__temperature">
+      <span class="current-weather__temperature-digit">{{ props.weather.temperature }}</span>
+      °C
+    </h2>
+    <img class="current-weather__icon" alt="weather icon" :src="props.weather.icon" />
+    <p class="current-weather__description">
+      {{ props.weather.description }}
+    </p>
+    <div class="current-weather__wind-container">
+      <div class="current-weather__wind-caption">вітер:</div>
+      <div
+        v-if="props.weather.windSpeed"
+        :style="{ transform: `rotate(${props.weather.windDirectionDeg}deg)` }"
+        class="current-weather__wind-direction"
+      >
         <div
-          v-if="props.weather.windSpeed"
-          :style="{ transform: `rotate(${props.weather.windDirectionDeg}deg)` }"
-          class="current-weather__wind-direction"
-        >
-          <div
-            :style="{ background: props.weather.windBackgroundColor }"
-            class="current-weather__wind-direction-inner"
-          ></div>
-        </div>
-        <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
-          {{ props.weather.windDirection }}, {{ props.weather.windSpeed }} м/с
-        </div>
-        <div v-else class="current-weather__wind-caption">штиль</div>
+          :style="{ background: props.weather.windBackgroundColor }"
+          class="current-weather__wind-direction-inner"
+        ></div>
       </div>
+      <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
+        {{ props.weather.windDirection }}, {{ props.weather.windSpeed }} м/с
+      </div>
+      <div v-else class="current-weather__wind-caption">штиль</div>
     </div>
-    <div class="current-weather__row">
-      <p class="current-weather__info">
-        відчувається як:
+    <p class="current-weather__feel-like">
+      відчувається як:
+      <strong>
+        {{ props.weather.realFeelTemperature }}
+      </strong>
+      °C
+      <span v-if="props.weather.isDayTime">
+        у затінку:
         <strong>
-          {{ props.weather.realFeelTemperature }}
+          {{ props.weather.realFeelTemperatureShade }}
         </strong>
         °C
-        <span v-if="props.weather.isDayTime">
-          у затінку:
-          <strong>
-            {{ props.weather.realFeelTemperatureShade }}
-          </strong>
-          °C
-        </span>
-      </p>
-    </div>
-    <div class="current-weather__row">
-      <p class="current-weather__info">
-        тиск:
-        <strong>{{ props.weather.pressure }}</strong>
-        мм.рт.ст, {{ props.weather.pressureTendency }}
-      </p>
-      <p v-if="props.weather.precipitationType" class="current-weather__info">
-        опади: {{ props.weather.precipitationType }}
-      </p>
-    </div>
-    <div class="current-weather__row">
-      <a
-        :href="props.weather.detailsURL"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="current-weather__datetime"
-      >
-        accuweather.com
-      </a>
-    </div>
-    <div class="current-weather__row">
-      <p class="current-weather__datetime">
-        Останнє оновлення:
-        {{ props.weather.dateTimeStamp | distanceToNowInWords }} тому
-      </p>
-    </div>
+      </span>
+    </p>
+    <p class="current-weather__pressure">
+      тиск:
+      <strong>{{ props.weather.pressure }}</strong>
+      мм.рт.ст, {{ props.weather.pressureTendency }}
+    </p>
+    <p v-if="props.weather.precipitationType" class="current-weather__info">
+      опади: {{ props.weather.precipitationType }}
+    </p>
+    <a
+      :href="props.weather.detailsURL"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="current-weather__link"
+    >
+      accuweather.com
+    </a>
+    <p class="current-weather__last-refresh">
+      Останнє оновлення:
+      {{ props.weather.dateTimeStamp | distanceToNowInWords }} тому
+    </p>
   </div>
 </template>
 
@@ -91,39 +80,55 @@ export default {
 <style lang="scss" scoped>
 .current-weather {
   width: 100%;
-  max-width: 480px;
-  padding: 5px;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  border: thick double #32a1ce;
+  background-color: #8cceea;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    'city city city'
+    'head head head'
+    'image temp wind'
+    'image temp pressure'
+    'descr feel-like .'
+    'link link link'
+    'last-refr last-refr last-refr';
 
-  &__row {
-    width: 100%;
-    padding: 3px 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  &__header {
+    grid-area: head;
+    text-align: center;
+    font-family: Oswald, sans-serif;
+    font-size: 20px;
   }
 
   &__icon {
+    grid-area: image;
     width: 120px;
     height: 120px;
   }
 
-  &__datetime {
+  &__link {
+    grid-area: link;
+    font-family: Roboto, sans-serif;
+    color: dimgray;
+    font-size: 12px;
+  }
+
+  &__last-refresh {
+    grid-area: last-refr;
     font-family: Roboto, sans-serif;
     color: var(--shadow-text-color, dimgray);
     font-size: 12px;
   }
 
   &__city {
+    grid-area: city;
     padding-top: 4px;
+    background-color: white;
     font-family: Oswald, sans-serif;
     font-size: 16px;
   }
 
   &__temperature {
+    grid-area: temp;
     font-family: Oswald, sans-serif;
     font-weight: 600;
     font-size: 40px;
@@ -135,12 +140,20 @@ export default {
     font-size: 80px;
   }
 
-  &__info {
+  &__feel-like {
+    grid-area: feel-like;
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+  }
+
+  &__pressure {
+    grid-area: pressure;
     font-family: Roboto, sans-serif;
     font-size: 12px;
   }
 
   &__wind-container {
+    grid-area: wind;
     display: flex;
     align-items: center;
   }
@@ -158,8 +171,8 @@ export default {
   }
 
   &__description {
-    text-align: center;
-    padding: 3px 0;
+    grid-area: descr;
+    padding: 5px;
     font-family: Roboto, sans-serif;
     font-weight: bold;
     font-size: 20px;

@@ -38,20 +38,6 @@ export default {
 </script>
 
 <style>
-.theme-light {
-  --main-text-color: 'black';
-  --shadow-text-color: 'dimgray';
-  --main-back-color: 'white';
-  --shadow-back-color: '#f4f4f4';
-}
-
-.theme-dark {
-  --main-text-color: 'darkgreen';
-  --shadow-text-color: '#115011';
-  --main-back-color: '#222';
-  --shadow-back-color: 'black';
-}
-
 * {
   margin: 0;
   padding: 0;

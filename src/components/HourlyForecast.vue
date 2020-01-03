@@ -182,9 +182,7 @@ $font: 12px Roboto, sans-serif;
 
 .hourly-forecast {
   padding: 5px;
-  border: thick double #32a1ce;
   width: 100%;
-  max-width: 480px;
   overflow-x: scroll;
 }
 

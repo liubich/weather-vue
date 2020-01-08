@@ -1,6 +1,6 @@
 import * as mutationTypes from './mutationTypes';
-// eslint-disable-next-line import/prefer-default-export
-export const themeModule = {
+
+export default {
   state: {
     preferDarkTheme: null,
   },

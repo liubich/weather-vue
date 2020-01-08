@@ -2,14 +2,14 @@ import * as mutationTypes from './mutationTypes';
 
 export default {
   state: {
-    preferDarkTheme: null,
+    preferredTheme: null,
   },
   mutations: {
-    [mutationTypes.SAVE_PREFER_DARK_THEME](state, preferDarkTheme) {
-      state.preferDarkTheme = preferDarkTheme;
+    [mutationTypes.SAVE_PREFERRED_THEME](state, preferredTheme) {
+      state.preferredTheme = preferredTheme;
     },
   },
   getters: {
-    isDarkTheme: state => state.preferDarkTheme,
+    isDarkTheme: state => state.preferredTheme === 'dark',
   },
 };

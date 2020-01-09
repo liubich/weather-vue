@@ -72,13 +72,15 @@ export default {
   --main-text-color: black;
   --shadow-text-color: dimgray;
   --main-back-color: white;
-  --shadow-back-color: #f4f4f4;
+  --additional-back-color: #87ceff;
+  --shadow-back-color: #080707;
 }
 
 .theme-dark {
   --main-text-color: darkgreen;
   --shadow-text-color: #115011;
   --main-back-color: #222;
+  --additional-back-color: #222;
   --shadow-back-color: black;
 }
 </style>

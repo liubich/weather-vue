@@ -3,10 +3,15 @@ import Vuex from 'vuex';
 import * as mutationTypes from './mutationTypes';
 import * as utils from './utils';
 import localStoragePlugin from './localStoragePlugin';
+import darkThemePlugin from './darkThemePlugin';
+import themeModule from './themeModule';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  modules: {
+    themeModule,
+  },
   state: {
     currentPosition: {
       latitude: null,
@@ -143,5 +148,5 @@ export default new Vuex.Store({
       }
     },
   },
-  plugins: [localStoragePlugin],
+  plugins: [localStoragePlugin, darkThemePlugin],
 });

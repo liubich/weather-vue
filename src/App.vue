@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="isDarkTheme ? 'theme-dark' : 'theme-light'">
     <CurrentWeather
       :weather="currentWeather"
       :currentPosition="currentPosition"
@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     ...mapState(['currentWeather', 'errorDesc', 'currentPosition', 'hourlyForecast']),
-    ...mapGetters(['isCurrentWeatherGot', 'isHourlyForecastGot']),
+    ...mapGetters(['isCurrentWeatherGot', 'isHourlyForecastGot', 'isDarkTheme']),
   },
   methods: {
     ...mapActions(['getCurrentPositionAndWeather']),
@@ -45,6 +45,9 @@ export default {
 }
 
 #app {
+  color: var(--main-text-color);
+  background-color: var(--main-back-color);
+  height: 100vh;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -54,5 +57,21 @@ export default {
 .weather-container__no-pos,
 .weather-container__loading {
   text-align: center;
+}
+</style>
+
+<style>
+.theme-light {
+  --main-text-color: black;
+  --shadow-text-color: dimgray;
+  --main-back-color: white;
+  --shadow-back-color: #f4f4f4;
+}
+
+.theme-dark {
+  --main-text-color: darkgreen;
+  --shadow-text-color: #115011;
+  --main-back-color: #222;
+  --shadow-back-color: black;
 }
 </style>

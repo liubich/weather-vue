@@ -1,11 +1,11 @@
-import * as mutationTypes from './mutationTypes';
+import { SAVE_PREFERRED_THEME } from './mutationTypes';
 
 export default {
   state: {
     preferredTheme: null,
   },
   mutations: {
-    [mutationTypes.SAVE_PREFERRED_THEME](state, preferredTheme) {
+    [SAVE_PREFERRED_THEME](state, preferredTheme) {
       state.preferredTheme = preferredTheme;
     },
   },

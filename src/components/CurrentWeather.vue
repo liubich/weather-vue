@@ -1,7 +1,7 @@
 <template functional>
   <div class="current-weather">
     <h1 class="current-weather__city">Погода у {{ props.currentPosition.city }}</h1>
-    <h2 class="current-weather__header">Поточний стан</h2>
+    <h2 class="current-weather__header">Поточні спостереження</h2>
     <h2 class="current-weather__temperature">
       <span class="current-weather__temperature-digit">{{ props.weather.temperature }}</span>
       °C
@@ -49,14 +49,18 @@
     <p v-if="props.weather.precipitationType" class="current-weather__info">
       опади: {{ props.weather.precipitationType }}
     </p>
-    <a
-      :href="props.weather.detailsURL"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="current-weather__link"
-    >
-      accuweather.com
-    </a>
+    <p class="current-weather__link">
+      деталі:
+      <a
+        :href="props.weather.detailsURL"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="current-weather__link"
+      >
+        accuweather.com
+      </a>
+    </p>
+
     <p class="current-weather__last-refresh">
       Останнє оновлення:
       {{ props.weather.dateTimeStamp | distanceToNowInWords }} тому
@@ -80,7 +84,7 @@ export default {
 <style lang="scss" scoped>
 .current-weather {
   width: 100%;
-  background-color: #8cceea;
+  background-color: var(--additional-back-color, #8cceea);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
@@ -96,24 +100,29 @@ export default {
     grid-area: head;
     text-align: center;
     font-family: Oswald, sans-serif;
-    font-size: 20px;
+    font-size: 17px;
   }
 
   &__icon {
     grid-area: image;
+    margin: 0 auto;
     width: 120px;
     height: 120px;
   }
 
   &__link {
     grid-area: link;
+    padding: 5px;
+    text-align: right;
     font-family: Roboto, sans-serif;
-    color: dimgray;
+    color: var(--shadow-text-color, dimgray);
     font-size: 12px;
   }
 
   &__last-refresh {
     grid-area: last-refr;
+    padding: 5px;
+    text-align: right;
     font-family: Roboto, sans-serif;
     color: var(--shadow-text-color, dimgray);
     font-size: 12px;
@@ -122,13 +131,14 @@ export default {
   &__city {
     grid-area: city;
     padding-top: 4px;
-    background-color: white;
+    background-color: var(--main-back-color, white);
     font-family: Oswald, sans-serif;
     font-size: 16px;
   }
 
   &__temperature {
     grid-area: temp;
+    text-align: center;
     font-family: Oswald, sans-serif;
     font-weight: 600;
     font-size: 40px;
@@ -142,12 +152,14 @@ export default {
 
   &__feel-like {
     grid-area: feel-like;
+    text-align: center;
     font-family: Roboto, sans-serif;
     font-size: 12px;
   }
 
   &__pressure {
     grid-area: pressure;
+    text-align: center;
     font-family: Roboto, sans-serif;
     font-size: 12px;
   }
@@ -156,6 +168,7 @@ export default {
     grid-area: wind;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   &__wind-direction {
@@ -173,9 +186,25 @@ export default {
   &__description {
     grid-area: descr;
     padding: 5px;
+    text-align: center;
     font-family: Roboto, sans-serif;
     font-weight: bold;
     font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .current-weather {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'city city'
+      'head head'
+      'image temp '
+      'image feel-like '
+      'descr wind'
+      '. pressure'
+      'link link'
+      'last-refr last-refr';
   }
 }
 </style>

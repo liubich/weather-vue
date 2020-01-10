@@ -46,7 +46,7 @@
       <strong>{{ props.weather.pressure }}</strong>
       мм.рт.ст, {{ props.weather.pressureTendency }}
     </p>
-    <p v-if="props.weather.precipitationType" class="current-weather__info">
+    <p v-if="props.weather.precipitationType" class="current-weather__precipitation">
       опади: {{ props.weather.precipitationType }}
     </p>
     <p class="current-weather__link">
@@ -62,7 +62,7 @@
     </p>
 
     <p class="current-weather__last-refresh">
-      Останнє оновлення:
+      Останнє спостереження:
       {{ props.weather.dateTimeStamp | distanceToNowInWords }} тому
     </p>
   </div>
@@ -92,6 +92,7 @@ export default {
     'head head head'
     'image temp wind'
     'image temp pressure'
+    'image temp precip'
     'descr feel-like .'
     'link link link'
     'last-refr last-refr last-refr';
@@ -167,7 +168,7 @@ export default {
   &__wind-container {
     grid-area: wind;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
   }
 
@@ -191,6 +192,13 @@ export default {
     font-weight: bold;
     font-size: 20px;
   }
+
+  &__precipitation {
+    grid-area: precip;
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -205,6 +213,10 @@ export default {
       '. pressure'
       'link link'
       'last-refr last-refr';
+
+    &__precipitation {
+      display: none;
+    }
   }
 }
 </style>

@@ -1,15 +1,17 @@
 <template>
   <div id="app" :class="isDarkTheme ? 'theme-dark' : 'theme-light'">
-    <CurrentWeather
-      :weather="currentWeather"
-      :currentPosition="currentPosition"
-      v-if="isCurrentWeatherGot"
-    />
-    <h2 v-else-if="errorDesc" class="weather-container__no-pos">
-      {{ errorDesc }}
-    </h2>
-    <h2 class="weather-container__loading" v-else>Завантаження</h2>
-    <HourlyForecast v-if="isHourlyForecastGot" :weather="hourlyForecast" />
+    <div class="container">
+      <CurrentWeather
+        :weather="currentWeather"
+        :currentPosition="currentPosition"
+        v-if="isCurrentWeatherGot"
+      />
+      <h2 v-else-if="errorDesc" class="weather-container__no-pos">
+        {{ errorDesc }}
+      </h2>
+      <h2 class="weather-container__loading" v-else>Завантаження</h2>
+      <HourlyForecast v-if="isHourlyForecastGot" :weather="hourlyForecast" />
+    </div>
   </div>
 </template>
 
@@ -54,6 +56,11 @@ export default {
   align-items: center;
 }
 
+.container {
+  width: 100%;
+  max-width: 960px;
+}
+
 .weather-container__no-pos,
 .weather-container__loading {
   text-align: center;
@@ -65,13 +72,15 @@ export default {
   --main-text-color: black;
   --shadow-text-color: dimgray;
   --main-back-color: white;
-  --shadow-back-color: #f4f4f4;
+  --additional-back-color: #87ceff;
+  --shadow-back-color: #080707;
 }
 
 .theme-dark {
   --main-text-color: darkgreen;
   --shadow-text-color: #115011;
   --main-back-color: #222;
+  --additional-back-color: #222;
   --shadow-back-color: black;
 }
 </style>

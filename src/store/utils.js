@@ -1,4 +1,13 @@
 import { isToday, isTomorrow, startOfDay } from 'date-fns';
+import { SAVE_ERROR_DESC } from './mutationTypes';
+
+export const getAPIData = async (APIUrl, commit = null) => {
+  return fetch(APIUrl).then(response => {
+    if (response.ok) return response.json();
+    if (commit) commit(SAVE_ERROR_DESC, response.statusText);
+    throw new Error(`HTTP error, status = ${response.status}`);
+  });
+};
 
 export const getReadableErrorDesc = error => {
   const errorCodeToDescription = {
@@ -103,11 +112,7 @@ export const getHourlyForecastForCoordinates = async ({ latitude, longitude }) =
     longitude,
     APIKey: process.env.VUE_APP_WEATHERBIT_KEY,
   });
-  const response = await fetch(hourlyForecastAPIUrl);
-  if (!response.ok) {
-    throw new Error(`HTTP error, status = ${response.status}`);
-  }
-  const hourlyForecastData = await response.json();
+  const hourlyForecastData = await getAPIData(hourlyForecastAPIUrl);
   return hourlyForecastData;
 };
 

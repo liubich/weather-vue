@@ -90,49 +90,36 @@ export default new Vuex.Store({
       navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
     },
 
-    getCurrentPositionKey({ commit, state, dispatch }) {
+    async getCurrentPositionKey({ commit, state, dispatch }) {
       const currentPositionAPIUrl = utils.getCurrentPositionAPIUrl({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
         APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
       });
-      fetch(currentPositionAPIUrl)
-        .then(response => {
-          if (response.ok) return response.json();
-          commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
-          throw new Error(`HTTP error, status = ${response.status}`);
-        })
-        .then(positionJson => {
-          if (positionJson.Key) {
-            commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, {
-              Key: positionJson.Key,
-              City: positionJson.LocalizedName,
-              dataLoadedFromAPI: true,
-            });
-            dispatch('getCurrentWeatherData');
-            dispatch('getHourlyForecastForCurrentLocation');
-            return;
-          }
-          commit(mutationTypes.SAVE_ERROR_DESC, 'Помилка при отриманні поточної погоди');
+      const positionJson = await utils.getAPIData(currentPositionAPIUrl, commit);
+      if (positionJson.Key) {
+        commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, {
+          Key: positionJson.Key,
+          City: positionJson.LocalizedName,
+          dataLoadedFromAPI: true,
         });
+        dispatch('getCurrentWeatherData');
+        dispatch('getHourlyForecastForCurrentLocation');
+        return;
+      }
+      commit(mutationTypes.SAVE_ERROR_DESC, 'Помилка при отриманні поточної погоди');
     },
 
-    getCurrentWeatherData({ commit, state }) {
+    async getCurrentWeatherData({ commit, state }) {
       const currentWeatherUrl = utils.getCurrentWeatherAPIUrl({
         positionKey: state.currentPosition.positionKey,
         APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
       });
-      fetch(currentWeatherUrl)
-        .then(response => {
-          if (response.ok) return response.json();
-          commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
-          throw new Error(`HTTP error, status = ${response.status}`);
-        })
-        .then(currentWeatherJson => {
-          const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
-          currentWeatherForStore.dataLoadedFromAPI = true;
-          commit(mutationTypes.SAVE_CURRENT_WEATHER, currentWeatherForStore);
-        });
+
+      const currentWeatherJson = await utils.getAPIData(currentWeatherUrl, commit);
+      const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
+      currentWeatherForStore.dataLoadedFromAPI = true;
+      commit(mutationTypes.SAVE_CURRENT_WEATHER, currentWeatherForStore);
     },
     async getHourlyForecastForCurrentLocation({ commit, state }) {
       const hourlyForecastDataFromAPI = await utils.getHourlyForecastForCoordinates({

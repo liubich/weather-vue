@@ -5,7 +5,7 @@ import * as utils from './utils';
 import localStoragePlugin from './localStoragePlugin';
 import darkThemePlugin from './darkThemePlugin';
 import themeModule from './themeModule';
-import { saveCurrentPosition } from './weatherProviders/accuweather';
+import { saveCurrentPosition, saveCurrentConditions } from './weatherProviders/accuweather';
 
 Vue.use(Vuex);
 
@@ -98,15 +98,7 @@ export default new Vuex.Store({
     },
 
     async getCurrentWeatherData({ commit, state }) {
-      const currentWeatherUrl = utils.getCurrentWeatherAPIUrl({
-        positionKey: state.currentPosition.positionKey,
-        APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
-      });
-
-      const currentWeatherJson = await utils.getAPIData(currentWeatherUrl, commit);
-      const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
-      currentWeatherForStore.dataLoadedFromAPI = true;
-      commit(mutationTypes.SAVE_CURRENT_WEATHER, currentWeatherForStore);
+      saveCurrentConditions(state, commit);
     },
     async getHourlyForecastForCurrentLocation({ commit, state }) {
       const hourlyForecastDataFromAPI = await utils.getHourlyForecastForCoordinates({

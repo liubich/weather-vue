@@ -5,6 +5,7 @@ import * as utils from './utils';
 import localStoragePlugin from './localStoragePlugin';
 import darkThemePlugin from './darkThemePlugin';
 import themeModule from './themeModule';
+import { saveCurrentPosition } from './weatherProviders/accuweather';
 
 Vue.use(Vuex);
 
@@ -71,7 +72,7 @@ export default new Vuex.Store({
     getCurrentPositionAndWeather({ commit, dispatch }) {
       const onSuccess = pos => {
         commit(mutationTypes.SAVE_COORDINATES, pos.coords);
-        dispatch('getCurrentPositionKey');
+        dispatch('getCurrentPosition');
       };
 
       const onError = error => {
@@ -90,24 +91,10 @@ export default new Vuex.Store({
       navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
     },
 
-    async getCurrentPositionKey({ commit, state, dispatch }) {
-      const currentPositionAPIUrl = utils.getCurrentPositionAPIUrl({
-        latitude: state.currentPosition.latitude,
-        longitude: state.currentPosition.longitude,
-        APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
-      });
-      const positionJson = await utils.getAPIData(currentPositionAPIUrl, commit);
-      if (positionJson.Key) {
-        commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, {
-          Key: positionJson.Key,
-          City: positionJson.LocalizedName,
-          dataLoadedFromAPI: true,
-        });
-        dispatch('getCurrentWeatherData');
-        dispatch('getHourlyForecastForCurrentLocation');
-        return;
-      }
-      commit(mutationTypes.SAVE_ERROR_DESC, 'Помилка при отриманні поточної погоди');
+    async getCurrentPosition({ commit, state, dispatch }) {
+      await saveCurrentPosition(state, commit);
+      dispatch('getCurrentWeatherData');
+      dispatch('getHourlyForecastForCurrentLocation');
     },
 
     async getCurrentWeatherData({ commit, state }) {

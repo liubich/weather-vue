@@ -6,6 +6,7 @@ import localStoragePlugin from './localStoragePlugin';
 import darkThemePlugin from './darkThemePlugin';
 import themeModule from './themeModule';
 import { saveCurrentPosition, saveCurrentConditions } from './weatherProviders/accuweather';
+import saveHourlyForecast from './weatherProviders/weatherbit';
 
 Vue.use(Vuex);
 
@@ -92,7 +93,7 @@ export default new Vuex.Store({
     },
 
     async getCurrentPosition({ commit, state, dispatch }) {
-      await saveCurrentPosition(state, commit);
+      saveCurrentPosition(state, commit);
       dispatch('getCurrentWeatherData');
       dispatch('getHourlyForecastForCurrentLocation');
     },
@@ -101,17 +102,7 @@ export default new Vuex.Store({
       saveCurrentConditions(state, commit);
     },
     async getHourlyForecastForCurrentLocation({ commit, state }) {
-      const hourlyForecastDataFromAPI = await utils.getHourlyForecastForCoordinates({
-        latitude: state.currentPosition.latitude,
-        longitude: state.currentPosition.longitude,
-      });
-      if (hourlyForecastDataFromAPI.data) {
-        const hourlyForecastDataForStore = {
-          data: utils.translateJSONToHourlyForecast(hourlyForecastDataFromAPI.data),
-          datesWithColumnsNumber: utils.getAllDatesForHeader(hourlyForecastDataFromAPI.data),
-        };
-        commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastDataForStore);
-      }
+      saveHourlyForecast(state, commit);
     },
   },
   plugins: [localStoragePlugin, darkThemePlugin],

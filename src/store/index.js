@@ -93,7 +93,7 @@ export default new Vuex.Store({
     },
 
     async getCurrentPosition({ commit, state, dispatch }) {
-      saveCurrentPosition(state, commit);
+      await saveCurrentPosition(state, commit);
       dispatch('getCurrentWeatherData');
       dispatch('getHourlyForecastForCurrentLocation');
     },

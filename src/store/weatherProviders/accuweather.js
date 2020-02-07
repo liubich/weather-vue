@@ -54,7 +54,7 @@ const translatePrecipitationType = (precipitationTypeInEnglish, languageCode = '
   return precipitationsTranslator[languageCode][precipitationCode];
 };
 
-export const translateJSONToCurrentWeather = jsonResponse => {
+const translateJSONToCurrentWeather = jsonResponse => {
   const iconNumber = getActualIconNumber(jsonResponse.WeatherIcon);
   return {
     icon: `img/weather-icons/${iconNumber || 'na'}.png`,
@@ -77,7 +77,7 @@ export const translateJSONToCurrentWeather = jsonResponse => {
   };
 };
 
-export const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) =>
+const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) =>
   `https://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
 
 export const saveCurrentConditions = async (state, commit) => {

@@ -84,7 +84,7 @@ const mapWeatherbitIconCodeToStandard = weatherbitIconCode => {
   return iconsMapping[weatherbitIconCode] || weatherbitIconCode;
 };
 
-export const translateJSONToHourlyForecast = hourlyForecastDataFromAPI => {
+const translateJSONToHourlyForecast = hourlyForecastDataFromAPI => {
   return hourlyForecastDataFromAPI.map(hourForecast => {
     const iconNumber = mapWeatherbitIconCodeToStandard(hourForecast.weather.icon);
     const localTimestamp = new Date(hourForecast.timestamp_local);

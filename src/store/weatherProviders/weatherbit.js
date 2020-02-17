@@ -1,6 +1,5 @@
 import { isToday, isTomorrow, startOfDay } from 'date-fns';
 import * as utils from '../utils';
-import { SAVE_HOURLY_FORECAST } from '../mutationTypes';
 
 const getHourlyForecastAPIUrl = ({ latitude, longitude, APIKey, language = 'uk' }) => {
   return `https://api.weatherbit.io/v2.0/forecast/hourly?key=${APIKey}&lang=${language}&lat=${latitude}&lon=${longitude}`;
@@ -155,16 +154,20 @@ const getAllDatesForHeader = hourlyForecastDataFromAPI => {
   });
 };
 
-export default async function saveHourlyForecast(state, commit) {
+export default async function saveHourlyForecast(state) {
   const hourlyForecastDataFromAPI = await getHourlyForecastForCoordinates({
     latitude: state.currentPosition.latitude,
     longitude: state.currentPosition.longitude,
   });
+  if (hourlyForecastDataFromAPI.error) return hourlyForecastDataFromAPI;
   if (hourlyForecastDataFromAPI.data) {
-    const hourlyForecastDataForStore = {
+    return {
       data: translateJSONToHourlyForecast(hourlyForecastDataFromAPI.data),
       datesWithColumnsNumber: getAllDatesForHeader(hourlyForecastDataFromAPI.data),
     };
-    commit(SAVE_HOURLY_FORECAST, hourlyForecastDataForStore);
   }
+  return {
+    error: true,
+    errorDescription: 'Помилка отримання погодинного прогнозу',
+  };
 }

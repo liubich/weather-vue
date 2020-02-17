@@ -93,16 +93,32 @@ export default new Vuex.Store({
     },
 
     async getCurrentPosition({ commit, state, dispatch }) {
-      await saveCurrentPosition(state, commit);
-      dispatch('getCurrentWeatherData');
-      dispatch('getHourlyForecastForCurrentLocation');
+      const currentPositionData = await saveCurrentPosition(state);
+      if (currentPositionData.error) {
+        commit(mutationTypes.SAVE_ERROR_DESC, currentPositionData.errorDescription);
+        dispatch('getHourlyForecastForCurrentLocation');
+      } else {
+        commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, currentPositionData);
+        dispatch('getCurrentWeatherData');
+        dispatch('getHourlyForecastForCurrentLocation');
+      }
     },
 
     async getCurrentWeatherData({ commit, state }) {
-      saveCurrentConditions(state, commit);
+      const currentConditionsData = await saveCurrentConditions(state);
+      if (currentConditionsData.error) {
+        commit(mutationTypes.SAVE_ERROR_DESC, currentConditionsData.errorDescription);
+      } else {
+        commit(mutationTypes.SAVE_CURRENT_WEATHER, currentConditionsData);
+      }
     },
     async getHourlyForecastForCurrentLocation({ commit, state }) {
-      saveHourlyForecast(state, commit);
+      const hourlyForecastData = saveHourlyForecast(state);
+      if (hourlyForecastData.error) {
+        commit(mutationTypes.SAVE_ERROR_DESC, hourlyForecastData.errorDescription);
+      } else {
+        commit(mutationTypes.saveHourlyForecast, hourlyForecastData);
+      }
     },
   },
   plugins: [localStoragePlugin, darkThemePlugin],

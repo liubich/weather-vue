@@ -1,10 +1,10 @@
-import { SAVE_ERROR_DESC } from './mutationTypes';
-
-export const getAPIData = async (APIUrl, commit = null) => {
+export const getAPIData = async APIUrl => {
   return fetch(APIUrl).then(response => {
     if (response.ok) return response.json();
-    if (commit) commit(SAVE_ERROR_DESC, response.statusText);
-    throw new Error(`HTTP error, status = ${response.status}`);
+    return {
+      error: true,
+      errorDescription: response.statusText,
+    };
   });
 };
 

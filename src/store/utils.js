@@ -1,4 +1,4 @@
-export const getAPIData = async APIUrl => {
+export const getAPIData = APIUrl => {
   return fetch(APIUrl).then(response => {
     if (response.ok) return response.json();
     return {

@@ -1,6 +1,6 @@
 import * as utils from '../utils';
 
-export const saveCurrentPosition = async state => {
+export const getCurrentPositionFromAPI = async state => {
   const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) =>
     `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua`;
 
@@ -82,7 +82,7 @@ const translateJSONToCurrentWeather = jsonResponse => {
 const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) =>
   `https://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
 
-export const saveCurrentConditions = async state => {
+export const getCurrentConditionsFromAPI = async state => {
   const currentWeatherUrl = getCurrentWeatherAPIUrl({
     positionKey: state.currentPosition.positionKey,
     APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,

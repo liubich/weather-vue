@@ -154,7 +154,7 @@ const getAllDatesForHeader = hourlyForecastDataFromAPI => {
   });
 };
 
-export default async function saveHourlyForecast(state) {
+export default async function getHourlyForecastFromAPI(state) {
   const hourlyForecastDataFromAPI = await getHourlyForecastForCoordinates({
     latitude: state.currentPosition.latitude,
     longitude: state.currentPosition.longitude,

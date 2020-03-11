@@ -96,11 +96,11 @@ export default new Vuex.Store({
     },
 
     async getCurrentPosition({ commit, state, dispatch }) {
-      const currentPositionData = await getCurrentPositionFromAPI(state);
-      if (currentPositionData.error) {
-        commit(mutationTypes.SAVE_ERROR_DESC, currentPositionData.errorDescription);
+      const currentPositionData = await getCurrentPositionFromAPI(state).catch(e => {
+        commit(mutationTypes.SAVE_ERROR_DESC, e.message);
         dispatch('getHourlyForecastForCurrentLocation');
-      } else {
+      });
+      if (currentPositionData) {
         commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, currentPositionData);
         dispatch('getCurrentWeatherData');
         dispatch('getHourlyForecastForCurrentLocation');
@@ -108,10 +108,10 @@ export default new Vuex.Store({
     },
 
     async getCurrentWeatherData({ commit, state }) {
-      const currentConditionsData = await getCurrentConditionsFromAPI(state);
-      if (currentConditionsData.error) {
-        commit(mutationTypes.SAVE_ERROR_DESC, currentConditionsData.errorDescription);
-      } else {
+      const currentConditionsData = await getCurrentConditionsFromAPI(state).catch(e => {
+        commit(mutationTypes.SAVE_ERROR_DESC, e.message);
+      });
+      if (currentConditionsData) {
         commit(mutationTypes.SAVE_CURRENT_WEATHER, currentConditionsData);
       }
     },

@@ -9,7 +9,9 @@ export const getCurrentPositionFromAPI = async state => {
     longitude: state.currentPosition.longitude,
     APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
   });
-  const positionJson = await utils.getAPIData(currentPositionAPIUrl);
+  const positionJson = await utils.getAPIData(currentPositionAPIUrl).catch(e => {
+    throw e;
+  });
   if (positionJson.error) return positionJson;
   if (positionJson.Key) {
     return {
@@ -18,10 +20,7 @@ export const getCurrentPositionFromAPI = async state => {
       dataLoadedFromAPI: true,
     };
   }
-  return {
-    error: true,
-    errorDescription: 'Помилка при отриманні поточної погоди',
-  };
+  throw new Error('Помилка при отриманні поточної погоди');
 };
 
 const getActualIconNumber = iconNumber => {
@@ -88,9 +87,13 @@ export const getCurrentConditionsFromAPI = async state => {
     APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
   });
 
-  const currentWeatherJson = await utils.getAPIData(currentWeatherUrl);
-  if (currentWeatherJson.error) return currentWeatherJson;
-  const currentWeatherForStore = translateJSONToCurrentWeather(currentWeatherJson[0]);
-  currentWeatherForStore.dataLoadedFromAPI = true;
-  return currentWeatherForStore;
+  const currentWeatherJson = await utils.getAPIData(currentWeatherUrl).catch(e => {
+    throw e;
+  });
+  if (currentWeatherJson) {
+    const currentWeatherForStore = translateJSONToCurrentWeather(currentWeatherJson[0]);
+    currentWeatherForStore.dataLoadedFromAPI = true;
+    return currentWeatherForStore;
+  }
+  return null;
 };

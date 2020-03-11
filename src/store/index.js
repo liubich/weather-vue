@@ -116,12 +116,10 @@ export default new Vuex.Store({
       }
     },
     async getHourlyForecastForCurrentLocation({ commit, state }) {
-      const hourlyForecastData = getHourlyForecastFromAPI(state);
-      if (hourlyForecastData.error) {
-        commit(mutationTypes.SAVE_ERROR_DESC, hourlyForecastData.errorDescription);
-      } else {
-        commit(mutationTypes.saveHourlyForecast, hourlyForecastData);
-      }
+      const hourlyForecastData = await getHourlyForecastFromAPI(state).catch(e => {
+        commit(mutationTypes.SAVE_ERROR_DESC, e.message);
+      });
+      if (hourlyForecastData) commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastData);
     },
   },
   plugins: [localStoragePlugin, darkThemePlugin],

@@ -1,10 +1,7 @@
 export const getAPIData = APIUrl => {
   return fetch(APIUrl).then(response => {
     if (response.ok) return response.json();
-    return {
-      error: true,
-      errorDescription: response.statusText,
-    };
+    throw new Error(`Network error, status = ${response.status}`);
   });
 };
 

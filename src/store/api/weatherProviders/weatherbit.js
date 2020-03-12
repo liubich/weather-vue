@@ -1,5 +1,6 @@
 import { isToday, isTomorrow, startOfDay } from 'date-fns';
-import * as utils from '../utils';
+import * as utils from './weatherutils';
+import getAPIData from '../apiutils';
 
 const getHourlyForecastAPIUrl = ({ latitude, longitude, APIKey, language = 'uk' }) => {
   return `https://api.weatherbit.io/v2.0/forecast/hourly?key=${APIKey}&lang=${language}&lat=${latitude}&lon=${longitude}`;
@@ -11,7 +12,7 @@ const getHourlyForecastForCoordinates = async ({ latitude, longitude }) => {
     longitude,
     APIKey: process.env.VUE_APP_WEATHERBIT_KEY,
   });
-  const hourlyForecastData = await utils.getAPIData(hourlyForecastAPIUrl).catch(e => {
+  const hourlyForecastData = await getAPIData(hourlyForecastAPIUrl).catch(e => {
     throw e;
   });
   return hourlyForecastData;

@@ -1,4 +1,5 @@
-import * as utils from '../utils';
+import * as utils from './weatherutils';
+import getAPIData from '../apiutils';
 
 export const getCurrentPositionFromAPI = async state => {
   const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) =>
@@ -9,7 +10,7 @@ export const getCurrentPositionFromAPI = async state => {
     longitude: state.currentPosition.longitude,
     APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
   });
-  const positionJson = await utils.getAPIData(currentPositionAPIUrl).catch(e => {
+  const positionJson = await getAPIData(currentPositionAPIUrl).catch(e => {
     throw e;
   });
   if (positionJson.error) return positionJson;
@@ -87,7 +88,7 @@ export const getCurrentConditionsFromAPI = async state => {
     APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
   });
 
-  const currentWeatherJson = await utils.getAPIData(currentWeatherUrl).catch(e => {
+  const currentWeatherJson = await getAPIData(currentWeatherUrl).catch(e => {
     throw e;
   });
   if (currentWeatherJson) {

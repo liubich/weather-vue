@@ -8,8 +8,8 @@ import themeModule from './themeModule';
 import {
   getCurrentPositionFromAPI,
   getCurrentConditionsFromAPI,
-} from './weatherProviders/accuweather';
-import getHourlyForecastFromAPI from './weatherProviders/weatherbit';
+} from './api/weatherProviders/accuweather';
+import getHourlyForecastFromAPI from './api/weatherProviders/weatherbit';
 
 Vue.use(Vuex);
 

@@ -13,7 +13,8 @@ const getHourlyForecastForCoordinates = async ({ latitude, longitude }) => {
     APIKey: process.env.VUE_APP_WEATHERBIT_KEY,
   });
   const hourlyForecastData = await getAPIData(hourlyForecastAPIUrl);
-  return hourlyForecastData;
+  if (hourlyForecastData.data) return hourlyForecastData;
+  throw new Error('Помилка при отриманні погодиннго прогнозу');
 };
 
 const mapWeatherbitIconCodeToStandard = weatherbitIconCode => {

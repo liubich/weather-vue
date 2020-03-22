@@ -1,15 +1,11 @@
 import * as utils from './weatherutils';
 import getAPIData from '../apiutils';
 
-export const getCurrentPositionFromAPI = async state => {
-  const getCurrentPositionAPIUrl = ({ latitude, longitude, APIkey }) =>
+export const getCurrentPositionFromAPI = async ({ latitude, longitude }) => {
+  const getCurrentPositionAPIUrl = (APIkey = process.env.VUE_APP_ACCUWEATHER_KEY) =>
     `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua`;
 
-  const currentPositionAPIUrl = getCurrentPositionAPIUrl({
-    latitude: state.currentPosition.latitude,
-    longitude: state.currentPosition.longitude,
-    APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
-  });
+  const currentPositionAPIUrl = getCurrentPositionAPIUrl();
   const positionJson = await getAPIData(currentPositionAPIUrl);
   if (positionJson.Key) {
     return {

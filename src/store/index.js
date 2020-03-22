@@ -96,7 +96,10 @@ export default new Vuex.Store({
     },
 
     async getCurrentPosition({ commit, state, dispatch }) {
-      const currentPositionData = await getCurrentPositionFromAPI(state).catch(e => {
+      const currentPositionData = await getCurrentPositionFromAPI({
+        latitude: state.currentPosition.latitude,
+        longitude: state.currentPosition.longitude,
+      }).catch(e => {
         commit(mutationTypes.SAVE_ERROR_DESC, e.message);
         dispatch('getHourlyForecastForCurrentLocation');
       });

@@ -111,7 +111,9 @@ export default new Vuex.Store({
     },
 
     async getCurrentWeatherData({ commit, state }) {
-      const currentConditionsData = await getCurrentConditionsFromAPI(state).catch(e => {
+      const currentConditionsData = await getCurrentConditionsFromAPI(
+        state.currentPosition.positionKey,
+      ).catch(e => {
         commit(mutationTypes.SAVE_ERROR_DESC, e.message);
       });
       if (currentConditionsData) {

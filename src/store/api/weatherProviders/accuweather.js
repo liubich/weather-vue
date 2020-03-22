@@ -72,13 +72,12 @@ const translateJSONToCurrentWeather = jsonResponse => {
   };
 };
 
-const getCurrentWeatherAPIUrl = ({ positionKey, APIkey }) =>
+const getCurrentWeatherAPIUrl = ({ positionKey, APIkey = process.env.VUE_APP_ACCUWEATHER_KEY }) =>
   `https://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
 
-export const getCurrentConditionsFromAPI = async state => {
+export const getCurrentConditionsFromAPI = async positionKey => {
   const currentWeatherUrl = getCurrentWeatherAPIUrl({
-    positionKey: state.currentPosition.positionKey,
-    APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
+    positionKey,
   });
 
   const currentWeatherJson = await getAPIData(currentWeatherUrl).catch(e => {

@@ -121,7 +121,10 @@ export default new Vuex.Store({
       }
     },
     async getHourlyForecastForCurrentLocation({ commit, state }) {
-      const hourlyForecastData = await getHourlyForecastFromAPI(state).catch(e => {
+      const hourlyForecastData = await getHourlyForecastFromAPI({
+        latitude: state.currentPosition.latitude,
+        longitude: state.currentPosition.longitude,
+      }).catch(e => {
         commit(mutationTypes.SAVE_ERROR_DESC, e.message);
       });
       if (hourlyForecastData) commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastData);

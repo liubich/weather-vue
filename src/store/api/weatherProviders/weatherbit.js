@@ -12,9 +12,7 @@ const getHourlyForecastForCoordinates = async ({ latitude, longitude }) => {
     longitude,
     APIKey: process.env.VUE_APP_WEATHERBIT_KEY,
   });
-  const hourlyForecastData = await getAPIData(hourlyForecastAPIUrl).catch(e => {
-    throw e;
-  });
+  const hourlyForecastData = await getAPIData(hourlyForecastAPIUrl);
   return hourlyForecastData;
 };
 

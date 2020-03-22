@@ -10,9 +10,7 @@ export const getCurrentPositionFromAPI = async state => {
     longitude: state.currentPosition.longitude,
     APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
   });
-  const positionJson = await getAPIData(currentPositionAPIUrl).catch(e => {
-    throw e;
-  });
+  const positionJson = await getAPIData(currentPositionAPIUrl);
   if (positionJson.Key) {
     return {
       Key: positionJson.Key,

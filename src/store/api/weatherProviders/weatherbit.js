@@ -161,14 +161,9 @@ export default async function getHourlyForecastFromAPI({ latitude, longitude }) 
     latitude,
     longitude,
   });
-  if (hourlyForecastDataFromAPI.data) {
-    return {
-      data: translateJSONToHourlyForecast(hourlyForecastDataFromAPI.data),
-      datesWithColumnsNumber: getAllDatesForHeader(hourlyForecastDataFromAPI.data),
-    };
-  }
+
   return {
-    error: true,
-    errorDescription: 'Помилка отримання погодинного прогнозу',
+    data: translateJSONToHourlyForecast(hourlyForecastDataFromAPI.data),
+    datesWithColumnsNumber: getAllDatesForHeader(hourlyForecastDataFromAPI.data),
   };
 }

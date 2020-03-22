@@ -80,13 +80,8 @@ export const getCurrentConditionsFromAPI = async positionKey => {
     positionKey,
   });
 
-  const currentWeatherJson = await getAPIData(currentWeatherUrl).catch(e => {
-    throw e;
-  });
-  if (currentWeatherJson) {
-    const currentWeatherForStore = translateJSONToCurrentWeather(currentWeatherJson[0]);
-    currentWeatherForStore.dataLoadedFromAPI = true;
-    return currentWeatherForStore;
-  }
-  return null;
+  const currentWeatherJson = await getAPIData(currentWeatherUrl);
+  const currentWeatherForStore = translateJSONToCurrentWeather(currentWeatherJson[0]);
+  currentWeatherForStore.dataLoadedFromAPI = true;
+  return currentWeatherForStore;
 };

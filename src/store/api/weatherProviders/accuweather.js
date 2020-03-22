@@ -13,7 +13,6 @@ export const getCurrentPositionFromAPI = async state => {
   const positionJson = await getAPIData(currentPositionAPIUrl).catch(e => {
     throw e;
   });
-  if (positionJson.error) return positionJson;
   if (positionJson.Key) {
     return {
       Key: positionJson.Key,

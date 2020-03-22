@@ -162,7 +162,6 @@ export default async function getHourlyForecastFromAPI(state) {
     latitude: state.currentPosition.latitude,
     longitude: state.currentPosition.longitude,
   });
-  if (hourlyForecastDataFromAPI.error) return hourlyForecastDataFromAPI;
   if (hourlyForecastDataFromAPI.data) {
     return {
       data: translateJSONToHourlyForecast(hourlyForecastDataFromAPI.data),

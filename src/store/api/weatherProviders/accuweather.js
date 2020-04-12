@@ -1,20 +1,6 @@
 import * as utils from './weatherutils';
 import getAPIData from '../apiutils';
 
-export const getCurrentPositionFromAPI = async ({ latitude, longitude }) => {
-  const getCurrentPositionAPIUrl = (APIkey = process.env.VUE_APP_ACCUWEATHER_KEY) =>
-    `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua`;
-
-  const currentPositionAPIUrl = getCurrentPositionAPIUrl();
-  const positionJson = await getAPIData(currentPositionAPIUrl);
-
-  return {
-    Key: positionJson.Key,
-    City: positionJson.LocalizedName,
-    dataLoadedFromAPI: true,
-  };
-};
-
 const getActualIconNumber = iconNumber => {
   const iconMapping = {
     3: '2',
@@ -72,6 +58,20 @@ const translateJSONToCurrentWeather = jsonResponse => {
 
 const getCurrentWeatherAPIUrl = ({ positionKey, APIkey = process.env.VUE_APP_ACCUWEATHER_KEY }) =>
   `https://dataservice.accuweather.com/currentconditions/v1/${positionKey}?apikey=${APIkey}&language=uk-ua&details=true`;
+
+export const getCurrentPositionFromAPI = async ({ latitude, longitude }) => {
+  const getCurrentPositionAPIUrl = (APIkey = process.env.VUE_APP_ACCUWEATHER_KEY) =>
+    `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${APIkey}&q=${latitude},${longitude}&language=uk-ua`;
+
+  const currentPositionAPIUrl = getCurrentPositionAPIUrl();
+  const positionJson = await getAPIData(currentPositionAPIUrl);
+
+  return {
+    Key: positionJson.Key,
+    City: positionJson.LocalizedName,
+    dataLoadedFromAPI: true,
+  };
+};
 
 export const getCurrentConditionsFromAPI = async positionKey => {
   const currentWeatherUrl = getCurrentWeatherAPIUrl({

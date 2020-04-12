@@ -7,14 +7,12 @@ export const getCurrentPositionFromAPI = async ({ latitude, longitude }) => {
 
   const currentPositionAPIUrl = getCurrentPositionAPIUrl();
   const positionJson = await getAPIData(currentPositionAPIUrl);
-  if (positionJson.Key) {
-    return {
-      Key: positionJson.Key,
-      City: positionJson.LocalizedName,
-      dataLoadedFromAPI: true,
-    };
-  }
-  throw new Error('Помилка при отриманні поточної погоди');
+
+  return {
+    Key: positionJson.Key,
+    City: positionJson.LocalizedName,
+    dataLoadedFromAPI: true,
+  };
 };
 
 const getActualIconNumber = iconNumber => {

@@ -69,17 +69,17 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    isCurrentWeatherGot: state => !!state.currentWeather.description,
-    isHourlyForecastGot: state => state.hourlyForecast.dataLoadedFromAPI,
+    isCurrentWeatherGot: (state) => !!state.currentWeather.description,
+    isHourlyForecastGot: (state) => state.hourlyForecast.dataLoadedFromAPI,
   },
   actions: {
     getCurrentPositionAndWeather({ commit, dispatch }) {
-      const onSuccess = pos => {
+      const onSuccess = (pos) => {
         commit(mutationTypes.SAVE_COORDINATES, pos.coords);
         dispatch('getCurrentPosition');
       };
 
-      const onError = error => {
+      const onError = (error) => {
         commit(mutationTypes.SAVE_ERROR_DESC, utils.getReadableErrorDesc(error));
       };
 
@@ -99,7 +99,7 @@ export default new Vuex.Store({
       const currentPositionData = await getCurrentPositionFromAPI({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
-      }).catch(e => {
+      }).catch((e) => {
         commit(mutationTypes.SAVE_ERROR_DESC, e.message);
         dispatch('getHourlyForecastForCurrentLocation');
       });
@@ -113,7 +113,7 @@ export default new Vuex.Store({
     async getCurrentWeatherData({ commit, state }) {
       const currentConditionsData = await getCurrentConditionsFromAPI(
         state.currentPosition.positionKey,
-      ).catch(e => {
+      ).catch((e) => {
         commit(mutationTypes.SAVE_ERROR_DESC, e.message);
       });
       if (currentConditionsData) {
@@ -124,7 +124,7 @@ export default new Vuex.Store({
       const hourlyForecastData = await getHourlyForecastFromAPI({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
-      }).catch(e => {
+      }).catch((e) => {
         commit(mutationTypes.SAVE_ERROR_DESC, e.message);
       });
       if (hourlyForecastData) commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastData);

@@ -17,7 +17,7 @@ const getHourlyForecastForCoordinates = async ({ latitude, longitude }) => {
   throw new Error('Помилка при отриманні погодиннго прогнозу');
 };
 
-const mapWeatherbitIconCodeToStandard = weatherbitIconCode => {
+const mapWeatherbitIconCodeToStandard = (weatherbitIconCode) => {
   const iconsMapping = {
     t01d: '15',
     t02d: '15',
@@ -85,8 +85,8 @@ const mapWeatherbitIconCodeToStandard = weatherbitIconCode => {
   return iconsMapping[weatherbitIconCode] || weatherbitIconCode;
 };
 
-const translateJSONToHourlyForecast = hourlyForecastDataFromAPI => {
-  return hourlyForecastDataFromAPI.map(hourForecast => {
+const translateJSONToHourlyForecast = (hourlyForecastDataFromAPI) => {
+  return hourlyForecastDataFromAPI.map((hourForecast) => {
     const iconNumber = mapWeatherbitIconCodeToStandard(hourForecast.weather.icon);
     const localTimestamp = new Date(hourForecast.timestamp_local);
     return {
@@ -113,14 +113,14 @@ const translateJSONToHourlyForecast = hourlyForecastDataFromAPI => {
   });
 };
 
-const getAllDatesForHeader = hourlyForecastDataFromAPI => {
-  const hourlyWeatherDatesInDate = hourlyForecastDataFromAPI.map(hourForecast =>
+const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {
+  const hourlyWeatherDatesInDate = hourlyForecastDataFromAPI.map((hourForecast) =>
     startOfDay(new Date(hourForecast.timestamp_local)),
   );
 
-  const getUniqueItems = items => [...new Set(items)];
+  const getUniqueItems = (items) => [...new Set(items)];
 
-  const formatTooltip = date => {
+  const formatTooltip = (date) => {
     return isToday(date) || isTomorrow(date)
       ? date.toLocaleDateString('uk-UA', {
           weekday: 'long',
@@ -133,7 +133,7 @@ const getAllDatesForHeader = hourlyForecastDataFromAPI => {
         });
   };
 
-  const getDisplayStringByDate = date => {
+  const getDisplayStringByDate = (date) => {
     if (isToday(date)) return 'Сьогодні';
     if (isTomorrow(date)) return 'Завтра';
     return date.toLocaleDateString('uk-UA', {
@@ -141,16 +141,16 @@ const getAllDatesForHeader = hourlyForecastDataFromAPI => {
     });
   };
 
-  const hourlyWeatherDatesInMilliseconds = hourlyWeatherDatesInDate.map(arrayItem => {
+  const hourlyWeatherDatesInMilliseconds = hourlyWeatherDatesInDate.map((arrayItem) => {
     return arrayItem.valueOf();
   });
-  return getUniqueItems(hourlyWeatherDatesInMilliseconds).map(dateItemInms => {
+  return getUniqueItems(hourlyWeatherDatesInMilliseconds).map((dateItemInms) => {
     const dateItemAsDate = new Date(dateItemInms);
     return {
       displayString: getDisplayStringByDate(dateItemAsDate),
       tooltipString: formatTooltip(dateItemAsDate),
       columnsNumber: hourlyWeatherDatesInDate.filter(
-        date => date.getDay() === dateItemAsDate.getDay(),
+        (date) => date.getDay() === dateItemAsDate.getDay(),
       ).length,
     };
   });

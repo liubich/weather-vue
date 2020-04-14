@@ -16,7 +16,7 @@ export default function localStoragePlugin(store) {
     );
     store.commit(mutationTypes.SAVE_CURRENT_WEATHER, JSON.parse(currentWeatherFromLocalStorage));
   }
-  store.subscribe(mutation => {
+  store.subscribe((mutation) => {
     switch (mutation.type) {
       case mutationTypes.SAVE_CURRENT_POSITION_DATA:
         if (mutation.payload.dataLoadedFromAPI) {

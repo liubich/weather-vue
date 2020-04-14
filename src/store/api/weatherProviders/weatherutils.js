@@ -1,16 +1,16 @@
-export const convertPressureFromhPaTommHg = pressureValuehPa =>
+export const convertPressureFromhPaTommHg = (pressureValuehPa) =>
   Math.round(pressureValuehPa * 0.75006375541921);
 
-export const convertWindSpeedFromKmPerHToMPerS = windSpeedKmPerH =>
+export const convertWindSpeedFromKmPerHToMPerS = (windSpeedKmPerH) =>
   Math.round((windSpeedKmPerH / 3.6) * 10) / 10;
 
-export const getWindBackgroundColor = windSpeedMPerS => {
+export const getWindBackgroundColor = (windSpeedMPerS) => {
   const windSpeedNumberForMapping = Math.ceil(windSpeedMPerS / 3);
   const windSpeedToBackgroundMapping = ['#FFF', '#DDD', '#BBB', '#999', '#000'];
   return windSpeedToBackgroundMapping[windSpeedNumberForMapping] || '#f36d6d';
 };
 
-export const getWindDirection = deg => {
+export const getWindDirection = (deg) => {
   const rumb = Math.ceil((deg - 11.25) / 22.5);
   const windDirectionTranslator = {
     0: 'Пн',
@@ -35,6 +35,6 @@ export const getWindDirection = deg => {
   return windDirectionTranslator[rumb];
 };
 
-export const formatTemperature = temperature => {
+export const formatTemperature = (temperature) => {
   return temperature > 0 ? `+ ${Math.round(temperature)}` : Math.round(temperature);
 };

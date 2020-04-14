@@ -1,7 +1,7 @@
 import * as utils from './weatherutils';
 import getAPIData from '../apiutils';
 
-const getActualIconNumber = iconNumber => {
+const getActualIconNumber = (iconNumber) => {
   const iconMapping = {
     3: '2',
     8: '7',
@@ -13,7 +13,7 @@ const getActualIconNumber = iconNumber => {
   return iconMapping[iconNumber] || iconNumber;
 };
 
-const translatePressureTendency = pressureTendencyCode => {
+const translatePressureTendency = (pressureTendencyCode) => {
   const pressureTendencyMapping = {
     F: 'падає',
     S: 'стабільний',
@@ -33,7 +33,7 @@ const translatePrecipitationType = (precipitationTypeInEnglish, languageCode = '
   return precipitationsTranslator[languageCode][precipitationCode];
 };
 
-const translateJSONToCurrentWeather = jsonResponse => {
+const translateJSONToCurrentWeather = (jsonResponse) => {
   const iconNumber = getActualIconNumber(jsonResponse.WeatherIcon);
   return {
     icon: `img/weather-icons/${iconNumber || 'na'}.png`,
@@ -73,7 +73,7 @@ export const getCurrentPositionFromAPI = async ({ latitude, longitude }) => {
   };
 };
 
-export const getCurrentConditionsFromAPI = async positionKey => {
+export const getCurrentConditionsFromAPI = async (positionKey) => {
   const currentWeatherUrl = getCurrentWeatherAPIUrl({
     positionKey,
   });

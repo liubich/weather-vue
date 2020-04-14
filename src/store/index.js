@@ -5,6 +5,11 @@ import * as utils from './utils';
 import localStoragePlugin from './localStoragePlugin';
 import darkThemePlugin from './darkThemePlugin';
 import themeModule from './themeModule';
+import {
+  getCurrentPositionFromAPI,
+  getCurrentConditionsFromAPI,
+  getHourlyForecastFromAPI,
+} from './api/index';
 
 Vue.use(Vuex);
 
@@ -71,7 +76,7 @@ export default new Vuex.Store({
     getCurrentPositionAndWeather({ commit, dispatch }) {
       const onSuccess = pos => {
         commit(mutationTypes.SAVE_COORDINATES, pos.coords);
-        dispatch('getCurrentPositionKey');
+        dispatch('getCurrentPosition');
       };
 
       const onError = error => {
@@ -90,62 +95,39 @@ export default new Vuex.Store({
       navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
     },
 
-    getCurrentPositionKey({ commit, state, dispatch }) {
-      const currentPositionAPIUrl = utils.getCurrentPositionAPIUrl({
+    async getCurrentPosition({ commit, state, dispatch }) {
+      const currentPositionData = await getCurrentPositionFromAPI({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
-        APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
+      }).catch(e => {
+        commit(mutationTypes.SAVE_ERROR_DESC, e.message);
+        dispatch('getHourlyForecastForCurrentLocation');
       });
-      fetch(currentPositionAPIUrl)
-        .then(response => {
-          if (response.ok) return response.json();
-          commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
-          throw new Error(`HTTP error, status = ${response.status}`);
-        })
-        .then(positionJson => {
-          if (positionJson.Key) {
-            commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, {
-              Key: positionJson.Key,
-              City: positionJson.LocalizedName,
-              dataLoadedFromAPI: true,
-            });
-            dispatch('getCurrentWeatherData');
-            dispatch('getHourlyForecastForCurrentLocation');
-            return;
-          }
-          commit(mutationTypes.SAVE_ERROR_DESC, 'Помилка при отриманні поточної погоди');
-        });
+      if (currentPositionData) {
+        commit(mutationTypes.SAVE_CURRENT_POSITION_DATA, currentPositionData);
+        dispatch('getCurrentWeatherData');
+        dispatch('getHourlyForecastForCurrentLocation');
+      }
     },
 
-    getCurrentWeatherData({ commit, state }) {
-      const currentWeatherUrl = utils.getCurrentWeatherAPIUrl({
-        positionKey: state.currentPosition.positionKey,
-        APIkey: process.env.VUE_APP_ACCUWEATHER_KEY,
+    async getCurrentWeatherData({ commit, state }) {
+      const currentConditionsData = await getCurrentConditionsFromAPI(
+        state.currentPosition.positionKey,
+      ).catch(e => {
+        commit(mutationTypes.SAVE_ERROR_DESC, e.message);
       });
-      fetch(currentWeatherUrl)
-        .then(response => {
-          if (response.ok) return response.json();
-          commit(mutationTypes.SAVE_ERROR_DESC, response.statusText);
-          throw new Error(`HTTP error, status = ${response.status}`);
-        })
-        .then(currentWeatherJson => {
-          const currentWeatherForStore = utils.translateJSONToCurrentWeather(currentWeatherJson[0]);
-          currentWeatherForStore.dataLoadedFromAPI = true;
-          commit(mutationTypes.SAVE_CURRENT_WEATHER, currentWeatherForStore);
-        });
+      if (currentConditionsData) {
+        commit(mutationTypes.SAVE_CURRENT_WEATHER, currentConditionsData);
+      }
     },
     async getHourlyForecastForCurrentLocation({ commit, state }) {
-      const hourlyForecastDataFromAPI = await utils.getHourlyForecastForCoordinates({
+      const hourlyForecastData = await getHourlyForecastFromAPI({
         latitude: state.currentPosition.latitude,
         longitude: state.currentPosition.longitude,
+      }).catch(e => {
+        commit(mutationTypes.SAVE_ERROR_DESC, e.message);
       });
-      if (hourlyForecastDataFromAPI.data) {
-        const hourlyForecastDataForStore = {
-          data: utils.translateJSONToHourlyForecast(hourlyForecastDataFromAPI.data),
-          datesWithColumnsNumber: utils.getAllDatesForHeader(hourlyForecastDataFromAPI.data),
-        };
-        commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastDataForStore);
-      }
+      if (hourlyForecastData) commit(mutationTypes.SAVE_HOURLY_FORECAST, hourlyForecastData);
     },
   },
   plugins: [localStoragePlugin, darkThemePlugin],

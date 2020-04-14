@@ -1,4 +1,4 @@
-export const getReadableErrorDesc = error => {
+export const getReadableErrorDesc = (error) => {
   const errorCodeToDescription = {
     [error.PERMISSION_DENIED]: 'Будь ласка, надайте сторінці доступ до місцезнаходження',
     [error.POSITION_UNAVAILABLE]: 'Недоступні дані про поточне місцезнаходження',
@@ -7,12 +7,12 @@ export const getReadableErrorDesc = error => {
   return errorCodeToDescription[error.code] || 'Невідома помилка';
 };
 
-export const saveCurrentPositionToLocalStorage = currentPosition => {
+export const saveCurrentPositionToLocalStorage = (currentPosition) => {
   if (!localStorage) return;
   localStorage.setItem('lastKnownPosition', JSON.stringify(currentPosition));
 };
 
-export const saveCurrentWeatherToLocalStorage = currentWeather => {
+export const saveCurrentWeatherToLocalStorage = (currentWeather) => {
   if (!localStorage) return;
   localStorage.setItem('currentWeather', JSON.stringify(currentWeather));
 };

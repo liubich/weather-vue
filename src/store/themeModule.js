@@ -10,6 +10,6 @@ export default {
     },
   },
   getters: {
-    isDarkTheme: state => state.preferredTheme === 'dark',
+    isDarkTheme: (state) => state.preferredTheme === 'dark',
   },
 };

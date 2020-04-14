@@ -76,7 +76,7 @@ export default {
   name: 'CurrentWeather',
   props: ['weather', 'currentPosition'],
   filters: {
-    distanceToNowInWords: dateTimeStamp => formatDistanceToNow(dateTimeStamp, { locale: uk }),
+    distanceToNowInWords: (dateTimeStamp) => formatDistanceToNow(dateTimeStamp, { locale: uk }),
   },
 };
 </script>

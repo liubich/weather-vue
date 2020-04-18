@@ -3,6 +3,7 @@ import getAPIData from '../apiutils';
 import * as utils from './weatherutils';
 
 const API_KEY = process.env.VUE_APP_CLIMACELL_API_KEY;
+const BASE_URL = 'https://api.climacell.co/v3/weather/forecast/';
 
 const getImageNumber = (weatherCode, isDayTime) => {
   const weatherCodeTranslatorDay = {
@@ -140,7 +141,7 @@ export default async function getHourlyForecastFromAPI({ latitude, longitude }) 
     apikey: API_KEY,
     'Content-Type': 'application/JSON',
   };
-  const hourlyForecastUrl = `https://api.climacell.co/v3/weather/forecast/hourly?lat=${latitude}&lon=${longitude}&unit_system=si&fields=temp%3AC,feels_like%3AC,wind_speed%3Am%2Fs,wind_gust%3Am%2Fs,baro_pressure%3AmmHg,wind_direction%3Adegrees,sunrise,sunset,weather_code&start_time=now`;
+  const hourlyForecastUrl = `${BASE_URL}hourly?lat=${latitude}&lon=${longitude}&unit_system=si&fields=temp%3AC,feels_like%3AC,wind_speed%3Am%2Fs,wind_gust%3Am%2Fs,baro_pressure%3AmmHg,wind_direction%3Adegrees,sunrise,sunset,weather_code&start_time=now`;
   const hourlyForecastDataFromAPI = await getAPIData(hourlyForecastUrl, headers);
   return {
     data: translateAPIDataToHourlyForecast(hourlyForecastDataFromAPI),

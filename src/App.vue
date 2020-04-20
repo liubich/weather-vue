@@ -69,6 +69,7 @@ export default {
 <style>
 .theme-light {
   --main-text-color: black;
+  --text-hover-color: #3f3f3f;
   --shadow-text-color: dimgray;
   --main-back-color: white;
   --additional-back-color: #87ceff;
@@ -77,6 +78,7 @@ export default {
 
 .theme-dark {
   --main-text-color: darkgreen;
+  --text-hover-color: #019701;
   --shadow-text-color: #115011;
   --main-back-color: #222;
   --additional-back-color: #222;

@@ -70,6 +70,10 @@ export default {
     cursor: pointer;
     width: 24px;
     padding: 5px;
+
+    &:hover {
+      color: var(--text-hover-color);
+    }
   }
 }
 </style>

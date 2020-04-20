@@ -2,21 +2,23 @@ import { SAVE_PREFERRED_THEME } from './mutationTypes';
 
 export default {
   state: {
-    osTheme: null,
-    localStorageTheme: null,
-    toggleTheme: null,
+    preferredTheme: {
+      fromOs: null,
+      fromLocalStorage: null,
+      fromToggle: null,
+    },
   },
   mutations: {
-    [SAVE_PREFERRED_THEME](state, { theme, source }) {
+    [SAVE_PREFERRED_THEME]({ preferredTheme }, { theme, source }) {
       switch (source) {
         case 'os':
-          state.osTheme = theme;
+          preferredTheme.fromOs = theme;
           break;
         case 'localstorage':
-          state.localStorageTheme = theme;
+          preferredTheme.fromLocalStorage = theme;
           break;
         case 'toggle':
-          state.toggleTheme = theme;
+          preferredTheme.fromToggle = theme;
           break;
         default:
           break;
@@ -24,9 +26,11 @@ export default {
     },
   },
   getters: {
-    isDarkTheme: (state) =>
-      state.toggleTheme === 'dark' ||
-      (!state.toggleTheme && state.localStorageTheme === 'dark') ||
-      (!state.toggleTheme && !state.localStorageTheme && state.osTheme === 'dark'),
+    isDarkTheme: ({ preferredTheme }) =>
+      preferredTheme.fromToggle === 'dark' ||
+      (!preferredTheme.fromToggle && preferredTheme.fromLocalStorage === 'dark') ||
+      (!preferredTheme.fromToggle &&
+        !preferredTheme.fromLocalStorage &&
+        preferredTheme.fromOs === 'dark'),
   },
 };

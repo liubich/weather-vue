@@ -24,6 +24,9 @@ export default {
     },
   },
   getters: {
-    isDarkTheme: (state) => state.osTheme === 'dark',
+    isDarkTheme: (state) =>
+      state.toggleTheme === 'dark' ||
+      (!state.toggleTheme && state.localStorageTheme === 'dark') ||
+      (!state.toggleTheme && !state.localStorageTheme && state.osTheme === 'dark'),
   },
 };

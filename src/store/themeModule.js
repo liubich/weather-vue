@@ -25,6 +25,12 @@ export default {
       }
     },
   },
+  actions: {
+    toggleTheme: ({ commit, getters }) => {
+      const theme = getters.isDarkTheme ? 'light' : 'dark';
+      commit(SAVE_PREFERRED_THEME, { theme, source: 'toggle' });
+    },
+  },
   getters: {
     isDarkTheme: ({ preferredTheme }) =>
       preferredTheme.fromToggle === 'dark' ||

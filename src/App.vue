@@ -1,7 +1,7 @@
 <template>
   <div id="app" :class="isDarkTheme ? 'theme-dark' : 'theme-light'">
     <div class="container">
-      <Header :currentPosition="currentPosition" />
+      <Header :currentPosition="currentPosition" v-if="isCurrentWeatherGot" />
       <CurrentWeather :weather="currentWeather" v-if="isCurrentWeatherGot" />
       <h2 v-else-if="errorDesc" class="weather-container__no-pos">
         {{ errorDesc }}

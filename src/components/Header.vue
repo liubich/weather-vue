@@ -54,19 +54,16 @@ export default {
 .header {
   display: grid;
   grid-template-columns: 90% 10%;
-  grid-template-areas: 'city theme-toggle';
   width: 100%;
   background-color: var(--additional-back-color, #8cceea);
 
   &__city {
-    grid-area: 'city';
     padding: 5px;
     font-family: Oswald, sans-serif;
     font-size: 16px;
   }
 
   &__theme-toggle {
-    grid-area: 'theme-toggle';
     cursor: pointer;
     width: 24px;
     padding: 5px;

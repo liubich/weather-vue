@@ -1,6 +1,5 @@
 <template functional>
   <div class="current-weather">
-    <h1 class="current-weather__city">Погода у {{ props.currentPosition.city }}</h1>
     <h2 class="current-weather__header">Поточні спостереження</h2>
     <h2 class="current-weather__temperature">
       <span class="current-weather__temperature-digit">{{ props.weather.temperature }}</span>
@@ -88,7 +87,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
-    'city city city'
     'head head head'
     'image temp wind'
     'image temp pressure'
@@ -127,14 +125,6 @@ export default {
     font-family: Roboto, sans-serif;
     color: var(--shadow-text-color, dimgray);
     font-size: 12px;
-  }
-
-  &__city {
-    grid-area: city;
-    padding-top: 4px;
-    background-color: var(--main-back-color, white);
-    font-family: Oswald, sans-serif;
-    font-size: 16px;
   }
 
   &__temperature {

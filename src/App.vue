@@ -1,11 +1,8 @@
 <template>
   <div id="app" :class="isDarkTheme ? 'theme-dark' : 'theme-light'">
     <div class="container">
-      <CurrentWeather
-        :weather="currentWeather"
-        :currentPosition="currentPosition"
-        v-if="isCurrentWeatherGot"
-      />
+      <Header :currentPosition="currentPosition" v-if="isCurrentWeatherGot" />
+      <CurrentWeather :weather="currentWeather" v-if="isCurrentWeatherGot" />
       <h2 v-else-if="errorDesc" class="weather-container__no-pos">
         {{ errorDesc }}
       </h2>
@@ -19,6 +16,7 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 import CurrentWeather from './components/CurrentWeather.vue';
 import HourlyForecast from './components/HourlyForecast.vue';
+import Header from './components/Header.vue';
 
 export default {
   name: 'app',
@@ -26,6 +24,7 @@ export default {
     this.getCurrentPositionAndWeather();
   },
   components: {
+    Header,
     CurrentWeather,
     HourlyForecast,
   },
@@ -70,6 +69,7 @@ export default {
 <style>
 .theme-light {
   --main-text-color: black;
+  --text-hover-color: #3f3f3f;
   --shadow-text-color: dimgray;
   --main-back-color: white;
   --additional-back-color: #87ceff;
@@ -78,6 +78,7 @@ export default {
 
 .theme-dark {
   --main-text-color: darkgreen;
+  --text-hover-color: #019701;
   --shadow-text-color: #115011;
   --main-back-color: #222;
   --additional-back-color: #222;

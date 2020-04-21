@@ -33,10 +33,8 @@ export default {
   },
   getters: {
     isDarkTheme: ({ preferredTheme }) =>
-      preferredTheme.fromToggle === 'dark' ||
-      (!preferredTheme.fromToggle && preferredTheme.fromLocalStorage === 'dark') ||
-      (!preferredTheme.fromToggle &&
-        !preferredTheme.fromLocalStorage &&
-        preferredTheme.fromOs === 'dark'),
+      [preferredTheme.fromToggle, preferredTheme.fromLocalStorage, preferredTheme.fromOs].filter(
+        Boolean,
+      )[0] === 'dark',
   },
 };

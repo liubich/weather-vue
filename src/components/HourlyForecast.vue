@@ -132,10 +132,11 @@
                 transform: `rotate(${hourForecast.windDirectionDeg}deg)`,
               }"
             >
-              <WindArrow
+              <component
                 class="data-table__wind-direction-image"
                 :style="{ color: hourForecast.windBackgroundColor }"
-              />
+                :is="injections.components.WindArrow"
+              ></component>
             </div>
           </td>
         </tr>
@@ -150,7 +151,13 @@ import WindArrow from '../../assets/images/location-arrow-solid.svg';
 export default {
   name: 'HourlyForecast',
   props: { weather: Object },
-  components: { WindArrow },
+  inject: {
+    components: {
+      default: {
+        WindArrow,
+      },
+    },
+  },
 };
 </script>
 

@@ -1,11 +1,11 @@
-<template functional>
+<template>
   <div class="hourly-forecast">
     <table class="hourly-forecast__data-table data-table">
       <tbody>
         <tr>
           <th class="data-table__headings-column">День тижня</th>
           <th
-            v-for="(day, index) in props.weather.datesWithColumnsNumber"
+            v-for="(day, index) in weather.datesWithColumnsNumber"
             :key="index"
             class="data-table__day-row"
             :colspan="day.columnsNumber"
@@ -18,7 +18,7 @@
         <tr>
           <th class="data-table__headings-column">Час</th>
           <th
-            v-for="(hourForecast, index) in props.weather.data"
+            v-for="(hourForecast, index) in weather.data"
             :key="index"
             class="data-table__time cell"
             :class="{
@@ -32,7 +32,7 @@
         <tr>
           <td class="data-table__headings-column">Опис погоди</td>
           <td
-            v-for="(hourForecast, index) in props.weather.data"
+            v-for="(hourForecast, index) in weather.data"
             :key="index"
             class="data-table__icon icon cell"
             :data-tooltip="hourForecast.weatherDescription"
@@ -47,7 +47,7 @@
         <tr>
           <td class="data-table__headings-column">Температура, °C</td>
           <td
-            v-for="(hourForecast, index) in props.weather.data"
+            v-for="(hourForecast, index) in weather.data"
             :key="index"
             class="data-table__temperature cell"
             :class="{
@@ -61,7 +61,7 @@
         <tr>
           <td class="data-table__headings-column">Відчувається як, °C</td>
           <td
-            v-for="(hourForecast, index) in props.weather.data"
+            v-for="(hourForecast, index) in weather.data"
             :key="index"
             class="data-table__feels-like cell"
             :class="{
@@ -75,7 +75,7 @@
         <tr>
           <td class="data-table__headings-column">Тиск, мм.рт.ст</td>
           <td
-            v-for="(hourForecast, index) in props.weather.data"
+            v-for="(hourForecast, index) in weather.data"
             :key="index"
             class="data-table__pressure cell"
             :class="{
@@ -89,7 +89,7 @@
         <tr>
           <td class="data-table__headings-column">Вітер: швидкість, м/с</td>
           <td
-            v-for="(hourForecast, index) in props.weather.data"
+            v-for="(hourForecast, index) in weather.data"
             :key="index"
             class="data-table__wind-speed cell"
             :class="{
@@ -103,7 +103,7 @@
         <tr>
           <td class="data-table__headings-column">Пориви, м/с</td>
           <td
-            v-for="(hourForecast, index) in props.weather.data"
+            v-for="(hourForecast, index) in weather.data"
             :key="index"
             class="data-table__wind-gust-speed cell"
             :class="{
@@ -117,7 +117,7 @@
         <tr>
           <td class="data-table__headings-column">Напрямок</td>
           <td
-            v-for="(hourForecast, index) in props.weather.data"
+            v-for="(hourForecast, index) in weather.data"
             :key="index"
             class="data-table__wind cell"
             :class="{
@@ -132,19 +132,10 @@
                 transform: `rotate(${hourForecast.windDirectionDeg}deg)`,
               }"
             >
-              <svg
+              <WindArrow
                 class="data-table__wind-direction-image"
-                focusable="false"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  :fill="hourForecast.windBackgroundColor"
-                  d="M444.52 3.52L28.74 195.42c-47.97
-                  22.39-31.98 92.75 19.19 92.75h175.91v175.91c0 51.17 70.36 67.17 92.75
-                  19.19l191.9-415.78c15.99-38.39-25.59-79.97-63.97-63.97z"
-                ></path>
-              </svg>
+                :style="{ color: hourForecast.windBackgroundColor }"
+              />
             </div>
           </td>
         </tr>
@@ -154,9 +145,12 @@
 </template>
 
 <script>
+import WindArrow from '../../assets/images/location-arrow-solid.svg';
+
 export default {
   name: 'HourlyForecast',
   props: { weather: Object },
+  components: { WindArrow },
 };
 </script>
 

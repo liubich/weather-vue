@@ -16,10 +16,11 @@
         :style="{ transform: `rotate(${props.weather.windDirectionDeg}deg)` }"
         class="current-weather__wind-direction"
       >
-        <div
-          :style="{ background: props.weather.windBackgroundColor }"
-          class="current-weather__wind-direction-inner"
-        ></div>
+        <component
+          class="current-weather__wind-direction-arrow"
+          :style="{ color: props.weather.windBackgroundColor }"
+          :is="injections.components.WindArrow"
+        ></component>
       </div>
       <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
         {{ props.weather.windDirection }}, {{ props.weather.windSpeed }} м/с
@@ -70,12 +71,20 @@
 <script>
 import { formatDistanceToNow } from 'date-fns';
 import { uk } from 'date-fns/locale';
+import WindArrow from '../../assets/images/location-arrow-solid.svg';
 
 export default {
   name: 'CurrentWeather',
   props: ['weather', 'currentPosition'],
   filters: {
     distanceToNowInWords: (dateTimeStamp) => formatDistanceToNow(dateTimeStamp, { locale: uk }),
+  },
+  inject: {
+    components: {
+      default: {
+        WindArrow,
+      },
+    },
   },
 };
 </script>
@@ -166,9 +175,7 @@ export default {
     padding: 0 5px;
   }
 
-  &__wind-direction-inner {
-    mask-image: url(location-arrow-solid.svg);
-    mask-size: cover;
+  &__wind-direction-arrow {
     transform: rotate(135deg);
     width: 17px;
     height: 17px;

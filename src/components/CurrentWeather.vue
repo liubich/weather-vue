@@ -1,6 +1,5 @@
 <template functional>
   <div class="current-weather">
-    <h1 class="current-weather__city">Погода у {{ props.currentPosition.city }}</h1>
     <h2 class="current-weather__header">Поточні спостереження</h2>
     <h2 class="current-weather__temperature">
       <span class="current-weather__temperature-digit">{{ props.weather.temperature }}</span>
@@ -17,10 +16,11 @@
         :style="{ transform: `rotate(${props.weather.windDirectionDeg}deg)` }"
         class="current-weather__wind-direction"
       >
-        <div
-          :style="{ background: props.weather.windBackgroundColor }"
-          class="current-weather__wind-direction-inner"
-        ></div>
+        <component
+          class="current-weather__wind-direction-arrow"
+          :style="{ color: props.weather.windBackgroundColor }"
+          :is="injections.components.WindArrow"
+        ></component>
       </div>
       <div v-if="props.weather.windSpeed" class="current-weather__wind-caption">
         {{ props.weather.windDirection }}, {{ props.weather.windSpeed }} м/с
@@ -71,12 +71,20 @@
 <script>
 import { formatDistanceToNow } from 'date-fns';
 import { uk } from 'date-fns/locale';
+import WindArrow from '../../assets/images/location-arrow-solid.svg';
 
 export default {
   name: 'CurrentWeather',
   props: ['weather', 'currentPosition'],
   filters: {
     distanceToNowInWords: (dateTimeStamp) => formatDistanceToNow(dateTimeStamp, { locale: uk }),
+  },
+  inject: {
+    components: {
+      default: {
+        WindArrow,
+      },
+    },
   },
 };
 </script>
@@ -88,7 +96,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
-    'city city city'
     'head head head'
     'image temp wind'
     'image temp pressure'
@@ -127,14 +134,6 @@ export default {
     font-family: Roboto, sans-serif;
     color: var(--shadow-text-color, dimgray);
     font-size: 12px;
-  }
-
-  &__city {
-    grid-area: city;
-    padding-top: 4px;
-    background-color: var(--main-back-color, white);
-    font-family: Oswald, sans-serif;
-    font-size: 16px;
   }
 
   &__temperature {
@@ -176,9 +175,7 @@ export default {
     padding: 0 5px;
   }
 
-  &__wind-direction-inner {
-    mask-image: url(location-arrow-solid.svg);
-    mask-size: cover;
+  &__wind-direction-arrow {
     transform: rotate(135deg);
     width: 17px;
     height: 17px;

@@ -2,14 +2,39 @@ import { SAVE_PREFERRED_THEME } from './mutationTypes';
 
 export default {
   state: {
-    preferredTheme: null,
+    preferredTheme: {
+      fromOs: null,
+      fromLocalStorage: null,
+      fromToggle: null,
+    },
   },
   mutations: {
-    [SAVE_PREFERRED_THEME](state, preferredTheme) {
-      state.preferredTheme = preferredTheme;
+    [SAVE_PREFERRED_THEME]({ preferredTheme }, { theme, source }) {
+      switch (source) {
+        case 'os':
+          preferredTheme.fromOs = theme;
+          break;
+        case 'localstorage':
+          preferredTheme.fromLocalStorage = theme;
+          break;
+        case 'toggle':
+          preferredTheme.fromToggle = theme;
+          break;
+        default:
+          break;
+      }
+    },
+  },
+  actions: {
+    toggleTheme: ({ commit, getters }) => {
+      const theme = getters.isDarkTheme ? 'light' : 'dark';
+      commit(SAVE_PREFERRED_THEME, { theme, source: 'toggle' });
     },
   },
   getters: {
-    isDarkTheme: (state) => state.preferredTheme === 'dark',
+    isDarkTheme: ({ preferredTheme }) =>
+      [preferredTheme.fromToggle, preferredTheme.fromLocalStorage, preferredTheme.fromOs].filter(
+        Boolean,
+      )[0] === 'dark',
   },
 };

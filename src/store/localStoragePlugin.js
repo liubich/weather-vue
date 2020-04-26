@@ -5,6 +5,7 @@ export default function localStoragePlugin(store) {
   if (!localStorage) return;
   const lastKnownPositionFromLocalStorage = localStorage.getItem('lastKnownPosition');
   const currentWeatherFromLocalStorage = localStorage.getItem('currentWeather');
+  const theme = localStorage.getItem('preferredTheme');
   if (
     lastKnownPositionFromLocalStorage &&
     currentWeatherFromLocalStorage &&
@@ -15,6 +16,7 @@ export default function localStoragePlugin(store) {
       JSON.parse(lastKnownPositionFromLocalStorage),
     );
     store.commit(mutationTypes.SAVE_CURRENT_WEATHER, JSON.parse(currentWeatherFromLocalStorage));
+    store.commit(mutationTypes.SAVE_PREFERRED_THEME, { theme, source: 'localstorage' });
   }
   store.subscribe((mutation) => {
     switch (mutation.type) {
@@ -29,6 +31,11 @@ export default function localStoragePlugin(store) {
       case mutationTypes.SAVE_CURRENT_WEATHER:
         if (mutation.payload.dataLoadedFromAPI) {
           utils.saveCurrentWeatherToLocalStorage({ ...mutation.payload, dataLoadedFromAPI: null });
+        }
+        break;
+      case mutationTypes.SAVE_PREFERRED_THEME:
+        if (mutation.payload.source === 'toggle') {
+          utils.savePreferredThemeToLocalStorage(mutation.payload.theme);
         }
         break;
       default:

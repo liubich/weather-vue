@@ -5,7 +5,10 @@ export default function darkThemePlugin({ commit }) {
   const preferDarkTheme = matchMedia('(prefers-color-scheme: dark)');
 
   function savePreferDarkThemeToStore(mql) {
-    commit(mutationTypes.SAVE_PREFERRED_THEME, mql.matches ? 'dark' : 'light');
+    commit(mutationTypes.SAVE_PREFERRED_THEME, {
+      theme: mql.matches ? 'dark' : 'light',
+      source: 'os',
+    });
   }
   savePreferDarkThemeToStore(preferDarkTheme);
   preferDarkTheme.addListener(savePreferDarkThemeToStore);

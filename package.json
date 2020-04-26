@@ -18,7 +18,7 @@
     "date-fns": "2.12.0",
     "register-service-worker": "1.7.1",
     "vue": "2.6.11",
-    "vuex": "3.1.3"
+    "vuex": "3.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "4.3.1",
@@ -28,18 +28,18 @@
     "@vue/eslint-config-airbnb": "5.0.2",
     "babel-eslint": "10.1.0",
     "eslint": "5.16.0",
-    "eslint-config-prettier": "6.10.1",
+    "eslint-config-prettier": "6.11.0",
     "eslint-plugin-prettier": "3.1.3",
     "eslint-plugin-vue": "6.2.2",
     "node-sass": "4.13.1",
-    "prettier": "2.0.4",
+    "prettier": "2.0.5",
     "sass-loader": "8.0.2",
-    "stylelint": "13.3.2",
+    "stylelint": "13.3.3",
     "stylelint-config-recommended-scss": "4.2.0",
     "stylelint-config-standard": "20.0.0",
     "stylelint-processor-html": "1.0.0",
-    "stylelint-scss": "3.17.0",
     "vue-svg-loader": "^0.16.0",
+    "stylelint-scss": "3.17.1",
     "vue-template-compiler": "2.6.11"
   },
   "keywords": [
@@ -50,5 +50,5 @@
   "bugs": {
     "url": "https://github.com/liubich/weather-vue/issues"
   },
-  "homepage": "https://little-weather-vue.netlify.com/"
+  "homepage": "https://little-weather-vue.netlify.app/"
 }

@@ -39,7 +39,7 @@
     "stylelint-config-standard": "20.0.0",
     "stylelint-processor-html": "1.0.0",
     "vue-svg-loader": "0.16.0",
-    "stylelint-scss": "3.17.1",
+    "stylelint-scss": "3.17.2",
     "vue-template-compiler": "2.6.11"
   },
   "keywords": [

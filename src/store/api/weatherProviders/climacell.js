@@ -72,7 +72,8 @@ const translateAPIDataToHourlyForecast = (hourlyForecastDataFromAPI) => {
     return {
       temperature: utils.formatTemperature(hourForecast.temp.value),
       appearingTemperature:
-        hourForecast.temp.value !== hourForecast.feels_like.value
+        utils.formatTemperature(hourForecast.temp.value) !==
+        utils.formatTemperature(hourForecast.feels_like.value)
           ? utils.formatTemperature(hourForecast.feels_like.value)
           : '',
       windDirectionDeg: hourForecast.wind_direction.value,

@@ -64,34 +64,39 @@ const getImageNumber = (weatherCode, isDayTime) => {
 };
 
 const translateAPIDataToHourlyForecast = (hourlyForecastDataFromAPI) => {
-  return hourlyForecastDataFromAPI.map((hourForecast) => {
-    const isDayTime =
-      hourForecast.observation_time.value >= hourForecast.sunrise.value &&
-      hourForecast.observation_time.value <= hourForecast.sunset.value;
-    const localTimestamp = new Date(hourForecast.observation_time.value);
-    return {
-      temperature: utils.formatTemperature(hourForecast.temp.value),
-      appearingTemperature:
-        utils.formatTemperature(hourForecast.temp.value) !==
-        utils.formatTemperature(hourForecast.feels_like.value)
-          ? utils.formatTemperature(hourForecast.feels_like.value)
-          : '',
-      windDirectionDeg: hourForecast.wind_direction.value,
-      pressure: Math.round(hourForecast.baro_pressure.value),
-      windBackgroundColor: utils.getWindBackgroundColor(hourForecast.wind_speed.value),
-      windDirection: utils.getWindDirection(hourForecast.wind_direction.value),
-      windSpeed: Math.round(hourForecast.wind_speed.value),
-      windGustSpeed: Math.round(hourForecast.wind_gust.value),
-      icon: getImageNumber(hourForecast.weather_code.value, isDayTime),
-      weatherDescription: hourForecast.weather_code.value,
-      time: localTimestamp.toLocaleTimeString('uk-UA', {
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-      beginNextDay: !localTimestamp.getHours(),
-      isDayTime,
-    };
-  });
+  return hourlyForecastDataFromAPI
+    .filter((hourForecast) => {
+      const localTimestamp = new Date(hourForecast.observation_time.value);
+      return localTimestamp >= Date.now();
+    })
+    .map((hourForecast) => {
+      const isDayTime =
+        hourForecast.observation_time.value >= hourForecast.sunrise.value &&
+        hourForecast.observation_time.value <= hourForecast.sunset.value;
+      const localTimestamp = new Date(hourForecast.observation_time.value);
+      return {
+        temperature: utils.formatTemperature(hourForecast.temp.value),
+        appearingTemperature:
+          utils.formatTemperature(hourForecast.temp.value) !==
+          utils.formatTemperature(hourForecast.feels_like.value)
+            ? utils.formatTemperature(hourForecast.feels_like.value)
+            : '',
+        windDirectionDeg: hourForecast.wind_direction.value,
+        pressure: Math.round(hourForecast.baro_pressure.value),
+        windBackgroundColor: utils.getWindBackgroundColor(hourForecast.wind_speed.value),
+        windDirection: utils.getWindDirection(hourForecast.wind_direction.value),
+        windSpeed: Math.round(hourForecast.wind_speed.value),
+        windGustSpeed: Math.round(hourForecast.wind_gust.value),
+        icon: getImageNumber(hourForecast.weather_code.value, isDayTime),
+        weatherDescription: hourForecast.weather_code.value,
+        time: localTimestamp.toLocaleTimeString('uk-UA', {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+        beginNextDay: !localTimestamp.getHours(),
+        isDayTime,
+      };
+    });
 };
 
 const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {

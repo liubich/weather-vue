@@ -63,8 +63,8 @@ const getImageNumber = (weatherCode, isDayTime) => {
   }.png`;
 };
 
-const translateAPIDataToHourlyForecast = (hourlyForecastDataFromAPI) => {
-  return hourlyForecastDataFromAPI
+const translateAPIDataToHourlyForecast = (hourlyForecastDataFromAPI) =>
+  hourlyForecastDataFromAPI
     .filter((hourForecast) => {
       const localTimestamp = new Date(hourForecast.observation_time.value);
       return localTimestamp >= Date.now();
@@ -97,7 +97,6 @@ const translateAPIDataToHourlyForecast = (hourlyForecastDataFromAPI) => {
         isDayTime,
       };
     });
-};
 
 const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {
   const hourlyWeatherDatesInDate = hourlyForecastDataFromAPI.map((hourForecast) =>
@@ -106,8 +105,8 @@ const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {
 
   const getUniqueItems = (items) => [...new Set(items)];
 
-  const formatTooltip = (date) => {
-    return isToday(date) || isTomorrow(date)
+  const formatTooltip = (date) =>
+    isToday(date) || isTomorrow(date)
       ? date.toLocaleDateString('uk-UA', {
           weekday: 'long',
           day: '2-digit',
@@ -117,7 +116,6 @@ const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {
           day: '2-digit',
           month: 'long',
         });
-  };
 
   const getDisplayStringByDate = (date) => {
     if (isToday(date)) return 'Сьогодні';
@@ -127,9 +125,9 @@ const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {
     });
   };
 
-  const hourlyWeatherDatesInMilliseconds = hourlyWeatherDatesInDate.map((arrayItem) => {
-    return arrayItem.valueOf();
-  });
+  const hourlyWeatherDatesInMilliseconds = hourlyWeatherDatesInDate.map((arrayItem) =>
+    arrayItem.valueOf(),
+  );
   return getUniqueItems(hourlyWeatherDatesInMilliseconds).map((dateItemInms) => {
     const dateItemAsDate = new Date(dateItemInms);
     return {

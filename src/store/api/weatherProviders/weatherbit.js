@@ -2,9 +2,8 @@ import { isToday, isTomorrow, startOfDay } from 'date-fns';
 import * as utils from './weatherutils';
 import getAPIData from '../apiutils';
 
-const getHourlyForecastAPIUrl = ({ latitude, longitude, APIKey, language = 'uk' }) => {
-  return `https://api.weatherbit.io/v2.0/forecast/hourly?key=${APIKey}&lang=${language}&lat=${latitude}&lon=${longitude}`;
-};
+const getHourlyForecastAPIUrl = ({ latitude, longitude, APIKey, language = 'uk' }) =>
+  `https://api.weatherbit.io/v2.0/forecast/hourly?key=${APIKey}&lang=${language}&lat=${latitude}&lon=${longitude}`;
 
 const getHourlyForecastForCoordinates = async ({ latitude, longitude }) => {
   const hourlyForecastAPIUrl = getHourlyForecastAPIUrl({
@@ -85,8 +84,8 @@ const mapWeatherbitIconCodeToStandard = (weatherbitIconCode) => {
   return iconsMapping[weatherbitIconCode] || weatherbitIconCode;
 };
 
-const translateJSONToHourlyForecast = (hourlyForecastDataFromAPI) => {
-  return hourlyForecastDataFromAPI.map((hourForecast) => {
+const translateJSONToHourlyForecast = (hourlyForecastDataFromAPI) =>
+  hourlyForecastDataFromAPI.map((hourForecast) => {
     const iconNumber = mapWeatherbitIconCodeToStandard(hourForecast.weather.icon);
     const localTimestamp = new Date(hourForecast.timestamp_local);
     return {
@@ -111,7 +110,6 @@ const translateJSONToHourlyForecast = (hourlyForecastDataFromAPI) => {
       isDayTime: hourForecast.pod === 'd',
     };
   });
-};
 
 const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {
   const hourlyWeatherDatesInDate = hourlyForecastDataFromAPI.map((hourForecast) =>
@@ -120,8 +118,8 @@ const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {
 
   const getUniqueItems = (items) => [...new Set(items)];
 
-  const formatTooltip = (date) => {
-    return isToday(date) || isTomorrow(date)
+  const formatTooltip = (date) =>
+    isToday(date) || isTomorrow(date)
       ? date.toLocaleDateString('uk-UA', {
           weekday: 'long',
           day: '2-digit',
@@ -131,7 +129,6 @@ const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {
           day: '2-digit',
           month: 'long',
         });
-  };
 
   const getDisplayStringByDate = (date) => {
     if (isToday(date)) return 'Сьогодні';
@@ -141,9 +138,9 @@ const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {
     });
   };
 
-  const hourlyWeatherDatesInMilliseconds = hourlyWeatherDatesInDate.map((arrayItem) => {
-    return arrayItem.valueOf();
-  });
+  const hourlyWeatherDatesInMilliseconds = hourlyWeatherDatesInDate.map((arrayItem) =>
+    arrayItem.valueOf(),
+  );
   return getUniqueItems(hourlyWeatherDatesInMilliseconds).map((dateItemInms) => {
     const dateItemAsDate = new Date(dateItemInms);
     return {

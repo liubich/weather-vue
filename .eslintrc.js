@@ -9,8 +9,6 @@ module.exports = {
     'plugin:vue/essential',
     '@vue/airbnb',
     'prettier',
-    'prettier/standard',
-    'prettier/vue',
   ],
   plugins: ['prettier', 'vue'],
   rules: {

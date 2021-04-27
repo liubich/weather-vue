@@ -35,6 +35,5 @@ export const getWindDirection = (deg) => {
   return windDirectionTranslator[rumb];
 };
 
-export const formatTemperature = (temperature) => {
-  return temperature > 0 ? `+ ${Math.round(temperature)}` : Math.round(temperature);
-};
+export const formatTemperature = (temperature) =>
+  temperature > 0 ? `+ ${Math.round(temperature)}` : Math.round(temperature);

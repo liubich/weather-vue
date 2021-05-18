@@ -64,39 +64,34 @@ const getImageNumber = (weatherCode, isDayTime) => {
 };
 
 const translateAPIDataToHourlyForecast = (hourlyForecastDataFromAPI) =>
-  hourlyForecastDataFromAPI
-    .filter((hourForecast) => {
-      const localTimestamp = new Date(hourForecast.observation_time.value);
-      return localTimestamp >= Date.now();
-    })
-    .map((hourForecast) => {
-      const isDayTime =
-        hourForecast.observation_time.value >= hourForecast.sunrise.value &&
-        hourForecast.observation_time.value <= hourForecast.sunset.value;
-      const localTimestamp = new Date(hourForecast.observation_time.value);
-      return {
-        temperature: utils.formatTemperature(hourForecast.temp.value),
-        appearingTemperature:
-          utils.formatTemperature(hourForecast.temp.value) !==
-          utils.formatTemperature(hourForecast.feels_like.value)
-            ? utils.formatTemperature(hourForecast.feels_like.value)
-            : '',
-        windDirectionDeg: hourForecast.wind_direction.value,
-        pressure: Math.round(hourForecast.baro_pressure.value),
-        windBackgroundColor: utils.getWindBackgroundColor(hourForecast.wind_speed.value),
-        windDirection: utils.getWindDirection(hourForecast.wind_direction.value),
-        windSpeed: Math.round(hourForecast.wind_speed.value),
-        windGustSpeed: Math.round(hourForecast.wind_gust.value),
-        icon: getImageNumber(hourForecast.weather_code.value, isDayTime),
-        weatherDescription: hourForecast.weather_code.value,
-        time: localTimestamp.toLocaleTimeString('uk-UA', {
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
-        beginNextDay: !localTimestamp.getHours(),
-        isDayTime,
-      };
-    });
+  hourlyForecastDataFromAPI.map((hourForecast) => {
+    const isDayTime =
+      hourForecast.observation_time.value >= hourForecast.sunrise.value &&
+      hourForecast.observation_time.value <= hourForecast.sunset.value;
+    const localTimestamp = new Date(hourForecast.observation_time.value);
+    return {
+      temperature: utils.formatTemperature(hourForecast.temp.value),
+      appearingTemperature:
+        utils.formatTemperature(hourForecast.temp.value) !==
+        utils.formatTemperature(hourForecast.feels_like.value)
+          ? utils.formatTemperature(hourForecast.feels_like.value)
+          : '',
+      windDirectionDeg: hourForecast.wind_direction.value,
+      pressure: Math.round(hourForecast.baro_pressure.value),
+      windBackgroundColor: utils.getWindBackgroundColor(hourForecast.wind_speed.value),
+      windDirection: utils.getWindDirection(hourForecast.wind_direction.value),
+      windSpeed: Math.round(hourForecast.wind_speed.value),
+      windGustSpeed: Math.round(hourForecast.wind_gust.value),
+      icon: getImageNumber(hourForecast.weather_code.value, isDayTime),
+      weatherDescription: hourForecast.weather_code.value,
+      time: localTimestamp.toLocaleTimeString('uk-UA', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      beginNextDay: !localTimestamp.getHours(),
+      isDayTime,
+    };
+  });
 
 const getAllDatesForHeader = (hourlyForecastDataFromAPI) => {
   const hourlyWeatherDatesInDate = hourlyForecastDataFromAPI.map((hourForecast) =>
@@ -147,8 +142,12 @@ export default async function getHourlyForecastFromAPI({ latitude, longitude }) 
   };
   const hourlyForecastUrl = `${BASE_URL}hourly?lat=${latitude}&lon=${longitude}&unit_system=si&fields=temp%3AC,feels_like%3AC,wind_speed%3Am%2Fs,wind_gust%3Am%2Fs,baro_pressure%3AmmHg,wind_direction%3Adegrees,sunrise,sunset,weather_code&start_time=now`;
   const hourlyForecastDataFromAPI = await getAPIData(hourlyForecastUrl, headers);
+  const hourlyForecastDataFromAPIFiltered = hourlyForecastDataFromAPI.filter((hourForecast) => {
+    const localTimestamp = new Date(hourForecast.observation_time.value);
+    return localTimestamp >= Date.now();
+  });
   return {
-    data: translateAPIDataToHourlyForecast(hourlyForecastDataFromAPI),
-    datesWithColumnsNumber: getAllDatesForHeader(hourlyForecastDataFromAPI),
+    data: translateAPIDataToHourlyForecast(hourlyForecastDataFromAPIFiltered),
+    datesWithColumnsNumber: getAllDatesForHeader(hourlyForecastDataFromAPIFiltered),
   };
 }

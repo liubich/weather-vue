@@ -17,7 +17,7 @@
     "core-js": "3.12.1",
     "date-fns": "2.21.3",
     "register-service-worker": "1.7.2",
-    "vue": "2.6.12",
+    "vue": "2.7.16",
     "vuex": "3.6.2"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "stylelint-processor-html": "1.0.0",
     "vue-svg-loader": "0.16.0",
     "stylelint-scss": "3.19.0",
-    "vue-template-compiler": "2.6.12"
+    "vue-template-compiler": "2.7.16"
   },
   "keywords": [
     "weather"
